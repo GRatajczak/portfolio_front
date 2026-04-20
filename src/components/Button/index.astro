@@ -1,0 +1,26 @@
+---
+import type { Props } from "./index.type";
+
+const { href = "", label = "", type = "button", isExternal = false, className = "" } =
+    Astro.props as Props;
+---
+
+{
+    href ? (
+        <a
+            class={`inline-flex items-center rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-paper hover:border-zinc-500 ${className}`}
+            href={href}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noreferrer noopener" : undefined}
+        >
+            <slot>{label}</slot>
+        </a>
+    ) : (
+        <button
+            class={`inline-flex items-center rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-paper hover:border-zinc-500 ${className}`}
+            type={type}
+        >
+            <slot>{label}</slot>
+        </button>
+    )
+}

@@ -9,6 +9,9 @@ const rootDirectory = dirname(fileURLToPath(import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
+    image: {
+        domains: ["cdn.sanity.io"],
+    },
     env: {
         schema: {
             PUBLIC_SANITY_PROJECT_ID: envField.string({

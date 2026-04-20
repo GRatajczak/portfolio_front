@@ -1,0 +1,11 @@
+---
+import type { Props } from "./index.type";
+
+const { eyebrow = "", heading = "", description = "", className = "" } = Astro.props as Props;
+---
+
+<div class={`space-y-2 ${className}`}>
+    {eyebrow && <p class="text-sm font-semibold uppercase tracking-[0.16em] text-paper">{eyebrow}</p>}
+    {heading && <h2 class="text-3xl font-semibold text-paper">{heading}</h2>}
+    {description && <p class="text-base leading-7 text-paper">{description}</p>}
+</div>

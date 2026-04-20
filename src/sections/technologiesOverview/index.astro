@@ -1,5 +1,6 @@
 ---
 import Container from "@/components/Container/index.astro";
+import SectionHeader from "@/components/SectionHeader/index.astro";
 import { getTechnologyLabel, toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
@@ -8,8 +9,7 @@ const descriptionText = toPlainText(description);
 ---
 
 <Container>
-    {heading && <h2 class="text-3xl font-semibold text-paper">{heading}</h2>}
-    {descriptionText && <p class="text-base leading-7 text-paper">{descriptionText}</p>}
+    <SectionHeader heading={heading} description={descriptionText} />
 
     {
         groups.length > 0 ? (

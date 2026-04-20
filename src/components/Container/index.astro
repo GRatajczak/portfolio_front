@@ -2,10 +2,8 @@
 import type { Props } from "./index.type";
 
 const { className = "" } = Astro.props as Props;
-
 ---
 
-
-<section class={`mx-auto max-w-[100rem] px-[1.5rem] py-[4rem] ${className}`}>
+<section class={`block mx-auto w-full max-w-400 px-6 py-4 ${className}`}>
     <slot />
 </section>

@@ -1,0 +1,18 @@
+---
+import type { Props } from "./index.type";
+
+const { href = "", label = "", isExternal = false, className = "" } = Astro.props as Props;
+---
+
+{
+    href && (
+        <a
+            class={className}
+            href={href}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noreferrer noopener" : undefined}
+        >
+            <slot>{label}</slot>
+        </a>
+    )
+}

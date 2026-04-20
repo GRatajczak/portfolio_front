@@ -1,5 +1,6 @@
 ---
 import Container from "@/components/Container/index.astro";
+import SectionHeader from "@/components/SectionHeader/index.astro";
 import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
@@ -7,8 +8,7 @@ const { eyebrow = "", heading = "", entries = [] } = Astro.props as Props;
 ---
 
 <Container>
-    {eyebrow && <p class="text-sm font-semibold uppercase tracking-[0.16em] text-paper">{eyebrow}</p>}
-    {heading && <h2 class="text-3xl font-semibold text-paper">{heading}</h2>}
+    <SectionHeader eyebrow={eyebrow} heading={heading} />
 
     {
         entries.length > 0 ? (

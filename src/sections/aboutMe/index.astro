@@ -1,25 +1,28 @@
 ---
 import Container from "@/components/Container/index.astro";
+import Link from "@/components/Link/index.astro";
+import SectionHeader from "@/components/SectionHeader/index.astro";
 import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
-const { eyebrow = "", heading = "", description = [], button } = Astro.props as Props;
+const {
+    eyebrow = "",
+    heading = "",
+    description = [],
+    button,
+} = Astro.props as Props;
 const descriptionText = toPlainText(description);
 ---
 
 <Container>
-    {eyebrow && <p class="text-sm font-semibold uppercase tracking-[0.16em] text-paper">{eyebrow}</p>}
-    {heading && <h2 class="text-3xl font-semibold text-paper">{heading}</h2>}
-    {descriptionText && <p class="text-base leading-7 text-paper">{descriptionText}</p>}
-
-    {button?.buttonText && button.buttonLink && (
-        <a
-            class="inline-flex items-center rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-paper hover:border-zinc-500"
-            href={button.buttonLink}
-            target={button.isExternalLink ? "_blank" : undefined}
-            rel={button.isExternalLink ? "noreferrer noopener" : undefined}
-        >
-            {button.buttonText}
-        </a>
-    )}
+    <SectionHeader
+        eyebrow={eyebrow}
+        heading={heading}
+        description={descriptionText}
+    />
+    <Link
+        href={button?.buttonLink}
+        label={button?.buttonText}
+        isExternal={button?.isExternalLink}
+    />
 </Container>

@@ -1,0 +1,10 @@
+---
+import type { Props } from "./index.type";
+
+const { as = "p", text = "", className = "" } = Astro.props as Props;
+const Tag = as;
+---
+
+<Tag class={className}>
+    <slot>{text}</slot>
+</Tag>

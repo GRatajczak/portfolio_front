@@ -50,6 +50,21 @@ export const HOME_PAGE_QUERY = defineQuery(`
       title,
       "elements": coalesce(pageBuilder, [])[]{
         ...,
+        _type == "hero" => {
+          ...,
+          "portraitImage": portraitImage{
+            alt,
+            "asset": asset->{
+              url,
+              metadata{
+                dimensions{
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        },
         _type == "projectsShowcase" => {
           ...,
           projects[]{
