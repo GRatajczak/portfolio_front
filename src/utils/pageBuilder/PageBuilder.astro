@@ -1,0 +1,29 @@
+---
+import { componentsMapper } from "./componentsMapper";
+import type { Props } from "./PageBuilder.type";
+
+const { elements = [], facebook = "", instagram = "", phone = "" } = Astro.props as Props;
+---
+
+{
+    elements.map((element, index) => {
+        const blockType = element._type;
+        const Component = blockType
+            ? componentsMapper[blockType as keyof typeof componentsMapper]
+            : undefined;
+
+        if (!Component) {
+            console.warn(`[PageBuilder] Unknown block type "${String(blockType)}" at index ${index}.`);
+            return null;
+        }
+
+        return (
+            <Component
+                {...element}
+                facebook={facebook}
+                instagram={instagram}
+                phone={phone}
+            />
+        );
+    })
+}

@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+---
+
+# Types
+
+Define types in dedicated files with the `.type.ts` extension.
+Prefer `type` aliases over `interface`.

@@ -1,0 +1,25 @@
+---
+import Container from "@/components/Container/index.astro";
+import { getTechnologyLabel } from "@/utils/pageBuilder/helpers";
+import type { Props } from "./index.type";
+
+const { technologies = [] } = Astro.props as Props;
+---
+
+<Container>
+    <h2 class="text-2xl font-semibold text-paper">Technologies stack</h2>
+
+    {
+        technologies.length > 0 ? (
+            <ul class="flex flex-wrap gap-2">
+                {technologies.map((item) => (
+                    <li class="rounded-full border border-zinc-300 px-3 py-1 text-sm text-paper">
+                        {getTechnologyLabel(item)}
+                    </li>
+                ))}
+            </ul>
+        ) : (
+            <p class="text-paper">No technologies configured.</p>
+        )
+    }
+</Container>

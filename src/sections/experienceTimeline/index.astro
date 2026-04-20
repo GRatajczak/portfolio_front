@@ -1,0 +1,34 @@
+---
+import Container from "@/components/Container/index.astro";
+import { toPlainText } from "@/utils/pageBuilder/helpers";
+import type { Props } from "./index.type";
+
+const { eyebrow = "", heading = "", entries = [] } = Astro.props as Props;
+---
+
+<Container>
+    {eyebrow && <p class="text-sm font-semibold uppercase tracking-[0.16em] text-paper">{eyebrow}</p>}
+    {heading && <h2 class="text-3xl font-semibold text-paper">{heading}</h2>}
+
+    {
+        entries.length > 0 ? (
+            <ol class="space-y-4">
+                {entries.map((entry) => (
+                    <li class="rounded-2xl border border-zinc-100 p-4">
+                        <p class="text-sm text-paper">{entry.period}</p>
+                        <h3 class="text-lg font-medium text-paper">{entry.company}</h3>
+                        {entry.role && <p class="text-sm text-paper">{entry.role}</p>}
+                        {entry.description && <p class="mt-2 text-paper">{toPlainText(entry.description)}</p>}
+                        {entry.technologies && entry.technologies.length > 0 && (
+                            <p class="mt-2 text-sm text-paper">
+                                Stack: {entry.technologies.join(", ")}
+                            </p>
+                        )}
+                    </li>
+                ))}
+            </ol>
+        ) : (
+            <p class="text-paper">No experience entries configured.</p>
+        )
+    }
+</Container>

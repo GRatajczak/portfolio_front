@@ -1,0 +1,29 @@
+---
+import Container from "@/components/Container/index.astro";
+import type { Props } from "./index.type";
+
+const { headline = "", subheadline = [], facebook = "", instagram = "", phone = "" } =
+    Astro.props as Props;
+const subheadlineText = subheadline.map((item) => item.text).filter(Boolean).join(" ");
+---
+
+<Container>
+    {headline && <h1 class="text-4xl font-semibold text-paper">{headline}</h1>}
+    {subheadlineText && <p class="text-lg leading-8 text-paper">{subheadlineText}</p>}
+
+    {(facebook || instagram || phone) && (
+        <ul class="flex flex-wrap gap-3 text-sm text-paper">
+            {facebook && (
+                <li>
+                    <a class="underline decoration-zinc-300 hover:text-paper" href={facebook}>Facebook</a>
+                </li>
+            )}
+            {instagram && (
+                <li>
+                    <a class="underline decoration-zinc-300 hover:text-paper" href={instagram}>Instagram</a>
+                </li>
+            )}
+            {phone && <li>Phone: {phone}</li>}
+        </ul>
+    )}
+</Container>

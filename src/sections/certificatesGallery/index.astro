@@ -1,0 +1,26 @@
+---
+import Container from "@/components/Container/index.astro";
+import type { Props } from "./index.type";
+
+const { eyebrow = "", heading = "", certificates = [] } = Astro.props as Props;
+---
+
+<Container>
+    {eyebrow && <p class="text-sm font-semibold uppercase tracking-[0.16em] text-paper">{eyebrow}</p>}
+    {heading && <h2 class="text-3xl font-semibold text-paper">{heading}</h2>}
+
+    {
+        certificates.length > 0 ? (
+            <ul class="space-y-2">
+                {certificates.map((certificate) => (
+                    <li class="rounded-2xl border border-zinc-100 px-4 py-3">
+                        <p class="font-medium text-paper">{certificate.title || "Untitled certificate"}</p>
+                        {certificate.issuer && <p class="text-sm text-paper">{certificate.issuer}</p>}
+                    </li>
+                ))}
+            </ul>
+        ) : (
+            <p class="text-paper">No certificates configured.</p>
+        )
+    }
+</Container>

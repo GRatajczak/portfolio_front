@@ -1,11 +1,22 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import PageBuilder from "@/utils/pageBuilder/PageBuilder.astro";
+import { DEFAULT_LOCALE, getHomePage } from "../lib/sanity";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const homePage = await getHomePage(DEFAULT_LOCALE);
 ---
 
 <Layout>
-	<Welcome />
+    <main>
+        {
+            homePage?.elements?.length ? (
+                <PageBuilder
+                    elements={homePage.elements}
+                    facebook={homePage.facebook}
+                    instagram={homePage.instagram}
+                    phone={homePage.phone}
+                />
+            ) : null
+        }
+    </main>
 </Layout>
