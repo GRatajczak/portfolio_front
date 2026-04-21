@@ -1,10 +1,23 @@
 ---
 import type { Props } from "./index.type";
 
-const { as = "p", text = "", className = "" } = Astro.props as Props;
+const {
+    as = "p",
+    text = "",
+    className = "",
+    style = "",
+} = Astro.props as Props;
 const Tag = as;
+const fluidStyleByTag = {
+    p: "font-size: var(--font-size-p); line-height: 1.2;",
+    span: "font-size: inherit; line-height: inherit;",
+    small: "font-size: var(--font-size-small); line-height: 1.2;",
+};
+const mergedStyle = style
+    ? `${fluidStyleByTag[as]} ${style}`
+    : fluidStyleByTag[as];
 ---
 
-<Tag class={className}>
+<Tag class={className} style={mergedStyle}>
     <slot>{text}</slot>
 </Tag>

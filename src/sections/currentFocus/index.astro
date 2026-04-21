@@ -1,7 +1,9 @@
 ---
 import Container from "@/components/Container/index.astro";
+import Heading from "@/components/Heading/index.astro";
 import Link from "@/components/Link/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
+import Text from "@/components/Text/index.astro";
 import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
@@ -16,18 +18,20 @@ const descriptionText = toPlainText(description);
         project?.title && (
             <article class="rounded-2xl border border-zinc-100 p-4">
                 {project.category && (
-                    <p class="text-sm uppercase tracking-[0.12em] text-paper">
+                    <Text className="text-sm uppercase tracking-[0.12em] text-paper">
                         {project.category}
-                    </p>
+                    </Text>
                 )}
-                <h3 class="text-xl font-medium text-paper">{project.title}</h3>
+                <Heading as="h3" className="text-xl font-medium text-paper">
+                    {project.title}
+                </Heading>
                 {project.description && (
-                    <p class="mt-2 text-paper">{project.description}</p>
+                    <Text className="mt-2 text-paper">{project.description}</Text>
                 )}
                 {project.technologies && project.technologies.length > 0 && (
-                    <p class="mt-2 text-sm text-paper">
+                    <Text className="mt-2 text-sm text-paper">
                         Tech: {project.technologies.join(", ")}
-                    </p>
+                    </Text>
                 )}
                 <Link
                     className="mt-3"

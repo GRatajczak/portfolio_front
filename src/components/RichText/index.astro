@@ -2,8 +2,135 @@
 import type { Props } from "./index.type";
 
 const { value = "", className = "" } = Astro.props as Props;
+
+const escapeHtml = (input: string) =>
+    input
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+
+const renderSpan = (
+    text: string,
+    marks: string[] = [],
+    markDefs: Record<string, { href?: string }>,
+) => {
+    return marks.reduce((result, mark) => {
+        if (mark === "strong") return `<strong>${result}</strong>`;
+        if (mark === "em") return `<em>${result}</em>`;
+        if (mark === "code") return `<code>${result}</code>`;
+        if (mark === "underline") return `<u>${result}</u>`;
+        if (mark === "strike-through") return `<s>${result}</s>`;
+
+        const markDef = markDefs[mark];
+        if (markDef?.href) {
+            const href = escapeHtml(markDef.href);
+            return `<a href="${href}" target="_blank" rel="noreferrer noopener">${result}</a>`;
+        }
+
+        return result;
+    }, escapeHtml(text));
+};
+
+const renderBlockInner = (block: {
+    children?: Array<{ text?: string; marks?: string[] }>;
+    markDefs?: Array<{ _key: string; href?: string }>;
+}) => {
+    const markDefs = Object.fromEntries((block.markDefs ?? []).map((item) => [item._key, item]));
+    return (block.children ?? [])
+        .map((span) => renderSpan(span.text ?? "", span.marks ?? [], markDefs))
+        .join("");
+};
+
+const wrapBlock = (style: string | undefined, content: string) => {
+    if (!content.trim()) {
+        return "";
+    }
+
+    switch (style) {
+        case "h1":
+            return `<h1>${content}</h1>`;
+        case "h2":
+            return `<h2>${content}</h2>`;
+        case "h3":
+            return `<h3>${content}</h3>`;
+        case "h4":
+            return `<h4>${content}</h4>`;
+        case "h5":
+            return `<h5>${content}</h5>`;
+        case "h6":
+            return `<h6>${content}</h6>`;
+        case "blockquote":
+            return `<blockquote>${content}</blockquote>`;
+        default:
+            return `<p>${content}</p>`;
+    }
+};
+
+const renderPortableText = (
+    blocks: Array<{
+        _type?: string;
+        style?: string;
+        listItem?: "bullet" | "number";
+        children?: Array<{ text?: string; marks?: string[] }>;
+        markDefs?: Array<{ _key: string; href?: string }>;
+    }>,
+) => {
+    const output: string[] = [];
+    let listBuffer: string[] = [];
+    let listType: "bullet" | "number" | null = null;
+
+    const flushList = () => {
+        if (listBuffer.length === 0 || !listType) {
+            listBuffer = [];
+            listType = null;
+            return;
+        }
+
+        const tag = listType === "number" ? "ol" : "ul";
+        const listClass =
+            listType === "number"
+                ? "list-decimal list-outside pl-5 space-y-1"
+                : "list-disc list-outside pl-5 space-y-1";
+        output.push(`<${tag} class="${listClass}">${listBuffer.join("")}</${tag}>`);
+        listBuffer = [];
+        listType = null;
+    };
+
+    for (const block of blocks) {
+        if (block._type !== "block") {
+            continue;
+        }
+
+        const inner = renderBlockInner(block);
+
+        if (block.listItem) {
+            if (listType && listType !== block.listItem) {
+                flushList();
+            }
+            listType = block.listItem;
+            listBuffer.push(`<li>${inner}</li>`);
+            continue;
+        }
+
+        flushList();
+        output.push(wrapBlock(block.style, inner));
+    }
+
+    flushList();
+    return output.join("");
+};
+
+const htmlValue = Array.isArray(value) ? renderPortableText(value) : "";
 ---
 
-<div class={className}>
-    <slot>{value}</slot>
-</div>
+{
+    Array.isArray(value) ? (
+        <div class={className} set:html={htmlValue} />
+    ) : (
+        <div class={className}>
+            <slot>{value}</slot>
+        </div>
+    )
+}

@@ -1,6 +1,8 @@
 ---
 import Container from "@/components/Container/index.astro";
+import Heading from "@/components/Heading/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
+import Text from "@/components/Text/index.astro";
 import { getTechnologyLabel, toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
@@ -16,7 +18,11 @@ const descriptionText = toPlainText(description);
             <div class="space-y-4">
                 {groups.map((group) => (
                     <article class="rounded-2xl border  p-4">
-                        {group.label && <h3 class="text-lg font-medium text-paper">{group.label}</h3>}
+                        {group.label && (
+                            <Heading as="h3" className="text-lg font-medium text-paper">
+                                {group.label}
+                            </Heading>
+                        )}
                         <ul class="mt-2 flex flex-wrap gap-2">
                             {(group.technologies ?? []).map((technology) => (
                                 <li class="rounded-full bg-zinc-100 px-3 py-1 text-sm text-paper">
@@ -28,7 +34,7 @@ const descriptionText = toPlainText(description);
                 ))}
             </div>
         ) : (
-            <p class="text-paper">No technology groups configured.</p>
+            <Text className="text-paper">No technology groups configured.</Text>
         )
     }
 </Container>

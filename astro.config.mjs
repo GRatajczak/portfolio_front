@@ -34,6 +34,13 @@ export default defineConfig({
     },
     vite: {
         plugins: [tailwindcss()],
+        server: {
+            allowedHosts: [
+                "hypervigilant-marilou-observant.ngrok-free.dev",
+                "localhost",
+                "127.0.0.1",
+            ],
+        },
         resolve: {
             alias: {
                 "@": resolve(rootDirectory, "src"),

@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Heading from "@/components/Heading/index.astro";
+import Text from "@/components/Text/index.astro";
 import type { Props } from "./index.type";
 
 const { headline = "", subheadline = [], portraitImage } = Astro.props as Props;
@@ -22,12 +23,9 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
     <div class="w-[60%] pb-8 min-h-screen flex flex-col justify-end">
         {
             subheadlineText && (
-                <p
-                    class="leading-8 text-paper opacity-70"
-                    style="font-size: var(--font-size-lg);"
-                >
+                <Text className="leading-8 text-paper opacity-70" style="font-size: var(--font-size-lg);">
                     {subheadline[0].text}
-                </p>
+                </Text>
             )
         }
         {
@@ -36,7 +34,7 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
                     as="h1"
                     text={headline}
                     className="font-semibold text-paper mb-5 leading-[0.95]"
-                    style="font-size: var(--font-size-display);"
+                    style="font-size: var(--font-size-display); line-height: 1.1;"
                 />
             )
         }

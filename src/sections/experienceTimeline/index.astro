@@ -1,6 +1,8 @@
 ---
 import Container from "@/components/Container/index.astro";
+import Heading from "@/components/Heading/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
+import Text from "@/components/Text/index.astro";
 import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
@@ -15,20 +17,26 @@ const { eyebrow = "", heading = "", entries = [] } = Astro.props as Props;
             <ol class="space-y-4">
                 {entries.map((entry) => (
                     <li class="rounded-2xl border border-zinc-100 p-4">
-                        <p class="text-sm text-paper">{entry.period}</p>
-                        <h3 class="text-lg font-medium text-paper">{entry.company}</h3>
-                        {entry.role && <p class="text-sm text-paper">{entry.role}</p>}
-                        {entry.description && <p class="mt-2 text-paper">{toPlainText(entry.description)}</p>}
+                        <Text className="text-sm text-paper">{entry.period}</Text>
+                        <Heading as="h3" className="text-lg font-medium text-paper">
+                            {entry.company}
+                        </Heading>
+                        {entry.role && <Text className="text-sm text-paper">{entry.role}</Text>}
+                        {entry.description && (
+                            <Text className="mt-2 text-paper">
+                                {toPlainText(entry.description)}
+                            </Text>
+                        )}
                         {entry.technologies && entry.technologies.length > 0 && (
-                            <p class="mt-2 text-sm text-paper">
+                            <Text className="mt-2 text-sm text-paper">
                                 Stack: {entry.technologies.join(", ")}
-                            </p>
+                            </Text>
                         )}
                     </li>
                 ))}
             </ol>
         ) : (
-            <p class="text-paper">No experience entries configured.</p>
+            <Text className="text-paper">No experience entries configured.</Text>
         )
     }
 </Container>

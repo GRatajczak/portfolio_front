@@ -88,7 +88,35 @@ export const HOME_PAGE_QUERY = defineQuery(`
             "project": project->{
               _id,
               title,
-              "slug": slug.current
+              category,
+              description,
+              content,
+              "slug": slug.current,
+              button{
+                buttonText,
+                buttonLink,
+                isExternalLink
+              },
+              "image": images[0]{
+                alt,
+                "asset": asset->{
+                  url,
+                  metadata{
+                    dimensions{
+                      width,
+                      height
+                    }
+                  }
+                }
+              },
+              technologies[]{
+                ...,
+                "technology": technology->{
+                  _id,
+                  name,
+                  svg
+                }
+              }
             }
           }
         },

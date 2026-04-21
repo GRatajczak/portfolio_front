@@ -1,7 +1,9 @@
 ---
 import LogoFooter from "@/assets/Logo_footer.svg";
 import PolandFlag from "@/assets/polandflag.svg";
+import Text from "@/components/Text/index.astro";
 import type { FooterMenuItem, Props } from "./index.type";
+import Link from "@/components/Link/index.astro";
 
 const {
     menuItems = [],
@@ -16,13 +18,15 @@ type ResolvedFooterMenuItem = FooterMenuItem & {
     slug: string;
 };
 
-const resolvedMenuItems: ResolvedFooterMenuItem[] = menuItems.flatMap((item) => {
-    if (!item?.title || !item?.slug) {
-        return [];
-    }
+const resolvedMenuItems: ResolvedFooterMenuItem[] = menuItems.flatMap(
+    (item) => {
+        if (!item?.title || !item?.slug) {
+            return [];
+        }
 
-    return [{ ...item, title: item.title, slug: item.slug }];
-});
+        return [{ ...item, title: item.title, slug: item.slug }];
+    },
+);
 
 const getHref = (slug: string) => {
     if (slug.startsWith("http://") || slug.startsWith("https://")) {
@@ -40,7 +44,9 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="mt-20 border-t border-paper/20 bg-paper text-ink">
-    <div class="mx-auto grid w-full max-w-600 gap-10 px-6 py-8 md:grid-cols-[1fr_auto_auto]">
+    <div
+        class="mx-auto grid w-full max-w-600 gap-10 px-6 py-8 md:grid-cols-[1fr_auto_auto]"
+    >
         <div class="space-y-4">
             <a href="/" aria-label="Go to homepage" class="inline-flex">
                 <LogoFooter />
@@ -48,7 +54,12 @@ const currentYear = new Date().getFullYear();
             <div class="flex items-center gap-4 text-sm">
                 {
                     linkedin && (
-                        <a href={linkedin} target="_blank" rel="noreferrer noopener" class="hover:opacity-70">
+                        <a
+                            href={linkedin}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            class="hover:opacity-70"
+                        >
                             LinkedIn
                         </a>
                     )
@@ -71,11 +82,14 @@ const currentYear = new Date().getFullYear();
         {
             resolvedMenuItems.length > 0 && (
                 <div class="space-y-3">
-                    <p class="text-sm font-semibold">Quick links</p>
+                    <Text className="text-sm font-semibold">Quick links</Text>
                     <ul class="space-y-2 text-sm">
                         {resolvedMenuItems.map((item) => (
                             <li>
-                                <a href={getHref(item.slug)} class="hover:opacity-70">
+                                <a
+                                    href={getHref(item.slug)}
+                                    class="hover:opacity-70"
+                                >
                                     {item.title}
                                 </a>
                             </li>
@@ -86,7 +100,7 @@ const currentYear = new Date().getFullYear();
         }
 
         <div class="space-y-3">
-            <p class="text-sm font-semibold">Contact</p>
+            <Text className="text-sm font-semibold">Contact</Text>
             <ul class="space-y-2 text-sm">
                 {
                     phone && (
@@ -100,7 +114,10 @@ const currentYear = new Date().getFullYear();
                 {
                     email && (
                         <li>
-                            <a href={`mailto:${email}`} class="hover:opacity-70">
+                            <a
+                                href={`mailto:${email}`}
+                                class="hover:opacity-70"
+                            >
                                 {email}
                             </a>
                         </li>
@@ -110,20 +127,25 @@ const currentYear = new Date().getFullYear();
         </div>
     </div>
     <div class="border-t border-ink/20">
-        <div class="mx-auto flex w-full max-w-600 flex-col gap-3 px-6 py-4 text-xs md:flex-row md:items-center md:justify-between">
-            <p>© {currentYear} | Grzegorz Ratajczak</p>
-            <p class="flex items-center gap-2">
+        <div
+            class="mx-auto flex w-full max-w-600 flex-col gap-3 px-6 py-4 text-xs md:flex-row md:items-center md:justify-between"
+        >
+            <Text>© {currentYear} | Grzegorz Ratajczak</Text>
+            <Text className="flex items-center gap-2">
                 <PolandFlag class="h-3 w-4 border border-ink/20" />
                 Poland
-            </p>
-            <a href="#" class="inline-flex items-center gap-2 hover:opacity-70">
+            </Text>
+            <Link
+                href="/privacy-policy"
+                className="inline-flex items-center gap-2 hover:opacity-70"
+            >
                 <span
                     class="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-ink/70 text-[9px] leading-none"
                 >
                     P
                 </span>
                 Privacy Policy
-            </a>
+            </Link>
         </div>
     </div>
 </footer>

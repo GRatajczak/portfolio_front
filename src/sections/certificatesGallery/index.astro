@@ -1,6 +1,7 @@
 ---
 import Container from "@/components/Container/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
+import Text from "@/components/Text/index.astro";
 import type { Props } from "./index.type";
 
 const { eyebrow = "", heading = "", certificates = [] } = Astro.props as Props;
@@ -14,13 +15,17 @@ const { eyebrow = "", heading = "", certificates = [] } = Astro.props as Props;
             <ul class="space-y-2">
                 {certificates.map((certificate) => (
                     <li class="rounded-2xl border border-zinc-100 px-4 py-3">
-                        <p class="font-medium text-paper">{certificate.title || "Untitled certificate"}</p>
-                        {certificate.issuer && <p class="text-sm text-paper">{certificate.issuer}</p>}
+                        <Text className="font-medium text-paper">
+                            {certificate.title || "Untitled certificate"}
+                        </Text>
+                        {certificate.issuer && (
+                            <Text className="text-sm text-paper">{certificate.issuer}</Text>
+                        )}
                     </li>
                 ))}
             </ul>
         ) : (
-            <p class="text-paper">No certificates configured.</p>
+            <Text className="text-paper">No certificates configured.</Text>
         )
     }
 </Container>

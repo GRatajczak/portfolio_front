@@ -1,8 +1,8 @@
+import type { ProjectCardData } from "@/components/Project/index.type";
+
 export type ProjectItem = {
     _key?: string;
-    project?: {
-        _ref?: string;
-    };
+    project?: ProjectCardData;
     overrideLabel?: string;
 };
 

@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import PageBuilder from "@/utils/pageBuilder/PageBuilder.astro";
+import Text from "@/components/Text/index.astro";
 import {
     DEFAULT_LOCALE,
     getHomePage,
@@ -24,9 +25,9 @@ const homePage = await getHomePage("pl", DEFAULT_LOCALE);
         {
             isSanityConfigured && (
                 <section class="rounded-3xl border border-zinc-200  p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium text-paper">
+                    <Text className="text-sm font-medium text-paper">
                         PageBuilder (Astro SSR)
-                    </p>
+                    </Text>
                     {homePage?.elements?.length ? (
                         <div class="mt-3 space-y-6">
                             <PageBuilder
@@ -37,12 +38,12 @@ const homePage = await getHomePage("pl", DEFAULT_LOCALE);
                             />
                         </div>
                     ) : (
-                        <p class="mt-3 text-paper">
+                        <Text className="mt-3 text-paper">
                             Połączenie jest aktywne. Dodaj dokument{" "}
                             <code>page</code> z sekcjami{" "}
                             <code>pageBuilder</code> w Sanity, a pojawią się
                             tutaj.
-                        </p>
+                        </Text>
                     )}
                 </section>
             )

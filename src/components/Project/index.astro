@@ -1,0 +1,134 @@
+---
+import Button from "@/components/Button/index.astro";
+import RichText from "@/components/RichText/index.astro";
+import Heading from "@/components/Heading/index.astro";
+import Text from "@/components/Text/index.astro";
+import type { Props } from "./index.type";
+
+const { project, className = "" } = Astro.props as Props;
+
+const getCategoryBadgeData = (category?: string) => {
+    if (category === "done") {
+        return {
+            label: "Done",
+            colorClass: "border-accent-green text-accent-green",
+            dotClass: "bg-accent-green",
+        };
+    }
+
+    if (category === "ongoing" || category === "going") {
+        return {
+            label: "Ongoing",
+            colorClass: "border-accent-orange text-accent-orange",
+            dotClass: "bg-accent-orange",
+        };
+    }
+
+    return category
+        ? {
+              label: category,
+              colorClass: "border-accent-orange text-accent-orange",
+              dotClass: "bg-accent-orange",
+          }
+        : null;
+};
+const categoryBadgeData = getCategoryBadgeData(project.category);
+const technologies = project.technologies ?? [];
+const imageUrl = project.image?.asset?.url;
+const imageWidth = project.image?.asset?.metadata?.dimensions?.width;
+const imageHeight = project.image?.asset?.metadata?.dimensions?.height;
+const imageAlt = project.image?.alt || project.title || "Project image";
+const richContent = project.content?.length
+    ? project.content
+    : (project.description ?? "");
+---
+
+<article
+    class={`overflow-hidden rounded-2xl border border-paper/50  ${className}`}
+>
+    <div class="grid md:grid-cols-2">
+        <div class="flex flex-col justify-between gap-8 p-6 md:p-8">
+            <div class="space-y-4">
+                {
+                    categoryBadgeData && (
+                        <div
+                            class={`w-fit rounded-full border px-3 py-1 text-xs uppercase flex items-center gap-2 ${categoryBadgeData.colorClass}`}
+                        >
+                            {categoryBadgeData.label}{" "}
+                            <div
+                                class={`w-1 h-1 rounded-full ${categoryBadgeData.dotClass}`}
+                            />
+                        </div>
+                    )
+                }
+                {
+                    project.title && (
+                        <Heading
+                            as="h3"
+                            className="text-1xl font-semibold text-paper"
+                        >
+                            {project.title}
+                        </Heading>
+                    )
+                }
+                <RichText
+                    value={richContent}
+                    className="max-w-xl text-lg text-paper/85"
+                />
+
+                {
+                    project.button?.buttonText && (
+                        <Button
+                            href={project.button.buttonLink}
+                            label={project.button.buttonText}
+                            isExternal={project.button.isExternalLink}
+                        />
+                    )
+                }
+            </div>
+
+            {
+                technologies.length > 0 && (
+                    <div class="space-y-3">
+                        <Text className="text-paper">Technologies:</Text>
+                        <ul class="flex flex-wrap items-center gap-3">
+                            {technologies.map((item) => (
+                                <li class="flex items-center px-1 py-1 text-sm text-paper">
+                                    {item.technology?.svg ? (
+                                        <span
+                                            aria-hidden="true"
+                                            class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0"
+                                            set:html={item.technology.svg}
+                                        />
+                                    ) : (
+                                        <span>
+                                            {item.technology?.name ??
+                                                item.technology?._ref}
+                                        </span>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )
+            }
+        </div>
+
+        {
+            imageUrl && imageWidth && imageHeight ? (
+                <img
+                    src={imageUrl}
+                    alt={imageAlt}
+                    width={imageWidth}
+                    height={imageHeight}
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                />
+            ) : (
+                <div class="flex min-h-72 items-center justify-center bg-zinc-900 text-paper/60">
+                    No image
+                </div>
+            )
+        }
+    </div>
+</article>

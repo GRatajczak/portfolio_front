@@ -58,6 +58,14 @@ html {
     --font-size-4xl: calc(1rem * pow(var(--type-scale), 4));
     --font-size-5xl: calc(1rem * pow(var(--type-scale), 5));
     --font-size-display: clamp(2.75rem, 1.6rem + 6.5vw, 8rem);
+    --font-size-h1: clamp(2.75rem, 1.95rem + 4vw, 5.5rem);
+    --font-size-h2: clamp(2.25rem, 1.7rem + 3vw, 4.25rem);
+    --font-size-h3: clamp(1.9rem, 1.45rem + 2vw, 3.1rem);
+    --font-size-h4: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
+    --font-size-h5: clamp(1.35rem, 1.16rem + 0.8vw, 1.8rem);
+    --font-size-h6: clamp(1.15rem, 1.06rem + 0.4vw, 1.4rem);
+    --font-size-p: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+    --font-size-small: clamp(0.875rem, 0.84rem + 0.18vw, 1rem);
 }
 
 @media (width > 64rem) {
@@ -111,4 +119,46 @@ h4,
 h5,
 h6 {
     font-family: var(--font-display);
+    text-wrap: balance;
+}
+
+h1 {
+    font-size: var(--font-size-h1);
+    line-height: 1.08;
+}
+
+h2 {
+    font-size: var(--font-size-h2);
+    line-height: 1.1;
+}
+
+h3 {
+    font-size: var(--font-size-h3);
+    line-height: 1.12;
+}
+
+h4 {
+    font-size: var(--font-size-h4);
+    line-height: 1.15;
+}
+
+h5 {
+    font-size: var(--font-size-h5);
+    line-height: 1.2;
+}
+
+h6 {
+    font-size: var(--font-size-h6);
+    line-height: 1.25;
+}
+
+p,
+a {
+    font-size: var(--font-size-p);
+    line-height: 1.6;
+}
+
+small {
+    font-size: var(--font-size-small);
+    line-height: 1.5;
 }

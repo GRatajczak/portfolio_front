@@ -1,8 +1,9 @@
 ---
+import Button from "@/components/Button/index.astro";
 import Container from "@/components/Container/index.astro";
-import Link from "@/components/Link/index.astro";
+import Project from "@/components/Project/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
-import { getProjectLabel } from "@/utils/pageBuilder/helpers";
+import Text from "@/components/Text/index.astro";
 import type { Props } from "./index.type";
 
 const {
@@ -14,25 +15,29 @@ const {
 ---
 
 <Container>
-    <SectionHeader eyebrow={eyebrow} heading={heading} />
+    <div class="mb-8 flex items-center justify-between gap-4">
+        <SectionHeader eyebrow={eyebrow} heading={heading} />
+        {button?.buttonText && (
+            <Button
+                className="shrink-0"
+                href={button?.buttonLink}
+                label={button?.buttonText}
+                isExternal={button?.isExternalLink}
+            />
+        )}
+    </div>
 
     {
         projects.length > 0 ? (
-            <ul class="space-y-2">
-                {projects.map((project) => (
-                    <li class="rounded-2xl border border-zinc-100 px-4 py-3 text-paper">
-                        {getProjectLabel(project)}
+            <ul class="space-y-4">
+                {projects.map((item) => (
+                    <li>
+                        {item.project ? <Project project={item.project} /> : null}
                     </li>
                 ))}
             </ul>
         ) : (
-            <p class="text-paper">No projects configured.</p>
+            <Text className="text-paper">No projects configured.</Text>
         )
     }
-
-    <Link
-        href={button?.buttonLink}
-        label={button?.buttonText}
-        isExternal={button?.isExternalLink}
-    />
 </Container>

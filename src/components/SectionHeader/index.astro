@@ -1,6 +1,7 @@
 ---
 import type { Props } from "./index.type";
 import Heading from "../Heading/index.astro";
+import Text from "../Text/index.astro";
 
 const {
     eyebrow = "",
@@ -14,12 +15,12 @@ const {
 <div class={`space-y-2 ${className}`}>
     {
         eyebrow && (
-            <p
-                class="font-semibold uppercase text-paper"
+            <Text
+                className="font-semibold uppercase text-paper"
                 style="font-size: var(--font-size-sm);"
             >
                 {eyebrow}
-            </p>
+            </Text>
         )
     }
     {
@@ -34,12 +35,12 @@ const {
     }
     {
         description && (
-            <p
-                class="leading-7 text-paper"
+            <Text
+                className="leading-7 text-paper"
                 style="font-size: var(--font-size-lg);"
             >
                 {description}
-            </p>
+            </Text>
         )
     }
 </div>
