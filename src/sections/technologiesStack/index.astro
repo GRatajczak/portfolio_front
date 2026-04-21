@@ -1,28 +1,166 @@
 ---
 import Container from "@/components/Container/index.astro";
+import { getTechnologyLabel } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
-import ellipse from "@/assets/elipse.svg";
 
 const { technologies = [] } = Astro.props as Props;
+const minSlidesForMarquee = 12;
+const marqueeTechnologies =
+    technologies.length === 0
+        ? []
+        : Array.from(
+              {
+                  length: Math.max(
+                      minSlidesForMarquee,
+                      technologies.length * 3,
+                  ),
+              },
+              (_, index) => technologies[index % technologies.length],
+          );
 ---
 
 <Container className="border-t border-b border-paper/50 ">
     {
-        technologies.length > 0 ? (
-            <ul class="flex flex-wrap gap-2 items-center justify-between">
-                {technologies.map((item, index) => (
-                    <li class="flex items-center gap-2    px-3 py-1 text-sm text-paper">
-                        {item.technology?.svg ? (
+        marqueeTechnologies.length > 0 ? (
+            <swiper-container class="technologies-stack-swiper" init="false">
+                {marqueeTechnologies.map((item) => (
+                    <swiper-slide>
+                        <div class="inline-flex shrink-0 items-center gap-1.5 px-2 py-0.5 text-xs text-paper whitespace-nowrap">
+                            {item.technology?.svg ? (
                                 <span
+                                    data-tech-icon
                                     aria-hidden="true"
-                                    class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300"
+                                    title={getTechnologyLabel(item)}
+                                    class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale transition-all duration-300 hover:grayscale-0"
                                     set:html={item.technology.svg}
                                 />
-                        ) : null}
-                    </li>
-                    <img src={ellipse.src} alt="" aria-hidden="true" />
+                            ) : null}
+                        </div>
+                    </swiper-slide>
                 ))}
-            </ul>
+            </swiper-container>
         ) : null
     }
 </Container>
+
+<script>
+    import { register } from "swiper/element/bundle";
+
+    if (!customElements.get("swiper-container")) {
+        register();
+    }
+
+    const initRandomTechHighlight = (swiperEl: HTMLElement) => {
+        if (swiperEl.dataset.randomHighlightInitialized === "true") {
+            return;
+        }
+
+        const icons = Array.from(
+            swiperEl.querySelectorAll<HTMLElement>("[data-tech-icon]"),
+        );
+        if (icons.length === 0) {
+            return;
+        }
+
+        let activeIndexes = new Set<number>();
+        const setGrayscale = (icon: HTMLElement, isGray: boolean) => {
+            icon.style.filter = isGray ? "grayscale(1)" : "grayscale(0)";
+        };
+
+        const highlightBatchSize = Math.min(3, icons.length);
+        const pickRandomIndexes = () => {
+            const candidateIndexes = Array.from(icons.keys());
+            for (let i = candidateIndexes.length - 1; i > 0; i -= 1) {
+                const randomIndex = Math.floor(Math.random() * (i + 1));
+                [candidateIndexes[i], candidateIndexes[randomIndex]] = [
+                    candidateIndexes[randomIndex],
+                    candidateIndexes[i],
+                ];
+            }
+
+            return new Set(candidateIndexes.slice(0, highlightBatchSize));
+        };
+
+        const highlightRandomIcons = () => {
+            activeIndexes.forEach((index) => setGrayscale(icons[index], true));
+            activeIndexes = pickRandomIndexes();
+            activeIndexes.forEach((index) => setGrayscale(icons[index], false));
+        };
+
+        icons.forEach((icon) => setGrayscale(icon, true));
+        highlightRandomIcons();
+        window.setInterval(highlightRandomIcons, 1000);
+        swiperEl.dataset.randomHighlightInitialized = "true";
+    };
+
+    const initTechnologiesStackSwipers = () => {
+        document
+            .querySelectorAll(".technologies-stack-swiper")
+            .forEach((swiperCandidate) => {
+                if (
+                    !(swiperCandidate instanceof HTMLElement) ||
+                    swiperCandidate.dataset.initialized === "true"
+                ) {
+                    return;
+                }
+
+                const slidesCount =
+                    swiperCandidate.querySelectorAll("swiper-slide").length;
+                if (slidesCount < 1) {
+                    return;
+                }
+
+                const swiperEl = swiperCandidate as HTMLElement & {
+                    initialize: () => void;
+                };
+
+                if (typeof swiperEl.initialize !== "function") {
+                    return;
+                }
+
+                Object.assign(swiperEl, {
+                    slidesPerView: 12,
+                    spaceBetween: 8,
+                    loop: true,
+                    loopAdditionalSlides: slidesCount,
+                    watchSlidesProgress: true,
+                    speed: 5000,
+                    allowTouchMove: false,
+                    grabCursor: false,
+                    freeMode: true,
+                    freeModeMomentum: false,
+                    autoplay: {
+                        delay: 0,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true,
+                    },
+                    injectStyles: [
+                        `
+                            .swiper-wrapper {
+                                transition-timing-function: linear !important;
+                            }
+                            .swiper-slide {
+                                width: auto !important;
+                            }
+                        `,
+                    ],
+                });
+
+                swiperEl.initialize();
+                swiperEl.dataset.initialized = "true";
+                initRandomTechHighlight(swiperEl);
+            });
+    };
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initTechnologiesStackSwipers,
+            {
+                once: true,
+            },
+        );
+    } else {
+        initTechnologiesStackSwipers();
+    }
+</script>
