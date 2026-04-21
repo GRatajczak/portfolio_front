@@ -1,25 +1,28 @@
 ---
 import Container from "@/components/Container/index.astro";
-import { getTechnologyLabel } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
+import ellipse from "@/assets/elipse.svg";
 
 const { technologies = [] } = Astro.props as Props;
 ---
 
-<Container>
-    <h2 class="text-2xl font-semibold text-paper">Technologies stack</h2>
-
+<Container className="border-t border-b border-paper/50 ">
     {
         technologies.length > 0 ? (
-            <ul class="flex flex-wrap gap-2">
-                {technologies.map((item) => (
-                    <li class="rounded-full border border-zinc-300 px-3 py-1 text-sm text-paper">
-                        {getTechnologyLabel(item)}
+            <ul class="flex flex-wrap gap-2 items-center justify-between">
+                {technologies.map((item, index) => (
+                    <li class="flex items-center gap-2    px-3 py-1 text-sm text-paper">
+                        {item.technology?.svg ? (
+                                <span
+                                    aria-hidden="true"
+                                    class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300"
+                                    set:html={item.technology.svg}
+                                />
+                        ) : null}
                     </li>
+                    <img src={ellipse.src} alt="" aria-hidden="true" />
                 ))}
             </ul>
-        ) : (
-            <p class="text-paper">No technologies configured.</p>
-        )
+        ) : null
     }
 </Container>

@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import Container from "@/components/Container/index.astro";
+import Heading from "@/components/Heading/index.astro";
 import type { Props } from "./index.type";
 
 const { headline = "", subheadline = [], portraitImage } = Astro.props as Props;
@@ -9,29 +9,49 @@ const subheadlineText = subheadline
     .filter(Boolean)
     .join(" ");
 const portraitImageUrl = portraitImage?.asset?.url;
-const portraitImageWidth = portraitImage?.asset?.metadata?.dimensions?.width;
-const portraitImageHeight = portraitImage?.asset?.metadata?.dimensions?.height;
+const portraitImageWidth =
+    portraitImage?.asset?.metadata?.dimensions?.width ?? 900;
+const portraitImageHeight =
+    portraitImage?.asset?.metadata?.dimensions?.height ?? 1200;
 const portraitImageAlt = portraitImage?.alt || "Portrait photo";
 ---
 
-<Container>
+<section
+    class="flex items-end justify-between h-full max-h-screen mx-auto px-6 relative"
+>
+    <div class="w-[60%] pb-8 min-h-screen flex flex-col justify-end">
+        {
+            subheadlineText && (
+                <p
+                    class="leading-8 text-paper opacity-70"
+                    style="font-size: var(--font-size-lg);"
+                >
+                    {subheadline[0].text}
+                </p>
+            )
+        }
+        {
+            headline && (
+                <Heading
+                    as="h1"
+                    text={headline}
+                    className="font-semibold text-paper mb-5 leading-[0.95]"
+                    style="font-size: var(--font-size-display);"
+                />
+            )
+        }
+    </div>
     {
-        portraitImageUrl && portraitImageWidth && portraitImageHeight && (
+        portraitImageUrl && (
             <Image
                 src={portraitImageUrl}
                 alt={portraitImageAlt}
                 width={portraitImageWidth}
                 height={portraitImageHeight}
-                class="mb-6 h-auto w-40 rounded-2xl object-cover sm:w-52"
+                class="mt-6 h-auto max-h-[60vh] w-full object-cover hidden! border-paper/50 lg:mt-0 lg:block! lg:max-h-screen lg:h-full lg:w-[40%] lg:border-l absolute lg:right-0 lg:bottom-0 lg:top-0"
                 loading="eager"
                 format="webp"
             />
         )
     }
-    {headline && <h1 class="text-4xl font-semibold text-paper">{headline}</h1>}
-    {
-        subheadlineText && (
-            <p class="text-lg leading-8 text-paper">{subheadlineText}</p>
-        )
-    }
-</Container>
+</section>

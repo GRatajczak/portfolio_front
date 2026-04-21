@@ -1,5 +1,17 @@
 ---
 import "../styles/global.css";
+import Header from "@/components/Header/index.astro";
+import Footer from "@/components/Footer/index.astro";
+import type { Props } from "./Layout.type";
+
+const {
+    headerMenuItems = [],
+    footerMenuItems = [],
+    phone = "",
+    email = "",
+    instagram = "",
+    linkedin = "",
+} = Astro.props as Props;
 ---
 
 <!doctype html>
@@ -13,7 +25,15 @@ import "../styles/global.css";
         <title>Grzegorz Ratajczak</title>
     </head>
     <body class="min-h-screen antialiased">
+        <Header menuItems={headerMenuItems} />
         <slot />
+        <Footer
+            menuItems={footerMenuItems}
+            phone={phone}
+            email={email}
+            instagram={instagram}
+            linkedin={linkedin}
+        />
     </body>
 </html>
 

@@ -6,7 +6,14 @@ import { DEFAULT_LOCALE, getHomePage } from "../lib/sanity";
 const homePage = await getHomePage(DEFAULT_LOCALE);
 ---
 
-<Layout>
+<Layout
+    headerMenuItems={homePage?.headerMenuItems ?? []}
+    footerMenuItems={homePage?.footerMenuItems ?? []}
+    phone={homePage?.phone ?? ""}
+    email={homePage?.email ?? ""}
+    instagram={homePage?.instagram ?? ""}
+    linkedin={homePage?.linkedin ?? ""}
+>
     <main>
         {
             homePage?.elements?.length ? (

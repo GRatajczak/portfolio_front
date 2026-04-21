@@ -1,0 +1,60 @@
+---
+import { Image } from "astro:assets";
+import type { Props } from "./index.type";
+
+const { images = [], className = "" } = Astro.props as Props;
+const visibleImages = images.slice(0, 3);
+
+const gridArea = (index: number) => {
+    switch (index) {
+        case 0:
+            return "md:[grid-area:1/1/2/2]";
+        case 1:
+            return "md:[grid-area:1/2/3/3]";
+        case 2:
+            return "md:[grid-area:2/1/3/2]";
+        default:
+            return "md:[grid-area:auto]";
+    }
+};
+---
+
+{
+    visibleImages.length > 0 ? (
+        <ul
+            class={`grid grid-cols-1 gap-4 md:h-[58vw] md:grid-cols-2 md:grid-rows-2 lg:h-[44vw] lg:gap-5 xl:h-[38vw] ${className}`}
+        >
+            {visibleImages.map((image, index) => {
+                const imageUrl = image.asset?.url;
+                const imageWidth = image.asset?.metadata?.dimensions?.width;
+                const imageHeight = image.asset?.metadata?.dimensions?.height;
+                const imageAlt = image.alt || "About me image";
+
+                if (!imageUrl || imageWidth == null || imageHeight == null) {
+                    return null;
+                }
+
+                const itemClassName = gridArea(index);
+                const visibilityClassName = index === 1 ? "block" : "hidden md:block";
+                const imageClassName =
+                    index === 0
+                        ? "ml-auto h-full w-[46%] object-cover"
+                        : "h-full w-full object-cover";
+
+                return (
+                    <li class={`overflow-hidden ${visibilityClassName} ${itemClassName}`}>
+                        <Image
+                            src={imageUrl}
+                            alt={imageAlt}
+                            width={imageWidth}
+                            height={imageHeight}
+                            class={imageClassName}
+                            loading="lazy"
+                            format="webp"
+                        />
+                    </li>
+                );
+            })}
+        </ul>
+    ) : null
+}

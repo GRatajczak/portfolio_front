@@ -1,0 +1,129 @@
+---
+import LogoFooter from "@/assets/Logo_footer.svg";
+import PolandFlag from "@/assets/polandflag.svg";
+import type { FooterMenuItem, Props } from "./index.type";
+
+const {
+    menuItems = [],
+    phone = "",
+    email = "",
+    instagram = "",
+    linkedin = "",
+} = Astro.props as Props;
+
+type ResolvedFooterMenuItem = FooterMenuItem & {
+    title: string;
+    slug: string;
+};
+
+const resolvedMenuItems: ResolvedFooterMenuItem[] = menuItems.flatMap((item) => {
+    if (!item?.title || !item?.slug) {
+        return [];
+    }
+
+    return [{ ...item, title: item.title, slug: item.slug }];
+});
+
+const getHref = (slug: string) => {
+    if (slug.startsWith("http://") || slug.startsWith("https://")) {
+        return slug;
+    }
+
+    if (slug.startsWith("/") || slug.startsWith("#")) {
+        return slug;
+    }
+
+    return `/${slug}`;
+};
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mt-20 border-t border-paper/20 bg-paper text-ink">
+    <div class="mx-auto grid w-full max-w-600 gap-10 px-6 py-8 md:grid-cols-[1fr_auto_auto]">
+        <div class="space-y-4">
+            <a href="/" aria-label="Go to homepage" class="inline-flex">
+                <LogoFooter />
+            </a>
+            <div class="flex items-center gap-4 text-sm">
+                {
+                    linkedin && (
+                        <a href={linkedin} target="_blank" rel="noreferrer noopener" class="hover:opacity-70">
+                            LinkedIn
+                        </a>
+                    )
+                }
+                {
+                    instagram && (
+                        <a
+                            href={instagram}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            class="hover:opacity-70"
+                        >
+                            Instagram
+                        </a>
+                    )
+                }
+            </div>
+        </div>
+
+        {
+            resolvedMenuItems.length > 0 && (
+                <div class="space-y-3">
+                    <p class="text-sm font-semibold">Quick links</p>
+                    <ul class="space-y-2 text-sm">
+                        {resolvedMenuItems.map((item) => (
+                            <li>
+                                <a href={getHref(item.slug)} class="hover:opacity-70">
+                                    {item.title}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )
+        }
+
+        <div class="space-y-3">
+            <p class="text-sm font-semibold">Contact</p>
+            <ul class="space-y-2 text-sm">
+                {
+                    phone && (
+                        <li>
+                            <a href={`tel:${phone}`} class="hover:opacity-70">
+                                {phone}
+                            </a>
+                        </li>
+                    )
+                }
+                {
+                    email && (
+                        <li>
+                            <a href={`mailto:${email}`} class="hover:opacity-70">
+                                {email}
+                            </a>
+                        </li>
+                    )
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="border-t border-ink/20">
+        <div class="mx-auto flex w-full max-w-600 flex-col gap-3 px-6 py-4 text-xs md:flex-row md:items-center md:justify-between">
+            <p>© {currentYear} | Grzegorz Ratajczak</p>
+            <p class="flex items-center gap-2">
+                <PolandFlag class="h-3 w-4 border border-ink/20" />
+                Poland
+            </p>
+            <a href="#" class="inline-flex items-center gap-2 hover:opacity-70">
+                <span
+                    class="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-ink/70 text-[9px] leading-none"
+                >
+                    P
+                </span>
+                Privacy Policy
+            </a>
+        </div>
+    </div>
+</footer>

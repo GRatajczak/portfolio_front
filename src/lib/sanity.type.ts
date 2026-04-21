@@ -13,9 +13,21 @@ export type PageBuilderElement = NonNullable<Page["pageBuilder"]>[number];
 export type HomePageData = {
     title?: string;
     elements: PageBuilderElement[];
+    headerMenuItems: Array<{
+        _key?: string;
+        title?: string;
+        slug?: string;
+    }>;
+    footerMenuItems: Array<{
+        _key?: string;
+        title?: string;
+        slug?: string;
+    }>;
     facebook: string;
     instagram: string;
     phone: string;
+    email: string;
+    linkedin: string;
 };
 
 export type HomePageQueryResult = {
@@ -24,8 +36,24 @@ export type HomePageQueryResult = {
         elements?: PageBuilderElement[];
     };
     globals?: {
+        header?: {
+            menuItems?: Array<{
+                _key?: string;
+                title?: string;
+                slug?: string;
+            }>;
+        };
+        footer?: {
+            menuItems?: Array<{
+                _key?: string;
+                title?: string;
+                slug?: string;
+            }>;
+        };
         facebook?: string;
         instagram?: string;
         phone?: string;
+        email?: string;
+        linkedin?: string;
     };
 };

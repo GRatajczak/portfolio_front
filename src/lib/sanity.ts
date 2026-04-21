@@ -65,6 +65,22 @@ export const HOME_PAGE_QUERY = defineQuery(`
             }
           }
         },
+        _type == "aboutMe" => {
+          ...,
+          images[]{
+            _key,
+            alt,
+            "asset": asset->{
+              url,
+              metadata{
+                dimensions{
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        },
         _type == "projectsShowcase" => {
           ...,
           projects[]{
@@ -82,7 +98,8 @@ export const HOME_PAGE_QUERY = defineQuery(`
             ...,
             "technology": technology->{
               _id,
-              name
+              name,
+              svg
             }
           }
         },
@@ -94,7 +111,8 @@ export const HOME_PAGE_QUERY = defineQuery(`
               ...,
               "technology": technology->{
                 _id,
-                name
+                name,
+                svg
               }
             }
           }
@@ -103,9 +121,25 @@ export const HOME_PAGE_QUERY = defineQuery(`
     },
     "globals": *[_type == "global" && language in [$locale, $baseLocale]]
       | order(select(language == $locale => 0, language == $baseLocale => 1, 2) asc, _updatedAt desc)[0] {
+      "header": header{
+        menuItems[]{
+          _key,
+          "title": @->title,
+          "slug": @->slug.current
+        }
+      },
+      "footer": footer{
+        menuItems[]{
+          _key,
+          "title": @->title,
+          "slug": @->slug.current
+        }
+      },
       "facebook": coalesce(facebook, ""),
       "instagram": coalesce(instagram, ""),
-      "phone": coalesce(phone, "")
+      "phone": coalesce(phone, ""),
+      "email": coalesce(email, ""),
+      "linkedin": coalesce(linkedin, "")
     }
   }
 `);
@@ -157,9 +191,13 @@ export async function getHomePage(
         return {
             title: data.page.title,
             elements: data.page.elements ?? [],
+            headerMenuItems: data.globals?.header?.menuItems ?? [],
+            footerMenuItems: data.globals?.footer?.menuItems ?? [],
             facebook: data.globals?.facebook ?? "",
             instagram: data.globals?.instagram ?? "",
             phone: data.globals?.phone ?? "",
+            email: data.globals?.email ?? "",
+            linkedin: data.globals?.linkedin ?? "",
         };
     } catch (error) {
         if (import.meta.env.DEV) {

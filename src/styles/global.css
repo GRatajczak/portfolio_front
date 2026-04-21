@@ -21,6 +21,11 @@
     --color-paper: #ecece7;
     --color-accent-orange: #ee8e3e;
     --color-accent-green: #1ec229;
+    --breakpoint-sm: 40rem;
+    --breakpoint-md: 48rem;
+    --breakpoint-lg: 64rem;
+    --breakpoint-xl: 80rem;
+    --breakpoint-2xl: 96rem;
     --font-sans:
         "Inter", "Inter Fallback", ui-sans-serif, system-ui, -apple-system,
         "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
@@ -35,6 +40,29 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+    }
+}
+
+html {
+    /* Baseline approach: keep user preference while adding subtle fluidity. */
+    font-size: clamp(1em, 17px + 0.24vw, 1.125em);
+    --type-scale: 1.2;
+    --font-size-2xs: calc(1rem * pow(var(--type-scale), -1.5));
+    --font-size-xs: calc(1rem * pow(var(--type-scale), -1));
+    --font-size-sm: calc(1rem * pow(var(--type-scale), -0.5));
+    --font-size-base: 1rem;
+    --font-size-lg: calc(1rem * pow(var(--type-scale), 0.5));
+    --font-size-xl: calc(1rem * pow(var(--type-scale), 1));
+    --font-size-2xl: calc(1rem * pow(var(--type-scale), 2));
+    --font-size-3xl: calc(1rem * pow(var(--type-scale), 3));
+    --font-size-4xl: calc(1rem * pow(var(--type-scale), 4));
+    --font-size-5xl: calc(1rem * pow(var(--type-scale), 5));
+    --font-size-display: clamp(2.75rem, 1.6rem + 6.5vw, 8rem);
+}
+
+@media (width > 64rem) {
+    html {
+        --type-scale: 1.25;
     }
 }
 
@@ -73,6 +101,7 @@ body {
     background-color: var(--color-ink);
     color: var(--color-paper);
     font-family: var(--font-sans);
+    line-height: 1.5;
 }
 
 h1,

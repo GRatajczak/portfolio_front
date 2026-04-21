@@ -1,3 +1,5 @@
+import type { ImageGridItem } from "@/components/ImageGrid/index.type";
+
 export type PortableBlock = {
     children?: Array<{ text?: string }>;
 };
@@ -13,4 +15,5 @@ export type Props = {
     heading?: string;
     description?: PortableBlock[];
     button?: AboutMeButton;
+    images?: ImageGridItem[];
 };

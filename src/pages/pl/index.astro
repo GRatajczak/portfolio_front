@@ -1,34 +1,49 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import PageBuilder from "@/utils/pageBuilder/PageBuilder.astro";
-import {DEFAULT_LOCALE, getHomePage, isSanityConfigured} from "../../lib/sanity";
+import {
+    DEFAULT_LOCALE,
+    getHomePage,
+    isSanityConfigured,
+} from "../../lib/sanity";
 
 const homePage = await getHomePage("pl", DEFAULT_LOCALE);
 ---
 
-<Layout>
-    <main class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-6 px-6 py-16">
+<Layout
+    headerMenuItems={homePage?.headerMenuItems ?? []}
+    footerMenuItems={homePage?.footerMenuItems ?? []}
+    phone={homePage?.phone ?? ""}
+    email={homePage?.email ?? ""}
+    instagram={homePage?.instagram ?? ""}
+    linkedin={homePage?.linkedin ?? ""}
+>
+    <main
+        class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-6 px-6 py-16"
+    >
         {
             isSanityConfigured && (
                 <section class="rounded-3xl border border-zinc-200  p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium text-paper">PageBuilder (Astro SSR)</p>
-                    {
-                        homePage?.elements?.length ? (
-                            <div class="mt-3 space-y-6">
-                                <PageBuilder
-                                    elements={homePage.elements}
-                                    facebook={homePage.facebook}
-                                    instagram={homePage.instagram}
-                                    phone={homePage.phone}
-                                />
-                            </div>
-                        ) : (
-                            <p class="mt-3 text-paper">
-                                Połączenie jest aktywne. Dodaj dokument <code>page</code> z
-                                sekcjami <code>pageBuilder</code> w Sanity, a pojawią się tutaj.
-                            </p>
-                        )
-                    }
+                    <p class="text-sm font-medium text-paper">
+                        PageBuilder (Astro SSR)
+                    </p>
+                    {homePage?.elements?.length ? (
+                        <div class="mt-3 space-y-6">
+                            <PageBuilder
+                                elements={homePage.elements}
+                                facebook={homePage.facebook}
+                                instagram={homePage.instagram}
+                                phone={homePage.phone}
+                            />
+                        </div>
+                    ) : (
+                        <p class="mt-3 text-paper">
+                            Połączenie jest aktywne. Dodaj dokument{" "}
+                            <code>page</code> z sekcjami{" "}
+                            <code>pageBuilder</code> w Sanity, a pojawią się
+                            tutaj.
+                        </p>
+                    )}
                 </section>
             )
         }

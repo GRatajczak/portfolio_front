@@ -1,11 +1,45 @@
 ---
 import type { Props } from "./index.type";
+import Heading from "../Heading/index.astro";
 
-const { eyebrow = "", heading = "", description = "", className = "" } = Astro.props as Props;
+const {
+    eyebrow = "",
+    heading = "",
+    description = "",
+    className = "",
+    headingAs = "h2",
+} = Astro.props as Props;
 ---
 
 <div class={`space-y-2 ${className}`}>
-    {eyebrow && <p class="text-sm font-semibold uppercase tracking-[0.16em] text-paper">{eyebrow}</p>}
-    {heading && <h2 class="text-3xl font-semibold text-paper">{heading}</h2>}
-    {description && <p class="text-base leading-7 text-paper">{description}</p>}
+    {
+        eyebrow && (
+            <p
+                class="font-semibold uppercase text-paper"
+                style="font-size: var(--font-size-sm);"
+            >
+                {eyebrow}
+            </p>
+        )
+    }
+    {
+        heading && (
+            <Heading
+                as={headingAs}
+                text={heading}
+                className="leading-tight text-paper"
+                style="font-size: var(--font-size-4xl);"
+            />
+        )
+    }
+    {
+        description && (
+            <p
+                class="leading-7 text-paper"
+                style="font-size: var(--font-size-lg);"
+            >
+                {description}
+            </p>
+        )
+    }
 </div>

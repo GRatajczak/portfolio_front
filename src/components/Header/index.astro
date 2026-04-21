@@ -1,0 +1,60 @@
+---
+import Logo from "@/assets/Logo.svg";
+import type { HeaderMenuItem, Props } from "./index.type";
+
+const { menuItems = [] } = Astro.props as Props;
+
+type ResolvedHeaderMenuItem = HeaderMenuItem & {
+    title: string;
+    slug: string;
+};
+
+const sanitizedMenuItems: ResolvedHeaderMenuItem[] = menuItems.flatMap(
+    (item) => {
+        if (!item?.title || !item?.slug) {
+            return [];
+        }
+
+        return [{ ...item, title: item.title, slug: item.slug }];
+    },
+);
+
+const getHref = (slug: string) => {
+    if (slug.startsWith("http://") || slug.startsWith("https://")) {
+        return slug;
+    }
+
+    if (slug.startsWith("/") || slug.startsWith("#")) {
+        return slug;
+    }
+
+    return `/${slug}`;
+};
+---
+
+<header class="fixed top-0 left-0 z-20 w-full border-b border-paper/20">
+    <nav
+        class="mx-auto flex w-full max-w-600 items-center justify-between px-4 py-2 backdrop-blur-sm"
+    >
+        <a href="/" aria-label="Go to homepage" class="inline-flex">
+            <Logo />
+        </a>
+
+        {
+            sanitizedMenuItems.length > 0 && (
+                <ul class="flex items-center gap-6">
+                    {sanitizedMenuItems.map((item) => (
+                        <li>
+                            <a
+                                href={getHref(item.slug)}
+                                class="text-sm text-paper/90 hover:text-paper"
+                            >
+                                {item.title}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )
+        }
+    </nav>
+</header>

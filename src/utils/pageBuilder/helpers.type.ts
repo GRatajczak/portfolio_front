@@ -13,8 +13,12 @@ export type ReferenceLike = {
     title?: string;
 };
 
+export type TechnologyReferenceLike = ReferenceLike & {
+    svg?: string;
+};
+
 export type TechnologyLike = {
-    technology?: ReferenceLike;
+    technology?: TechnologyReferenceLike;
 };
 
 export type ProjectLike = {
