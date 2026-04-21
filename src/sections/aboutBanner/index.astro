@@ -1,0 +1,50 @@
+---
+import Container from "@/components/Container/index.astro";
+import Text from "@/components/Text/index.astro";
+import type { Props } from "./index.type";
+import { Image } from "astro:assets";
+import Heading from "@/components/Heading/index.astro";
+const { title = "", description = "", image } = Astro.props as Props;
+const imageUrl = image?.asset?.url;
+const imageAlt = image?.alt || title || "About image";
+const imageWidth = image?.asset?.metadata?.dimensions?.width ?? 1200;
+const imageHeight = image?.asset?.metadata?.dimensions?.height ?? 700;
+---
+
+<Container className="relative h-screen max-h-[630px] flex items-center">
+    <div
+        class="space-y-4 backdrop-blur-lg bg-black/30 p-6 rounded-2xl max-w-full flex flex-col justify-center md:max-w-[50%] h-full md:h-auto"
+    >
+        {
+            title && (
+                <Heading
+                    as="h2"
+                    className="font-semibold uppercase text-paper"
+                    style="font-size: var(--font-size-2xl);"
+                >
+                    {title}
+                </Heading>
+            )
+        }
+        {
+            description && (
+                <Text
+                    text={description}
+                    className="leading-tight text-paper "
+                />
+            )
+        }
+    </div>
+    {
+        imageUrl && (
+            <Image
+                src={imageUrl}
+                alt={imageAlt}
+                width={imageWidth}
+                height={imageHeight}
+                class="h-full w-full  object-cover absolute top-0 left-0 z-[-1] aspect-ratio-16/9 rounded-2xl"
+                loading="eager"
+            />
+        )
+    }
+</Container>

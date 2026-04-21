@@ -64,7 +64,7 @@ html {
     --font-size-h4: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
     --font-size-h5: clamp(1.35rem, 1.16rem + 0.8vw, 1.8rem);
     --font-size-h6: clamp(1.15rem, 1.06rem + 0.4vw, 1.4rem);
-    --font-size-p: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+    --font-size-p: clamp(0.75rem, 0.96rem + 0.2vw, 1.125rem);
     --font-size-small: clamp(0.875rem, 0.84rem + 0.18vw, 1rem);
 }
 

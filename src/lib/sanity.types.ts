@@ -47,13 +47,16 @@ export type Logo = {
     _type: "image";
 };
 
+export type ProjectReference = {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "project";
+};
+
 export type CurrentFocusProject = {
-    category?: string;
-    title: string;
-    description?: string;
-    technologies?: Array<string>;
+    project: ProjectReference;
     button?: ProjectButton;
-    image?: ProjectImage;
 };
 
 export type ProjectButton = {
@@ -63,16 +66,21 @@ export type ProjectButton = {
     buttonLink?: string;
 };
 
-export type ProjectImage = {
-    asset?: SanityImageAssetReference;
-    media?: unknown; // Unable to locate the referenced type "project.image.media" in schema
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
+export type ProjectsShowcaseButton = {
+    buttonText?: string;
+    isExternalLink?: boolean;
+    isDownload?: boolean;
+    buttonLink?: string;
 };
 
-export type ProjectsShowcaseButton = {
+export type PrimaryButton = {
+    buttonText?: string;
+    isExternalLink?: boolean;
+    isDownload?: boolean;
+    buttonLink?: string;
+};
+
+export type SecondaryButton = {
     buttonText?: string;
     isExternalLink?: boolean;
     isDownload?: boolean;
@@ -100,13 +108,6 @@ export type TechnologyReference = {
 export type TechnologyReference_2 = {
     _type: "technologyReference";
     technology: TechnologyReference;
-};
-
-export type ProjectReference = {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "project";
 };
 
 export type ProjectReference_2 = {
@@ -218,6 +219,13 @@ export type TechnologiesStack = {
     >;
 };
 
+export type Subhero = {
+    _type: "subhero";
+    eyebrow?: string;
+    heading: string;
+    highlightLine?: boolean;
+};
+
 export type ProjectsShowcase = {
     _type: "projectsShowcase";
     eyebrow?: string;
@@ -282,7 +290,11 @@ export type ExperienceTimeline = {
             _type: "block";
             _key: string;
         }>;
-        technologies?: Array<string>;
+        technologies?: Array<
+            {
+                _key: string;
+            } & TechnologyReference_2
+        >;
         logo?: Logo;
         _type: "entry";
         _key: string;
@@ -372,6 +384,20 @@ export type AboutMe = {
         _type: "image";
         _key: string;
     }>;
+};
+
+export type AboutBanner = {
+    _type: "aboutBanner";
+    title?: string;
+    description: string;
+    image: {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+    };
 };
 
 export type TranslationMetadata = {
@@ -586,6 +612,82 @@ export type Certificate = {
     }>;
 };
 
+export type Global = {
+    _id: string;
+    _type: "global";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    language?: string;
+    header?: {
+        menuItems?: Array<
+            {
+                _key: string;
+            } & PageReference
+        >;
+    };
+    footer?: {
+        menuItems?: Array<
+            {
+                _key: string;
+            } & PageReference
+        >;
+    };
+    phone?: string;
+    email?: string;
+    linkedin?: string;
+    instagram?: string;
+};
+
+export type Page = {
+    _id: string;
+    _type: "page";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    language?: string;
+    title?: string;
+    slug?: Slug;
+    seo?: {
+        metaTitle?: string;
+        metaDescription?: string;
+        keywords?: string;
+        openGraphImage?: OpenGraphImage;
+    };
+    pageBuilder?: Array<
+        | ({
+              _key: string;
+          } & Hero)
+        | ({
+              _key: string;
+          } & Subhero)
+        | ({
+              _key: string;
+          } & AboutBanner)
+        | ({
+              _key: string;
+          } & TechnologiesStack)
+        | ({
+              _key: string;
+          } & AboutMe)
+        | ({
+              _key: string;
+          } & ExperienceTimeline)
+        | ({
+              _key: string;
+          } & TechnologiesOverview)
+        | ({
+              _key: string;
+          } & CurrentFocus)
+        | ({
+              _key: string;
+          } & ProjectsShowcase)
+        | ({
+              _key: string;
+          } & CertificatesGallery)
+    >;
+};
+
 export type Project = {
     _id: string;
     _type: "project";
@@ -644,76 +746,6 @@ export type Project = {
         _type: "block";
         _key: string;
     }>;
-};
-
-export type Global = {
-    _id: string;
-    _type: "global";
-    _createdAt: string;
-    _updatedAt: string;
-    _rev: string;
-    language?: string;
-    header?: {
-        menuItems?: Array<
-            {
-                _key: string;
-            } & PageReference
-        >;
-    };
-    footer?: {
-        menuItems?: Array<
-            {
-                _key: string;
-            } & PageReference
-        >;
-    };
-    phone?: string;
-    email?: string;
-    linkedin?: string;
-    instagram?: string;
-};
-
-export type Page = {
-    _id: string;
-    _type: "page";
-    _createdAt: string;
-    _updatedAt: string;
-    _rev: string;
-    language?: string;
-    title?: string;
-    slug?: Slug;
-    seo?: {
-        metaTitle?: string;
-        metaDescription?: string;
-        keywords?: string;
-        openGraphImage?: OpenGraphImage;
-    };
-    pageBuilder?: Array<
-        | ({
-              _key: string;
-          } & Hero)
-        | ({
-              _key: string;
-          } & TechnologiesStack)
-        | ({
-              _key: string;
-          } & AboutMe)
-        | ({
-              _key: string;
-          } & ExperienceTimeline)
-        | ({
-              _key: string;
-          } & TechnologiesOverview)
-        | ({
-              _key: string;
-          } & CurrentFocus)
-        | ({
-              _key: string;
-          } & ProjectsShowcase)
-        | ({
-              _key: string;
-          } & CertificatesGallery)
-    >;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -818,14 +850,15 @@ export type AllSanitySchemaTypes =
     | OpenGraphImage
     | AboutMeButton
     | Logo
+    | ProjectReference
     | CurrentFocusProject
     | ProjectButton
-    | ProjectImage
     | ProjectsShowcaseButton
+    | PrimaryButton
+    | SecondaryButton
     | Locale
     | TechnologyReference
     | TechnologyReference_2
-    | ProjectReference
     | ProjectReference_2
     | Seo
     | PageReference
@@ -836,12 +869,14 @@ export type AllSanitySchemaTypes =
     | Button
     | TechnologiesOverview
     | TechnologiesStack
+    | Subhero
     | ProjectsShowcase
     | Hero
     | ExperienceTimeline
     | CurrentFocus
     | CertificatesGallery
     | AboutMe
+    | AboutBanner
     | TranslationMetadata
     | InternationalizedArrayReference
     | GlobalReference
@@ -855,9 +890,9 @@ export type AllSanitySchemaTypes =
     | SanityImageHotspot
     | Technology
     | Certificate
-    | Project
     | Global
     | Page
+    | Project
     | SanityImagePaletteSwatch
     | SanityImagePalette
     | SanityImageDimensions

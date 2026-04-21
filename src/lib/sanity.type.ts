@@ -30,6 +30,8 @@ export type HomePageData = {
     linkedin: string;
 };
 
+export type PageData = HomePageData;
+
 export type HomePageQueryResult = {
     page?: {
         title?: string;
@@ -57,3 +59,5 @@ export type HomePageQueryResult = {
         linkedin?: string;
     };
 };
+
+export type PageQueryResult = HomePageQueryResult;

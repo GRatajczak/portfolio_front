@@ -1,9 +1,7 @@
 ---
 import Container from "@/components/Container/index.astro";
-import Heading from "@/components/Heading/index.astro";
+import ExperienceTimelineCard from "@/components/ExperienceTimelineCard/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
-import Text from "@/components/Text/index.astro";
-import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
 const { eyebrow = "", heading = "", entries = [] } = Astro.props as Props;
@@ -14,29 +12,20 @@ const { eyebrow = "", heading = "", entries = [] } = Astro.props as Props;
 
     {
         entries.length > 0 ? (
-            <ol class="space-y-4">
-                {entries.map((entry) => (
-                    <li class="rounded-2xl border border-zinc-100 p-4">
-                        <Text className="text-sm text-paper">{entry.period}</Text>
-                        <Heading as="h3" className="text-lg font-medium text-paper">
-                            {entry.company}
-                        </Heading>
-                        {entry.role && <Text className="text-sm text-paper">{entry.role}</Text>}
-                        {entry.description && (
-                            <Text className="mt-2 text-paper">
-                                {toPlainText(entry.description)}
-                            </Text>
-                        )}
-                        {entry.technologies && entry.technologies.length > 0 && (
-                            <Text className="mt-2 text-sm text-paper">
-                                Stack: {entry.technologies.join(", ")}
-                            </Text>
-                        )}
+            <ol class="relative py-20 space-y-8 lg:space-y-10 before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-px before:-translate-x-1/2 before:bg-paper/20 lg:before:block">
+                {entries.map((entry, index) => (
+                    <li class="relative">
+                        <span class="absolute left-1/2 top-10 z-10 hidden h-3 w-3 -translate-x-1/2 rounded-full border border-paper/35 bg-[#0b0b0b] lg:block" />
+                        <span
+                            class:list={[
+                                "absolute top-[2.8rem] hidden h-px w-6 bg-paper/20 lg:block",
+                                index % 2 === 0 ? "right-1/2" : "left-1/2",
+                            ]}
+                        />
+                        <ExperienceTimelineCard entry={entry} index={index} />
                     </li>
                 ))}
             </ol>
-        ) : (
-            <Text className="text-paper">No experience entries configured.</Text>
-        )
+        ) : null
     }
 </Container>

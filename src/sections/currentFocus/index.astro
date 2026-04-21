@@ -1,9 +1,7 @@
 ---
 import Container from "@/components/Container/index.astro";
-import Heading from "@/components/Heading/index.astro";
-import Link from "@/components/Link/index.astro";
+import Project from "@/components/Project/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
-import Text from "@/components/Text/index.astro";
 import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
@@ -12,34 +10,11 @@ const descriptionText = toPlainText(description);
 ---
 
 <Container>
-    <SectionHeader heading={heading} description={descriptionText} />
+    <SectionHeader
+        heading={heading}
+        description={descriptionText}
+        className="mb-8"
+    />
 
-    {
-        project?.title && (
-            <article class="rounded-2xl border border-zinc-100 p-4">
-                {project.category && (
-                    <Text className="text-sm uppercase tracking-[0.12em] text-paper">
-                        {project.category}
-                    </Text>
-                )}
-                <Heading as="h3" className="text-xl font-medium text-paper">
-                    {project.title}
-                </Heading>
-                {project.description && (
-                    <Text className="mt-2 text-paper">{project.description}</Text>
-                )}
-                {project.technologies && project.technologies.length > 0 && (
-                    <Text className="mt-2 text-sm text-paper">
-                        Tech: {project.technologies.join(", ")}
-                    </Text>
-                )}
-                <Link
-                    className="mt-3"
-                    href={project.button?.buttonLink}
-                    label={project.button?.buttonText}
-                    isExternal={project.button?.isExternalLink}
-                />
-            </article>
-        )
-    }
+    {project?.title && <Project project={project} />}
 </Container>

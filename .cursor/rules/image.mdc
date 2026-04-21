@@ -1,0 +1,7 @@
+---
+alwaysApply: true
+---
+
+# Astro Image
+
+Always use Image from Astro. Use import { Image } from "astro:assets";

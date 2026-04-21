@@ -8,6 +8,7 @@ const {
     heading = "",
     description = "",
     className = "",
+    hero = false,
     headingAs = "h2",
 } = Astro.props as Props;
 ---
@@ -29,7 +30,11 @@ const {
                 as={headingAs}
                 text={heading}
                 className="leading-tight text-paper"
-                style="font-size: var(--font-size-4xl);"
+                style={
+                    hero
+                        ? "font-size: var(--font-size-h1);"
+                        : "font-size: var(--font-size-4xl);"
+                }
             />
         )
     }

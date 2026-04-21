@@ -2,7 +2,12 @@ import { createClient } from "@sanity/client";
 import { createImageUrlBuilder } from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url";
 import { defineQuery } from "groq";
-import type { HomePageData, HomePageQueryResult, PostPreview } from "./sanity.type";
+import type {
+    HomePageData,
+    PageData,
+    PageQueryResult,
+    PostPreview,
+} from "./sanity.type";
 
 const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
 const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
@@ -35,15 +40,15 @@ export const POSTS_QUERY = defineQuery(`
   }
 `);
 
-export const HOME_PAGE_QUERY = defineQuery(`
+export const PAGE_QUERY = defineQuery(`
   {
     "page": *[
       _type == "page"
-      && slug.current in [$homeSlug, $fallbackHomeSlug]
+      && slug.current in [$pageSlug, $fallbackPageSlug]
       && language in [$locale, $baseLocale]
     ]
       | order(
-        select(slug.current == $homeSlug => 0, slug.current == $fallbackHomeSlug => 1, 2) asc,
+        select(slug.current == $pageSlug => 0, slug.current == $fallbackPageSlug => 1, 2) asc,
         select(language == $locale => 0, language == $baseLocale => 1, 2) asc,
         _updatedAt desc
       )[0] {
@@ -77,6 +82,84 @@ export const HOME_PAGE_QUERY = defineQuery(`
                   width,
                   height
                 }
+              }
+            }
+          }
+        },
+        _type == "aboutBanner" => {
+          ...,
+          image{
+            alt,
+            "asset": asset->{
+              url,
+              metadata{
+                dimensions{
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        },
+        _type == "experienceTimeline" => {
+          ...,
+          entries[]{
+            ...,
+            logo{
+              alt,
+              "asset": asset->{
+                url,
+                metadata{
+                  dimensions{
+                    width,
+                    height
+                  }
+                }
+              }
+            },
+            technologies[]{
+              ...,
+              "technology": technology->{
+                _id,
+                name,
+                svg
+              }
+            }
+          }
+        },
+        _type == "currentFocus" => {
+          ...,
+          "project": project.project->{
+            _id,
+            title,
+            category,
+            description,
+            projectUrl,
+            content,
+            "slug": slug.current,
+            button{
+              buttonText,
+              buttonLink,
+              isExternalLink
+            },
+            "image": images[0]{
+              alt,
+              "asset": asset->{
+                url,
+                metadata{
+                  dimensions{
+                    width,
+                    height
+                  }
+                }
+              }
+            },
+            technologies[]{
+              ...,
+              "technology": technology->{
+                _id,
+                name,
+                svg
               }
             }
           }
@@ -197,6 +280,8 @@ export const HOME_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const HOME_PAGE_QUERY = PAGE_QUERY;
+
 export async function getPosts(
     locale = DEFAULT_LOCALE,
     baseLocale = DEFAULT_LOCALE,
@@ -223,18 +308,36 @@ export async function getHomePage(
     locale = DEFAULT_LOCALE,
     baseLocale = DEFAULT_LOCALE,
 ): Promise<HomePageData | null> {
+    const homeSlug = locale === DEFAULT_LOCALE ? "home" : `home-${locale}`;
+    const fallbackHomeSlug = "home";
+    return getPageBySlug(homeSlug, locale, baseLocale, fallbackHomeSlug);
+}
+
+export async function getAboutPage(
+    locale = DEFAULT_LOCALE,
+    baseLocale = DEFAULT_LOCALE,
+): Promise<PageData | null> {
+    const aboutSlug = locale === DEFAULT_LOCALE ? "about" : `about-${locale}`;
+    const fallbackAboutSlug = "about";
+    return getPageBySlug(aboutSlug, locale, baseLocale, fallbackAboutSlug);
+}
+
+async function getPageBySlug(
+    pageSlug: string,
+    locale = DEFAULT_LOCALE,
+    baseLocale = DEFAULT_LOCALE,
+    fallbackPageSlug = pageSlug,
+): Promise<PageData | null> {
     if (!sanityClient) {
         return null;
     }
 
     try {
-        const homeSlug = locale === DEFAULT_LOCALE ? "home" : `home-${locale}`;
-        const fallbackHomeSlug = "home";
-        const data = await sanityClient.fetch<HomePageQueryResult>(HOME_PAGE_QUERY, {
+        const data = await sanityClient.fetch<PageQueryResult>(PAGE_QUERY, {
             locale,
             baseLocale,
-            homeSlug,
-            fallbackHomeSlug,
+            pageSlug,
+            fallbackPageSlug,
         });
 
         if (!data.page) {
@@ -254,7 +357,10 @@ export async function getHomePage(
         };
     } catch (error) {
         if (import.meta.env.DEV) {
-            console.warn("[sanity] Failed to fetch homepage data.", error);
+            console.warn(
+                `[sanity] Failed to fetch page data for slug "${pageSlug}".`,
+                error,
+            );
         }
 
         return null;

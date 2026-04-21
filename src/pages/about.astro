@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageBuilder from "@/utils/pageBuilder/PageBuilder.astro";
+import Text from "@/components/Text/index.astro";
+import { DEFAULT_LOCALE, getAboutPage } from "../lib/sanity";
+
+const aboutPage = await getAboutPage(DEFAULT_LOCALE);
+const pageData = aboutPage;
+---
+
+<Layout
+    headerMenuItems={pageData?.headerMenuItems ?? []}
+    footerMenuItems={pageData?.footerMenuItems ?? []}
+    phone={pageData?.phone ?? ""}
+    email={pageData?.email ?? ""}
+    instagram={pageData?.instagram ?? ""}
+    linkedin={pageData?.linkedin ?? ""}
+>
+    <main>
+        {
+            pageData?.elements?.length ? (
+                <PageBuilder
+                    elements={pageData.elements}
+                    facebook={pageData.facebook}
+                    instagram={pageData.instagram}
+                    phone={pageData.phone}
+                />
+            ) : (
+                <section class="mx-auto max-w-600 px-6 py-24">
+                    <Text className="text-paper">
+                        No sections configured for the about page yet.
+                    </Text>
+                </section>
+            )
+        }
+    </main>
+</Layout>

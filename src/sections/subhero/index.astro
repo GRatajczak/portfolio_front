@@ -1,0 +1,15 @@
+---
+import Container from "@/components/Container/index.astro";
+import SectionHeader from "@/components/SectionHeader/index.astro";
+import type { Props } from "./index.type";
+
+const {
+    eyebrow = "",
+    heading = "",
+    highlightLine = false,
+} = Astro.props as Props;
+---
+
+<Container className={highlightLine ? "pb-8 mt-42" : ""}>
+    <SectionHeader hero eyebrow={eyebrow} heading={heading} headingAs="h1" />
+</Container>
