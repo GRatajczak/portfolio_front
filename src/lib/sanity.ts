@@ -90,6 +90,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
               title,
               category,
               description,
+              projectUrl,
               content,
               "slug": slug.current,
               button{
@@ -141,6 +142,30 @@ export const HOME_PAGE_QUERY = defineQuery(`
                 _id,
                 name,
                 svg
+              }
+            }
+          }
+        },
+        _type == "certificatesGallery" => {
+          ...,
+          certificates[]{
+            _key,
+            "certificate": certificate->{
+              _id,
+              title,
+              issuer,
+              certificateUrl,
+              "image": image{
+                alt,
+                "asset": asset->{
+                  url,
+                  metadata{
+                    dimensions{
+                      width,
+                      height
+                    }
+                  }
+                }
               }
             }
           }

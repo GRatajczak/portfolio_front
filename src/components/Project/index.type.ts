@@ -41,6 +41,7 @@ export type ProjectCardData = {
     slug?: string;
     category?: string;
     description?: string;
+    projectUrl?: string;
     content?: PortableTextBlock[];
     button?: ProjectButton;
     image?: ProjectImage;

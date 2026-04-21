@@ -4,6 +4,7 @@ import RichText from "@/components/RichText/index.astro";
 import Heading from "@/components/Heading/index.astro";
 import Text from "@/components/Text/index.astro";
 import type { Props } from "./index.type";
+import Link from "@/components/Link/index.astro";
 
 const { project, className = "" } = Astro.props as Props;
 
@@ -38,6 +39,7 @@ const imageUrl = project.image?.asset?.url;
 const imageWidth = project.image?.asset?.metadata?.dimensions?.width;
 const imageHeight = project.image?.asset?.metadata?.dimensions?.height;
 const imageAlt = project.image?.alt || project.title || "Project image";
+const projectUrl = project.projectUrl;
 const richContent = project.content?.length
     ? project.content
     : (project.description ?? "");
@@ -75,6 +77,17 @@ const richContent = project.content?.length
                     value={richContent}
                     className="max-w-xl text-lg text-paper/85"
                 />
+                {
+                    projectUrl && (
+                        <Link
+                            href={projectUrl}
+                            isExternal
+                            className="inline-flex w-fit text-sm text-accent-orange underline underline-offset-4 transition-opacity duration-200 hover:opacity-80"
+                        >
+                            See project
+                        </Link>
+                    )
+                }
 
                 {
                     project.button?.buttonText && (

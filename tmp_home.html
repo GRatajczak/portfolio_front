@@ -1,0 +1,2023 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v6.1.8"><title>Grzegorz Ratajczak</title><style data-vite-dev-id="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/styles/global.css">/*! tailwindcss v4.2.2 | MIT License | https://tailwindcss.com */
+@layer properties;
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --font-sans: "Inter", "Inter Fallback", ui-sans-serif, system-ui, -apple-system,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+        "Liberation Sans", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+    --color-zinc-100: oklch(96.7% 0.001 286.375);
+    --color-zinc-200: oklch(92% 0.004 286.32);
+    --color-zinc-300: oklch(87.1% 0.006 286.286);
+    --color-zinc-500: oklch(55.2% 0.016 285.938);
+    --color-zinc-900: oklch(21% 0.006 285.885);
+    --color-zinc-950: oklch(14.1% 0.005 285.823);
+    --spacing: 0.25rem;
+    --container-xl: 36rem;
+    --container-3xl: 48rem;
+    --text-xs: 0.75rem;
+    --text-xs--line-height: calc(1 / 0.75);
+    --text-sm: 0.875rem;
+    --text-sm--line-height: calc(1.25 / 0.875);
+    --text-lg: 1.125rem;
+    --text-lg--line-height: calc(1.75 / 1.125);
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --leading-tight: 1.25;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --blur-sm: 8px;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    --default-font-family: var(--font-sans);
+    --default-mono-font-family: var(--font-mono);
+    --color-ink: #0e0e0d;
+    --color-paper: #ecece7;
+    --color-accent-orange: #ee8e3e;
+    --color-accent-green: #1ec229;
+    --font-display: "Alfa Slab One", Impact, Haettenschweiler, "Arial Narrow Bold",
+        sans-serif;
+  }
+}
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0 solid;
+  }
+  html, :host {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+    font-feature-settings: var(--default-font-feature-settings, normal);
+    font-variation-settings: var(--default-font-variation-settings, normal);
+    -webkit-tap-highlight-color: transparent;
+  }
+  hr {
+    height: 0;
+    color: inherit;
+    border-top-width: 1px;
+  }
+  abbr:where([title]) {
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  a {
+    color: inherit;
+    -webkit-text-decoration: inherit;
+    text-decoration: inherit;
+  }
+  b, strong {
+    font-weight: bolder;
+  }
+  code, kbd, samp, pre {
+    font-family: var(--default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+    font-feature-settings: var(--default-mono-font-feature-settings, normal);
+    font-variation-settings: var(--default-mono-font-variation-settings, normal);
+    font-size: 1em;
+  }
+  small {
+    font-size: 80%;
+  }
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  sub {
+    bottom: -0.25em;
+  }
+  sup {
+    top: -0.5em;
+  }
+  table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse;
+  }
+  :-moz-focusring {
+    outline: auto;
+  }
+  progress {
+    vertical-align: baseline;
+  }
+  summary {
+    display: list-item;
+  }
+  ol, ul, menu {
+    list-style: none;
+  }
+  img, svg, video, canvas, audio, iframe, embed, object {
+    display: block;
+    vertical-align: middle;
+  }
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+  button, input, select, optgroup, textarea, ::file-selector-button {
+    font: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    border-radius: 0;
+    background-color: transparent;
+    opacity: 1;
+  }
+  :where(select:is([multiple], [size])) optgroup {
+    font-weight: bolder;
+  }
+  :where(select:is([multiple], [size])) optgroup option {
+    padding-inline-start: 20px;
+  }
+  ::file-selector-button {
+    margin-inline-end: 4px;
+  }
+  ::placeholder {
+    opacity: 1;
+  }
+  @supports (not (-webkit-appearance: -apple-pay-button))  or (contain-intrinsic-size: 1px) {
+    ::placeholder {
+      color: currentcolor;
+      @supports (color: color-mix(in lab, red, red)) {
+        color: color-mix(in oklab, currentcolor 50%, transparent);
+      }
+    }
+  }
+  textarea {
+    resize: vertical;
+  }
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  ::-webkit-date-and-time-value {
+    min-height: 1lh;
+    text-align: inherit;
+  }
+  ::-webkit-datetime-edit {
+    display: inline-flex;
+  }
+  ::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {
+    padding-block: 0;
+  }
+  ::-webkit-calendar-picker-indicator {
+    line-height: 1;
+  }
+  :-moz-ui-invalid {
+    box-shadow: none;
+  }
+  button, input:where([type="button"], [type="reset"], [type="submit"]), ::file-selector-button {
+    appearance: button;
+  }
+  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    height: auto;
+  }
+  [hidden]:where(:not([hidden="until-found"])) {
+    display: none !important;
+  }
+}
+@layer utilities {
+  .absolute {
+    position: absolute;
+  }
+  .fixed {
+    position: fixed;
+  }
+  .relative {
+    position: relative;
+  }
+  .top-0 {
+    top: calc(var(--spacing) * 0);
+  }
+  .left-0 {
+    left: calc(var(--spacing) * 0);
+  }
+  .z-20 {
+    z-index: 20;
+  }
+  .mx-auto {
+    margin-inline: auto;
+  }
+  .mt-2 {
+    margin-top: calc(var(--spacing) * 2);
+  }
+  .mt-3 {
+    margin-top: calc(var(--spacing) * 3);
+  }
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
+  }
+  .mt-6 {
+    margin-top: calc(var(--spacing) * 6);
+  }
+  .mt-8 {
+    margin-top: calc(var(--spacing) * 8);
+  }
+  .mt-20 {
+    margin-top: calc(var(--spacing) * 20);
+  }
+  .mb-5 {
+    margin-bottom: calc(var(--spacing) * 5);
+  }
+  .mb-8 {
+    margin-bottom: calc(var(--spacing) * 8);
+  }
+  .mb-48 {
+    margin-bottom: calc(var(--spacing) * 48);
+  }
+  .ml-auto {
+    margin-left: auto;
+  }
+  .block {
+    display: block;
+  }
+  .flex {
+    display: flex;
+  }
+  .grid {
+    display: grid;
+  }
+  .hidden {
+    display: none;
+  }
+  .hidden\! {
+    display: none !important;
+  }
+  .inline-flex {
+    display: inline-flex;
+  }
+  .h-1 {
+    height: calc(var(--spacing) * 1);
+  }
+  .h-3 {
+    height: calc(var(--spacing) * 3);
+  }
+  .h-3\.5 {
+    height: calc(var(--spacing) * 3.5);
+  }
+  .h-8 {
+    height: calc(var(--spacing) * 8);
+  }
+  .h-9 {
+    height: calc(var(--spacing) * 9);
+  }
+  .h-10 {
+    height: calc(var(--spacing) * 10);
+  }
+  .h-56 {
+    height: calc(var(--spacing) * 56);
+  }
+  .h-auto {
+    height: auto;
+  }
+  .h-full {
+    height: 100%;
+  }
+  .max-h-\[60vh\] {
+    max-height: 60vh;
+  }
+  .max-h-screen {
+    max-height: 100vh;
+  }
+  .min-h-72 {
+    min-height: calc(var(--spacing) * 72);
+  }
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  .w-1 {
+    width: calc(var(--spacing) * 1);
+  }
+  .w-3\.5 {
+    width: calc(var(--spacing) * 3.5);
+  }
+  .w-4 {
+    width: calc(var(--spacing) * 4);
+  }
+  .w-8 {
+    width: calc(var(--spacing) * 8);
+  }
+  .w-9 {
+    width: calc(var(--spacing) * 9);
+  }
+  .w-10 {
+    width: calc(var(--spacing) * 10);
+  }
+  .w-\[46\%\] {
+    width: 46%;
+  }
+  .w-\[60\%\] {
+    width: 60%;
+  }
+  .w-fit {
+    width: fit-content;
+  }
+  .w-full {
+    width: 100%;
+  }
+  .max-w-3xl {
+    max-width: var(--container-3xl);
+  }
+  .max-w-600 {
+    max-width: calc(var(--spacing) * 600);
+  }
+  .max-w-xl {
+    max-width: var(--container-xl);
+  }
+  .shrink-0 {
+    flex-shrink: 0;
+  }
+  .list-outside {
+    list-style-position: outside;
+  }
+  .list-decimal {
+    list-style-type: decimal;
+  }
+  .list-disc {
+    list-style-type: disc;
+  }
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .flex-col {
+    flex-direction: column;
+  }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+  .items-center {
+    align-items: center;
+  }
+  .items-end {
+    align-items: flex-end;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .justify-end {
+    justify-content: flex-end;
+  }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
+  .gap-3 {
+    gap: calc(var(--spacing) * 3);
+  }
+  .gap-4 {
+    gap: calc(var(--spacing) * 4);
+  }
+  .gap-6 {
+    gap: calc(var(--spacing) * 6);
+  }
+  .gap-8 {
+    gap: calc(var(--spacing) * 8);
+  }
+  .gap-10 {
+    gap: calc(var(--spacing) * 10);
+  }
+  .space-y-1 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 1) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-2 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-3 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-4 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-6 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 6) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .overflow-hidden {
+    overflow: hidden;
+  }
+  .rounded-2xl {
+    border-radius: var(--radius-2xl);
+  }
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
+  }
+  .rounded-full {
+    border-radius: calc(infinity * 1px);
+  }
+  .rounded-lg {
+    border-radius: var(--radius-lg);
+  }
+  .rounded-xl {
+    border-radius: var(--radius-xl);
+  }
+  .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .border-t {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 1px;
+  }
+  .border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+  }
+  .border-accent-green {
+    border-color: var(--color-accent-green);
+  }
+  .border-accent-orange {
+    border-color: var(--color-accent-orange);
+  }
+  .border-ink\/20 {
+    border-color: color-mix(in srgb, #0e0e0d 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-ink) 20%, transparent);
+    }
+  }
+  .border-ink\/70 {
+    border-color: color-mix(in srgb, #0e0e0d 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-ink) 70%, transparent);
+    }
+  }
+  .border-paper\/10 {
+    border-color: color-mix(in srgb, #ecece7 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-paper) 10%, transparent);
+    }
+  }
+  .border-paper\/20 {
+    border-color: color-mix(in srgb, #ecece7 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-paper) 20%, transparent);
+    }
+  }
+  .border-paper\/40 {
+    border-color: color-mix(in srgb, #ecece7 40%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-paper) 40%, transparent);
+    }
+  }
+  .border-paper\/50 {
+    border-color: color-mix(in srgb, #ecece7 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-paper) 50%, transparent);
+    }
+  }
+  .border-paper\/70 {
+    border-color: color-mix(in srgb, #ecece7 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-paper) 70%, transparent);
+    }
+  }
+  .border-zinc-100 {
+    border-color: var(--color-zinc-100);
+  }
+  .border-zinc-200 {
+    border-color: var(--color-zinc-200);
+  }
+  .border-zinc-300 {
+    border-color: var(--color-zinc-300);
+  }
+  .bg-accent-green {
+    background-color: var(--color-accent-green);
+  }
+  .bg-accent-orange {
+    background-color: var(--color-accent-orange);
+  }
+  .bg-paper {
+    background-color: var(--color-paper);
+  }
+  .bg-zinc-100 {
+    background-color: var(--color-zinc-100);
+  }
+  .bg-zinc-900 {
+    background-color: var(--color-zinc-900);
+  }
+  .bg-zinc-900\/60 {
+    background-color: color-mix(in srgb, oklch(21% 0.006 285.885) 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-zinc-900) 60%, transparent);
+    }
+  }
+  .bg-zinc-950 {
+    background-color: var(--color-zinc-950);
+  }
+  .object-cover {
+    object-fit: cover;
+  }
+  .p-4 {
+    padding: calc(var(--spacing) * 4);
+  }
+  .p-6 {
+    padding: calc(var(--spacing) * 6);
+  }
+  .px-1 {
+    padding-inline: calc(var(--spacing) * 1);
+  }
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+  .px-4 {
+    padding-inline: calc(var(--spacing) * 4);
+  }
+  .px-6 {
+    padding-inline: calc(var(--spacing) * 6);
+  }
+  .py-1 {
+    padding-block: calc(var(--spacing) * 1);
+  }
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
+  }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
+  .py-8 {
+    padding-block: calc(var(--spacing) * 8);
+  }
+  .py-16 {
+    padding-block: calc(var(--spacing) * 16);
+  }
+  .pb-8 {
+    padding-bottom: calc(var(--spacing) * 8);
+  }
+  .pl-5 {
+    padding-left: calc(var(--spacing) * 5);
+  }
+  .text-lg {
+    font-size: var(--text-lg);
+    line-height: var(--tw-leading, var(--text-lg--line-height));
+  }
+  .text-sm {
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+  }
+  .text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
+  .text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--tw-leading, var(--text-xs--line-height));
+  }
+  .text-\[9px\] {
+    font-size: 9px;
+  }
+  .leading-7 {
+    --tw-leading: calc(var(--spacing) * 7);
+    line-height: calc(var(--spacing) * 7);
+  }
+  .leading-8 {
+    --tw-leading: calc(var(--spacing) * 8);
+    line-height: calc(var(--spacing) * 8);
+  }
+  .leading-\[0\.95\] {
+    --tw-leading: 0.95;
+    line-height: 0.95;
+  }
+  .leading-none {
+    --tw-leading: 1;
+    line-height: 1;
+  }
+  .leading-tight {
+    --tw-leading: var(--leading-tight);
+    line-height: var(--leading-tight);
+  }
+  .font-medium {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+  }
+  .font-semibold {
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+  }
+  .tracking-\[0\.12em\] {
+    --tw-tracking: 0.12em;
+    letter-spacing: 0.12em;
+  }
+  .text-accent-green {
+    color: var(--color-accent-green);
+  }
+  .text-accent-orange {
+    color: var(--color-accent-orange);
+  }
+  .text-ink {
+    color: var(--color-ink);
+  }
+  .text-paper {
+    color: var(--color-paper);
+  }
+  .text-paper\/60 {
+    color: color-mix(in srgb, #ecece7 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-paper) 60%, transparent);
+    }
+  }
+  .text-paper\/75 {
+    color: color-mix(in srgb, #ecece7 75%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-paper) 75%, transparent);
+    }
+  }
+  .text-paper\/85 {
+    color: color-mix(in srgb, #ecece7 85%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-paper) 85%, transparent);
+    }
+  }
+  .text-paper\/90 {
+    color: color-mix(in srgb, #ecece7 90%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-paper) 90%, transparent);
+    }
+  }
+  .uppercase {
+    text-transform: uppercase;
+  }
+  .underline {
+    text-decoration-line: underline;
+  }
+  .underline-offset-4 {
+    text-underline-offset: 4px;
+  }
+  .antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .opacity-70 {
+    opacity: 70%;
+  }
+  .shadow-sm {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .grayscale {
+    --tw-grayscale: grayscale(100%);
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .backdrop-blur {
+    --tw-backdrop-blur: blur(8px);
+    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+  }
+  .backdrop-blur-sm {
+    --tw-backdrop-blur: blur(var(--blur-sm));
+    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+  }
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .transition-colors {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .duration-200 {
+    --tw-duration: 200ms;
+    transition-duration: 200ms;
+  }
+  .duration-300 {
+    --tw-duration: 300ms;
+    transition-duration: 300ms;
+  }
+  .hover\:border-paper {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-paper);
+      }
+    }
+  }
+  .hover\:border-zinc-500 {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-zinc-500);
+      }
+    }
+  }
+  .hover\:text-paper {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-paper);
+      }
+    }
+  }
+  .hover\:opacity-70 {
+    &:hover {
+      @media (hover: hover) {
+        opacity: 70%;
+      }
+    }
+  }
+  .hover\:opacity-80 {
+    &:hover {
+      @media (hover: hover) {
+        opacity: 80%;
+      }
+    }
+  }
+  .hover\:grayscale-0 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-grayscale: grayscale(0%);
+        filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+      }
+    }
+  }
+  .md\:block {
+    @media (width >= 48rem) {
+      display: block;
+    }
+  }
+  .md\:h-72 {
+    @media (width >= 48rem) {
+      height: calc(var(--spacing) * 72);
+    }
+  }
+  .md\:h-\[58vw\] {
+    @media (width >= 48rem) {
+      height: 58vw;
+    }
+  }
+  .md\:grid-cols-2 {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .md\:grid-cols-\[1fr_auto_auto\] {
+    @media (width >= 48rem) {
+      grid-template-columns: 1fr auto auto;
+    }
+  }
+  .md\:grid-rows-2 {
+    @media (width >= 48rem) {
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .md\:flex-row {
+    @media (width >= 48rem) {
+      flex-direction: row;
+    }
+  }
+  .md\:items-center {
+    @media (width >= 48rem) {
+      align-items: center;
+    }
+  }
+  .md\:justify-between {
+    @media (width >= 48rem) {
+      justify-content: space-between;
+    }
+  }
+  .md\:p-6 {
+    @media (width >= 48rem) {
+      padding: calc(var(--spacing) * 6);
+    }
+  }
+  .md\:p-8 {
+    @media (width >= 48rem) {
+      padding: calc(var(--spacing) * 8);
+    }
+  }
+  .md\:\[grid-area\:1\/1\/2\/2\] {
+    @media (width >= 48rem) {
+      grid-area: 1/1/2/2;
+    }
+  }
+  .md\:\[grid-area\:1\/2\/3\/3\] {
+    @media (width >= 48rem) {
+      grid-area: 1/2/3/3;
+    }
+  }
+  .md\:\[grid-area\:2\/1\/3\/2\] {
+    @media (width >= 48rem) {
+      grid-area: 2/1/3/2;
+    }
+  }
+  .md\:\[grid-area\:auto\] {
+    @media (width >= 48rem) {
+      grid-area: auto;
+    }
+  }
+  .lg\:top-0 {
+    @media (width >= 64rem) {
+      top: calc(var(--spacing) * 0);
+    }
+  }
+  .lg\:right-0 {
+    @media (width >= 64rem) {
+      right: calc(var(--spacing) * 0);
+    }
+  }
+  .lg\:bottom-0 {
+    @media (width >= 64rem) {
+      bottom: calc(var(--spacing) * 0);
+    }
+  }
+  .lg\:mt-0 {
+    @media (width >= 64rem) {
+      margin-top: calc(var(--spacing) * 0);
+    }
+  }
+  .lg\:mt-4 {
+    @media (width >= 64rem) {
+      margin-top: calc(var(--spacing) * 4);
+    }
+  }
+  .lg\:block\! {
+    @media (width >= 64rem) {
+      display: block !important;
+    }
+  }
+  .lg\:h-\[44vw\] {
+    @media (width >= 64rem) {
+      height: 44vw;
+    }
+  }
+  .lg\:h-full {
+    @media (width >= 64rem) {
+      height: 100%;
+    }
+  }
+  .lg\:max-h-screen {
+    @media (width >= 64rem) {
+      max-height: 100vh;
+    }
+  }
+  .lg\:w-\[40\%\] {
+    @media (width >= 64rem) {
+      width: 40%;
+    }
+  }
+  .lg\:grid-cols-\[minmax\(0\,0\.8fr\)_minmax\(0\,1\.2fr\)\] {
+    @media (width >= 64rem) {
+      grid-template-columns: minmax(0,0.8fr) minmax(0,1.2fr);
+    }
+  }
+  .lg\:items-start {
+    @media (width >= 64rem) {
+      align-items: flex-start;
+    }
+  }
+  .lg\:gap-5 {
+    @media (width >= 64rem) {
+      gap: calc(var(--spacing) * 5);
+    }
+  }
+  .lg\:justify-self-end {
+    @media (width >= 64rem) {
+      justify-self: flex-end;
+    }
+  }
+  .lg\:border-l {
+    @media (width >= 64rem) {
+      border-left-style: var(--tw-border-style);
+      border-left-width: 1px;
+    }
+  }
+  .xl\:h-\[38vw\] {
+    @media (width >= 80rem) {
+      height: 38vw;
+    }
+  }
+  .\[\&_svg\]\:h-8 {
+    & svg {
+      height: calc(var(--spacing) * 8);
+    }
+  }
+  .\[\&_svg\]\:h-10 {
+    & svg {
+      height: calc(var(--spacing) * 10);
+    }
+  }
+  .\[\&_svg\]\:w-8 {
+    & svg {
+      width: calc(var(--spacing) * 8);
+    }
+  }
+  .\[\&_svg\]\:w-10 {
+    & svg {
+      width: calc(var(--spacing) * 10);
+    }
+  }
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-VariableFont_opsz,wght.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Alfa Slab One";
+  src: url("/fonts/AlfaSlabOne-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@layer base {
+  :where(*, *::before, *::after) {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+html {
+  font-size: clamp(1em, 17px + 0.24vw, 1.125em);
+  --type-scale: 1.2;
+  --font-size-2xs: calc(1rem * pow(var(--type-scale), -1.5));
+  --font-size-xs: calc(1rem * pow(var(--type-scale), -1));
+  --font-size-sm: calc(1rem * pow(var(--type-scale), -0.5));
+  --font-size-base: 1rem;
+  --font-size-lg: calc(1rem * pow(var(--type-scale), 0.5));
+  --font-size-xl: calc(1rem * pow(var(--type-scale), 1));
+  --font-size-2xl: calc(1rem * pow(var(--type-scale), 2));
+  --font-size-3xl: calc(1rem * pow(var(--type-scale), 3));
+  --font-size-4xl: calc(1rem * pow(var(--type-scale), 4));
+  --font-size-5xl: calc(1rem * pow(var(--type-scale), 5));
+  --font-size-display: clamp(2.75rem, 1.6rem + 6.5vw, 8rem);
+  --font-size-h1: clamp(2.75rem, 1.95rem + 4vw, 5.5rem);
+  --font-size-h2: clamp(2.25rem, 1.7rem + 3vw, 4.25rem);
+  --font-size-h3: clamp(1.9rem, 1.45rem + 2vw, 3.1rem);
+  --font-size-h4: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
+  --font-size-h5: clamp(1.35rem, 1.16rem + 0.8vw, 1.8rem);
+  --font-size-h6: clamp(1.15rem, 1.06rem + 0.4vw, 1.4rem);
+  --font-size-p: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --font-size-small: clamp(0.875rem, 0.84rem + 0.18vw, 1rem);
+}
+@media (width > 64rem) {
+  html {
+    --type-scale: 1.25;
+  }
+}
+html, body {
+  min-height: 100%;
+}
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+ul, ol {
+  list-style: none;
+}
+a {
+  color: inherit;
+}
+body {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+h1 {
+  font-size: var(--font-size-h1);
+  line-height: 1.08;
+}
+h2 {
+  font-size: var(--font-size-h2);
+  line-height: 1.1;
+}
+h3 {
+  font-size: var(--font-size-h3);
+  line-height: 1.12;
+}
+h4 {
+  font-size: var(--font-size-h4);
+  line-height: 1.15;
+}
+h5 {
+  font-size: var(--font-size-h5);
+  line-height: 1.2;
+}
+h6 {
+  font-size: var(--font-size-h6);
+  line-height: 1.25;
+}
+p, a {
+  font-size: var(--font-size-p);
+  line-height: 1.6;
+}
+small {
+  font-size: var(--font-size-small);
+  line-height: 1.5;
+}
+@property --tw-space-y-reverse {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-tracking {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-inset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-ring-inset {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-offset-width {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --tw-ring-offset-color {
+  syntax: "*";
+  inherits: false;
+  initial-value: #fff;
+}
+@property --tw-ring-offset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-space-y-reverse: 0;
+      --tw-border-style: solid;
+      --tw-leading: initial;
+      --tw-font-weight: initial;
+      --tw-tracking: initial;
+      --tw-shadow: 0 0 #0000;
+      --tw-shadow-color: initial;
+      --tw-shadow-alpha: 100%;
+      --tw-inset-shadow: 0 0 #0000;
+      --tw-inset-shadow-color: initial;
+      --tw-inset-shadow-alpha: 100%;
+      --tw-ring-color: initial;
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-inset-ring-color: initial;
+      --tw-inset-ring-shadow: 0 0 #0000;
+      --tw-ring-inset: initial;
+      --tw-ring-offset-width: 0px;
+      --tw-ring-offset-color: #fff;
+      --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
+      --tw-backdrop-blur: initial;
+      --tw-backdrop-brightness: initial;
+      --tw-backdrop-contrast: initial;
+      --tw-backdrop-grayscale: initial;
+      --tw-backdrop-hue-rotate: initial;
+      --tw-backdrop-invert: initial;
+      --tw-backdrop-opacity: initial;
+      --tw-backdrop-saturate: initial;
+      --tw-backdrop-sepia: initial;
+      --tw-duration: initial;
+    }
+  }
+}
+</style>
+<style data-vite-dev-id="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/layouts/Layout.astro?astro&#38;type=style&#38;index=0&#38;lang.css">html,body{margin:0;width:100%;height:100%}</style><script type="module" src="/@vite/client"></script>
+<script type="module" src="/@id/astro/runtime/client/dev-toolbar/entrypoint.js"></script>
+<script>window.__astro_dev_toolbar__ = {"root":"/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/","version":"6.1.8","debugInfo":"Astro                    v6.1.8\nNode                     v22.20.0\nSystem                   macOS (arm64)\nPackage Manager          npm\nOutput                   static\nAdapter                  none\nIntegrations             none"}</script>
+<script type="module" src="/src/styles/global.css"></script>
+<script type="module" src="/src/layouts/Layout.astro?astro&type=style&index=0&lang.css"></script></head> <body class="min-h-screen antialiased" data-astro-cid-sckkx6r4 data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/layouts/Layout.astro" data-astro-source-loc="27:44"> <header class="fixed top-0 left-0 z-20 w-full border-b border-paper/20" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Header/index.astro" data-astro-source-loc="35:73"> <nav class="mx-auto flex w-full max-w-600 items-center justify-between px-4 py-2 backdrop-blur-sm" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Header/index.astro" data-astro-source-loc="38:6"> <a href="/" aria-label="Go to homepage" class="inline-flex" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Header/index.astro" data-astro-source-loc="39:69"> <svg width="54" height="48" viewBox="0 0 54 48" fill="none">
+<path d="M20.064 19.072C16.992 18.144 14.736 17.68 13.296 17.68C11.888 17.68 10.912 18.304 10.368 19.552C9.856 20.8 9.6 22.784 9.6 25.504C9.6 28.192 9.84 30.16 10.32 31.408C10.832 32.624 11.856 33.232 13.392 33.232C13.84 33.232 14.704 33.104 15.984 32.848V29.2H13.824V23.536H22.992V40H17.328L16.56 38.464H16.368C15.824 38.912 15.392 39.248 15.072 39.472C14.176 40.144 12.912 40.48 11.28 40.48C4.592 40.48 1.248 35.424 1.248 25.312C1.248 20.256 2.128 16.4 3.888 13.744C5.648 11.056 8.608 9.712 12.768 9.712C16.096 9.712 18.96 10.224 21.36 11.248L20.064 19.072ZM47.4026 19.648C47.4026 21.44 47.1306 22.928 46.5866 24.112C46.0426 25.296 45.1946 26.368 44.0426 27.328L48.0266 40H39.1466L36.1706 29.248H35.0666V40H27.0026V10.192H38.1386C41.3386 10.192 43.6746 10.944 45.1466 12.448C46.6506 13.952 47.4026 16.352 47.4026 19.648ZM36.3146 24.208C37.1466 24.208 37.7386 23.968 38.0906 23.488C38.4426 23.008 38.6186 22.144 38.6186 20.896C38.6186 19.616 38.4426 18.736 38.0906 18.256C37.7386 17.744 37.1626 17.488 36.3626 17.488H35.0666V24.208H36.3146Z" fill="#ECECE7" />
+</svg> </a> <ul class="flex items-center gap-6" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Header/index.astro" data-astro-source-loc="45:53"> <li data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Header/index.astro" data-astro-source-loc="47:29"> <a href="/home" class="text-sm text-paper/90 hover:text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Header/index.astro" data-astro-source-loc="51:30"> Home </a> </li> </ul> </nav> </header>  <main data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/pages/index.astro" data-astro-source-loc="17:11"> <section class="flex items-end justify-between h-full max-h-screen mx-auto px-6 relative" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/hero/index.astro" data-astro-source-loc="22:2"> <div class="w-[60%] pb-8 min-h-screen flex flex-col justify-end" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/hero/index.astro" data-astro-source-loc="23:70"> <p class="leading-8 text-paper opacity-70" style="font-size: var(--font-size-p); line-height: 1.2; font-size: var(--font-size-lg);"> Creative Frontend Developer </p> <h1 class="font-semibold text-paper mb-5 leading-[0.95]" style="font-size: var(--font-size-h1); line-height: 1.08; font-size: var(--font-size-display); line-height: 1.1;"> Grzegorz Ratajczak </h1> </div> <img src="/_image?href=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F11djiifo%2Fproduction%2Fcecb149d69cd4f920c3ca1141dbc2a47df361d23-3861x5791.jpg&#38;w=3861&#38;h=5791&#38;f=webp" data-image-component="true" alt="Grzegorz Ratajczak " loading="eager" decoding="async" width="3861" height="5791" class="mt-6 h-auto max-h-[60vh] w-full object-cover hidden! border-paper/50 lg:mt-0 lg:block! lg:max-h-screen lg:h-full lg:w-[40%] lg:border-l absolute lg:right-0 lg:bottom-0 lg:top-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/node_modules/astro/components/Image.astro" data-astro-source-loc="53:2"> </section><section class="block mx-auto w-full max-w-600 px-6 py-4 mb-48 border-t border-b border-paper/50 " data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Container/index.astro" data-astro-source-loc="7:80"> <ul class="flex flex-wrap gap-2 items-center justify-between" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="12:75"> <li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="103" height="103" viewBox="0 0 103 103" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_266_2082)">
+<path d="M48.1271 0.0277177C47.9056 0.0478516 47.2008 0.11832 46.5665 0.168655C31.937 1.48742 18.2339 9.37991 9.55494 21.5106C4.72209 28.2554 1.63109 35.9063 0.463148 44.0102C0.0503421 46.839 0 47.6746 0 51.5101C0 55.3456 0.0503421 56.1811 0.463148 59.01C3.26217 78.3486 17.0257 94.5966 35.6926 100.617C39.0353 101.694 42.5592 102.429 46.5665 102.872C48.1271 103.043 54.8729 103.043 56.4335 102.872C63.3505 102.107 69.2104 100.395 74.9896 97.4456C75.8757 96.9925 76.0468 96.8717 75.926 96.7711C75.8455 96.7107 72.0698 91.647 67.539 85.5263L59.303 74.4023L48.9829 59.1308C43.3043 50.7349 38.6326 43.8693 38.5923 43.8693C38.552 43.8592 38.5117 50.6443 38.4916 58.9294C38.4614 73.4359 38.4513 74.0198 38.2701 74.3621C38.0083 74.8553 37.8069 75.0567 37.3841 75.2781C37.0619 75.4392 36.78 75.4694 35.2596 75.4694H33.5178L33.0546 75.1775C32.7526 74.9862 32.5311 74.7345 32.3801 74.4426L32.1686 73.9896L32.1888 53.8053L32.219 33.6111L32.5311 33.2184C32.6922 33.007 33.0345 32.7352 33.2761 32.6044C33.689 32.403 33.85 32.3829 35.5919 32.3829C37.6458 32.3829 37.9882 32.4634 38.5218 33.0473C38.6728 33.2084 44.2608 41.6243 50.9462 51.7618C57.6317 61.8992 66.7738 75.7412 71.2643 82.5364L79.4197 94.8886L79.8325 94.6167C83.4874 92.2409 87.3537 88.8585 90.4145 85.335C96.9287 77.8553 101.127 68.7346 102.537 59.01C102.95 56.1811 103 55.3456 103 51.5101C103 47.6746 102.95 46.839 102.537 44.0102C99.7378 24.6716 85.9743 8.42355 67.3074 2.40352C64.0151 1.33642 60.5112 0.601534 56.5846 0.158588C55.618 0.0579185 48.9628 -0.0528179 48.1271 0.0277177ZM69.2104 31.1749C69.6936 31.4165 70.0863 31.8795 70.2273 32.3628C70.3078 32.6245 70.328 38.2217 70.3078 50.8356L70.2776 68.936L67.0859 64.0434L63.8842 59.1509V45.9934C63.8842 37.4868 63.9244 32.705 63.9848 32.4735C64.1459 31.9097 64.4983 31.4668 64.9816 31.2051C65.3944 30.9936 65.5455 30.9735 67.1262 30.9735C68.6163 30.9735 68.8781 30.9936 69.2104 31.1749Z" fill="#ECECE7"/>
+</g>
+<defs>
+<clipPath id="clip0_266_2082">
+<rect width="103" height="103" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+</span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <g>
+        <path d="M0,0 L256,0 L256,256 L0,256 L0,0 Z" fill="#F7DF1E">
+
+</path>
+        <path d="M67.311746,213.932292 L86.902654,202.076241 C90.6821079,208.777346 94.1202286,214.447137 102.367086,214.447137 C110.272203,214.447137 115.256076,211.354819 115.256076,199.326883 L115.256076,117.528787 L139.313575,117.528787 L139.313575,199.666997 C139.313575,224.58433 124.707759,235.925943 103.3984,235.925943 C84.1532952,235.925943 72.9819429,225.958603 67.3113397,213.93026" fill="#000000">
+
+</path>
+        <path d="M152.380952,211.354413 L171.969422,200.0128 C177.125994,208.433981 183.827911,214.619835 195.684368,214.619835 C205.652521,214.619835 212.009041,209.635962 212.009041,202.762159 C212.009041,194.513676 205.479416,191.592025 194.481168,186.78207 L188.468419,184.202565 C171.111213,176.81473 159.597308,167.53534 159.597308,147.944838 C159.597308,129.901308 173.344508,116.153295 194.825752,116.153295 C210.119924,116.153295 221.117765,121.48094 229.021663,135.400432 L210.29059,147.428775 C206.166146,140.040127 201.699556,137.119289 194.826159,137.119289 C187.78047,137.119289 183.312254,141.587098 183.312254,147.428775 C183.312254,154.646349 187.78047,157.568406 198.089956,162.036622 L204.103924,164.614095 C224.553448,173.378641 236.067352,182.313448 236.067352,202.418387 C236.067352,224.071924 219.055137,235.927975 196.200432,235.927975 C173.860978,235.927975 159.425829,225.274311 152.381359,211.354413" fill="#000000">
+
+</path>
+    </g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <g>
+        <path d="M251.172245,116.593517 L139.398753,4.82845302 C132.966433,-1.60948434 122.525852,-1.60948434 116.085106,4.82845302 L92.8753863,28.0381721 L122.317995,57.4807809 C129.16041,55.1690784 137.005593,56.7195763 142.460425,62.1744081 C147.940536,67.6629464 149.479799,75.5755422 147.111919,82.4404282 L175.487156,110.815665 C182.352042,108.450594 190.273064,109.98143 195.755985,115.472777 C203.418591,123.132574 203.418591,135.547794 195.755985,143.213209 C188.09057,150.878624 175.67535,150.878624 168.007126,143.213209 C162.243319,137.443783 160.81922,128.977839 163.737639,121.877008 L137.275245,95.4146135 L137.272436,165.052198 C139.140337,165.979126 140.904309,167.212221 142.460425,168.762719 C150.123031,176.422516 150.123031,188.837736 142.460425,196.508768 C134.79501,204.171375 122.374173,204.171375 114.719993,196.508768 C107.057387,188.837736 107.057387,176.422516 114.719993,168.762719 C116.613174,166.872347 118.804095,165.442631 121.141077,164.481996 L121.141077,94.1955625 C118.804095,93.2405457 116.615983,91.8192558 114.719993,89.9148396 C108.914052,84.1173254 107.518042,75.5980132 110.492639,68.4690928 L81.4713611,39.4421974 L4.83125614,116.076685 C-1.60949009,122.52024 -1.60949009,132.960821 4.83125614,139.398759 L116.604747,251.166631 C123.039876,257.604569 133.477648,257.604569 139.921203,251.166631 L251.172245,139.9184 C257.61018,133.477654 257.61018,123.031455 251.172245,116.593517" fill="#DE4C36">
+
+</path>
+    </g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="-52.5 0 361 361" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <g>
+        <path d="M255.554813,70.7657143 L232.31367,331.125451 L127.843868,360.087912 L23.6617143,331.166242 L0.445186813,70.7657143 L255.554813,70.7657143 L255.554813,70.7657143 Z" fill="#E44D26">
+
+</path>
+        <path d="M128,337.950242 L212.416703,314.546637 L232.277802,92.0573187 L128,92.0573187 L128,337.950242 L128,337.950242 Z" fill="#F16529">
+
+</path>
+        <path d="M82.8202198,155.932132 L128,155.932132 L128,123.994725 L47.917011,123.994725 L48.6814945,132.562989 L56.530989,220.572835 L128,220.572835 L128,188.636132 L85.7389011,188.636132 L82.8202198,155.932132 L82.8202198,155.932132 Z" fill="#EBEBEB">
+
+</path>
+        <path d="M90.0177582,236.54189 L57.957978,236.54189 L62.4323516,286.687648 L127.853011,304.848879 L128,304.808088 L128,271.580132 L127.860044,271.617407 L92.2915165,262.013187 L90.0177582,236.54189 L90.0177582,236.54189 Z" fill="#EBEBEB">
+
+</path>
+        <path d="M24.1807473,0 L40.4107253,0 L40.4107253,16.0351648 L55.2573187,16.0351648 L55.2573187,0 L71.488,0 L71.488,48.5584176 L55.258022,48.5584176 L55.258022,32.2981978 L40.4114286,32.2981978 L40.4114286,48.5584176 L24.1814505,48.5584176 L24.1814505,0 L24.1807473,0 L24.1807473,0 Z" fill="#000000">
+
+</path>
+        <path d="M92.8309451,16.1026813 L78.5427692,16.1026813 L78.5427692,0 L123.356835,0 L123.356835,16.1026813 L109.06233,16.1026813 L109.06233,48.5584176 L92.8316484,48.5584176 L92.8316484,16.1026813 L92.8309451,16.1026813 L92.8309451,16.1026813 Z" fill="#000000">
+
+</path>
+        <path d="M130.469275,0 L147.392703,0 L157.802901,17.061978 L168.202549,0 L185.132308,0 L185.132308,48.5584176 L168.969143,48.5584176 L168.969143,24.4901978 L157.802901,41.7554286 L157.523692,41.7554286 L146.349714,24.4901978 L146.349714,48.5584176 L130.469275,48.5584176 L130.469275,0 L130.469275,0 Z" fill="#000000">
+
+</path>
+        <path d="M193.20967,0 L209.444571,0 L209.444571,32.5077802 L232.268659,32.5077802 L232.268659,48.5584176 L193.20967,48.5584176 L193.20967,0 L193.20967,0 Z" fill="#000000">
+
+</path>
+        <path d="M127.889582,220.572835 L167.216527,220.572835 L163.509451,261.992791 L127.889582,271.606857 L127.889582,304.833407 L193.362286,286.687648 L193.842637,281.291956 L201.347516,197.212132 L202.126769,188.636132 L127.889582,188.636132 L127.889582,220.572835 L127.889582,220.572835 Z" fill="#FFFFFF">
+
+</path>
+        <path d="M127.889582,155.854066 L127.889582,155.932132 L205.032791,155.932132 L205.673495,148.753582 L207.128615,132.562989 L207.892396,123.994725 L127.889582,123.994725 L127.889582,155.854066 L127.889582,155.854066 Z" fill="#FFFFFF">
+
+</path>
+    </g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 -204 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+	<g>
+		<polygon fill="#F37368" points="381.461756 36.9858357 381.461756 101.81983 360.575637 101.81983 360.575637 26.8328612">
+
+</polygon>
+		<path d="M85.8651558,89.7813031 L101.529745,103.415297 L167.524079,69.0402266 L160.707082,52.6504249 L85.8651558,89.7813031 Z M360.575637,48.0090652 L413.66119,20.4509915 L404.668555,4.93144476 L360.575637,26.8328612 L360.575637,48.0090652 Z" fill="#F7A199">
+
+</path>
+		<path d="M211.18187,31.9093484 L211.18187,101.81983 L191.166006,101.81983 L191.166006,2.17563739 L211.18187,31.9093484 Z M85.8651558,89.7813031 L101.529745,103.415297 L131.698584,27.9932011 L121.980737,2.17563739 L85.8651558,89.7813031 Z" fill="#F37368">
+
+</path>
+		<path d="M121.980737,2.17563739 L142.576771,2.17563739 L180.722946,101.81983 L159.546742,101.81983 L121.980737,2.17563739 Z M214.227762,2.17563739 L258.175637,70.2005666 L258.175637,101.81983 L191.166006,2.17563739 L214.227762,2.17563739 Z M295.886686,2.17563739 L316.627762,2.17563739 L316.627762,101.81983 L295.886686,101.81983 L295.886686,2.17563739 Z M360.575637,20.4509915 L328.666289,20.4509915 L328.666289,2.17563739 L403.073088,2.17563739 L413.66119,20.4509915 L381.461756,20.4509915 L360.575637,20.4509915 Z" fill="#F04939">
+
+</path>
+		<polyline fill="#F7A199" points="475.014164 63.9637394 475.014164 101.81983 454.41813 101.81983 454.41813 63.9637394">
+
+</polyline>
+		<polygon fill="#F04939" points="489.228329 2.17563739 454.41813 63.9637394 475.014164 63.9637394 511.129745 2.17563739">
+
+</polygon>
+		<polygon fill="#F37368" points="454.41813 63.9637394 418.447592 2.17563739 441.074221 2.17563739 465.296317 44.5280453">
+
+</polygon>
+		<path d="M8.55750708,13.7790368 C8.55750708,27.5580737 17.1150142,35.8254958 34.2300283,40.1767705 L52.3603399,44.3830028 C68.6050992,48.1541076 78.4679887,57.4368272 78.4679887,72.5212465 C78.6130312,79.0481586 76.4373938,85.4300283 72.5212465,90.6515581 C72.5212465,75.5671388 64.6889518,67.4447592 45.9784703,62.5133144 L28.1382436,58.4521246 C13.7790368,55.2611898 2.75580737,47.5739377 2.75580737,31.184136 C2.75580737,24.9473088 4.78640227,18.7104816 8.55750708,13.7790368" fill="#F04939">
+
+</path>
+		<polygon fill="#F37368" points="258.175637 65.1240793 258.175637 2.17563739 278.191501 2.17563739 278.191501 101.81983 258.175637 101.81983">
+
+</polygon>
+		<path d="M61.3529745,68.7501416 C69.0402266,73.6815864 72.5212465,80.6436261 72.5212465,90.6515581 C65.9943343,98.9189802 54.8260623,103.415297 41.6271955,103.415297 C19.4356941,103.415297 3.62606232,92.392068 0.290084986,73.3915014 L21.6113314,73.3915014 C24.3671388,82.094051 31.6192635,86.1552408 41.482153,86.1552408 C53.2305949,86.3002833 61.207932,79.9184136 61.3529745,68.7501416 M8.55750708,13.6339943 C14.7943343,5.51161473 25.5274788,0.580169972 38.5813031,0.580169972 C61.3529745,0.580169972 74.4067989,12.6186969 77.7427762,29.4436261 L57.1467422,29.4436261 C54.8260623,22.7716714 49.1694051,17.5501416 38.8713881,17.5501416 C27.7031161,17.6951841 20.1609065,24.0770538 19.725779,34.2300283 C12.2517705,30.1081799 8.2674221,22.0464589 8.55750708,13.6339943 Z" fill="#F37368">
+
+</path>
+	</g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 -35.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <g>
+        <path d="M250.715745,70.4971666 C244.951102,66.4973277 231.740464,64.997388 221.412146,66.9973071 C220.211179,56.9977092 214.68673,48.2480609 205.078993,40.4983724 L199.554544,36.4985331 L195.711449,42.248302 C190.90758,49.7480006 188.505646,60.2475786 189.226226,70.2471769 C189.46642,73.7470364 190.667387,79.9967847 194.270289,85.496564 C190.90758,87.4964838 183.941971,89.996383 174.814621,89.996383 L1.15476998,89.996383 L0.674383104,91.9963028 C-1.00697093,101.9959 -1.00697093,133.244645 18.6888904,157.243681 C33.5808831,175.492947 55.6786788,184.742575 84.7420842,184.742575 C147.672763,184.742575 194.270289,154.493791 216.127891,99.7459909 C224.774854,99.9959813 243.269748,99.7459909 252.637292,80.996745 C252.877486,80.4967649 253.357872,79.4968046 255.039227,75.7469554 L256,73.7470364 L250.715745,70.4971666 L250.715745,70.4971666 Z M139.986573,0 L113.565295,0 L113.565295,24.9989952 L139.986573,24.9989952 L139.986573,0 L139.986573,0 Z M139.986573,29.9987943 L113.565295,29.9987943 L113.565295,54.9977896 L139.986573,54.9977896 L139.986573,29.9987943 L139.986573,29.9987943 Z M108.761427,29.9987943 L82.3401495,29.9987943 L82.3401495,54.9977896 L108.761427,54.9977896 L108.761427,29.9987943 L108.761427,29.9987943 Z M77.5362814,29.9987943 L51.1150037,29.9987943 L51.1150037,54.9977896 L77.5362814,54.9977896 L77.5362814,29.9987943 L77.5362814,29.9987943 Z M46.311135,59.9975886 L19.8898576,59.9975886 L19.8898576,84.9965839 L46.311135,84.9965839 L46.311135,59.9975886 L46.311135,59.9975886 Z M77.5362814,59.9975886 L51.1150037,59.9975886 L51.1150037,84.9965839 L77.5362814,84.9965839 L77.5362814,59.9975886 L77.5362814,59.9975886 Z M108.761427,59.9975886 L82.3401495,59.9975886 L82.3401495,84.9965839 L108.761427,84.9965839 L108.761427,59.9975886 L108.761427,59.9975886 Z M139.986573,59.9975886 L113.565295,59.9975886 L113.565295,84.9965839 L139.986573,84.9965839 L139.986573,59.9975886 L139.986573,59.9975886 Z M171.211719,59.9975886 L144.790441,59.9975886 L144.790441,84.9965839 L171.211719,84.9965839 L171.211719,59.9975886 L171.211719,59.9975886 Z" fill="#2396ED" fill-rule="nonzero">
+
+</path>
+    </g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="-52.5 0 361 361" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <g>
+        <path d="M127.843868,360.087912 L23.6617143,331.166242 L0.445186813,70.7657143 L255.554813,70.7657143 L232.31367,331.125451 L127.843868,360.087912 L127.843868,360.087912 Z" fill="#264DE4">
+
+</path>
+        <path d="M212.416703,314.546637 L232.277802,92.0573187 L128,92.0573187 L128,337.950242 L212.416703,314.546637 L212.416703,314.546637 Z" fill="#2965F1">
+
+</path>
+        <path d="M53.6685714,188.636132 L56.530989,220.572835 L128,220.572835 L128,188.636132 L53.6685714,188.636132 L53.6685714,188.636132 Z" fill="#EBEBEB">
+
+</path>
+        <path d="M47.917011,123.994725 L50.8202198,155.932132 L128,155.932132 L128,123.994725 L47.917011,123.994725 L47.917011,123.994725 Z" fill="#EBEBEB">
+
+</path>
+        <path d="M128,271.580132 L127.860044,271.617407 L92.2915165,262.013187 L90.0177582,236.54189 L57.957978,236.54189 L62.4323516,286.687648 L127.853011,304.848879 L128,304.808088 L128,271.580132 L128,271.580132 Z" fill="#EBEBEB">
+
+</path>
+        <path d="M60.4835165,0 L99.1648352,0 L99.1648352,16.1758242 L76.6593407,16.1758242 L76.6593407,32.3516484 L99.1648352,32.3516484 L99.1648352,48.5274725 L60.4835165,48.5274725 L60.4835165,0 L60.4835165,0 Z" fill="#000000">
+
+</path>
+        <path d="M106.901099,0 L145.582418,0 L145.582418,14.0659341 L123.076923,14.0659341 L123.076923,16.8791209 L145.582418,16.8791209 L145.582418,49.2307692 L106.901099,49.2307692 L106.901099,34.4615385 L129.406593,34.4615385 L129.406593,31.6483516 L106.901099,31.6483516 L106.901099,0 L106.901099,0 Z" fill="#000000">
+
+</path>
+        <path d="M153.318681,0 L192,0 L192,14.0659341 L169.494505,14.0659341 L169.494505,16.8791209 L192,16.8791209 L192,49.2307692 L153.318681,49.2307692 L153.318681,34.4615385 L175.824176,34.4615385 L175.824176,31.6483516 L153.318681,31.6483516 L153.318681,0 L153.318681,0 Z" fill="#000000">
+
+</path>
+        <path d="M202.126769,188.636132 L207.892396,123.994725 L127.889582,123.994725 L127.889582,155.932132 L172.892132,155.932132 L169.98611,188.636132 L127.889582,188.636132 L127.889582,220.572835 L167.216527,220.572835 L163.509451,261.992791 L127.889582,271.606857 L127.889582,304.833407 L193.362286,286.687648 L193.842637,281.291956 L201.347516,197.212132 L202.126769,188.636132 L202.126769,188.636132 Z" fill="#FFFFFF">
+
+</path>
+    </g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+	<g>
+		<polygon fill="#007ACC" transform="translate(128.000000, 128.000000) scale(1, -1) translate(-128.000000, -128.000000) " points="0 128 0 0 128 0 256 0 256 128 256 256 128 256 0 256">
+
+</polygon>
+		<path d="M146.658132,223.436863 L146.739401,212.953054 L130.079084,212.953054 L113.418767,212.953054 L113.418767,165.613371 L113.418767,118.273689 L101.63464,118.273689 L89.8505126,118.273689 L89.8505126,165.613371 L89.8505126,212.953054 L73.1901951,212.953054 L56.5298776,212.953054 L56.5298776,223.233689 C56.5298776,228.922577 56.6517824,233.676863 56.8143221,233.798768 C56.9362269,233.961308 77.2130522,234.042577 101.797179,234.001943 L146.536227,233.880038 L146.658132,223.436863 Z" fill="#FFFFFF" transform="translate(101.634640, 176.142993) rotate(-180.000000) translate(-101.634640, -176.142993) ">
+
+</path>
+		<path d="M206.566631,234.272145 C213.068219,232.646748 218.025679,229.761668 222.57679,225.048018 C224.933616,222.528653 228.428219,217.936907 228.712663,216.839764 C228.793933,216.514684 217.659965,209.037859 210.914568,204.852462 C210.670758,204.689922 209.69552,205.74643 208.598377,207.371827 C205.306949,212.166748 201.852981,214.239129 196.570441,214.604843 C188.809171,215.133097 183.811076,211.069605 183.851711,204.283573 C183.851711,202.292462 184.136155,201.114049 184.948854,199.488653 C186.65552,195.953414 189.825044,193.840399 199.7806,189.533097 C218.106949,181.649922 225.949489,176.448653 230.825679,169.053097 C236.270758,160.804208 237.489806,147.638494 233.792028,137.845478 C229.728536,127.199129 219.651076,119.966113 205.469489,117.568653 C201.080917,116.796589 190.678377,116.918494 185.964727,117.771827 C175.684092,119.600399 165.931711,124.679764 159.917743,131.343891 C157.560917,133.944526 152.969171,140.730557 153.253616,141.218176 C153.37552,141.380716 154.432028,142.030875 155.610441,142.721668 C156.748219,143.371827 161.05552,145.850557 165.119012,148.207383 L172.473933,152.474049 L174.01806,150.198494 C176.171711,146.907065 180.885362,142.396589 183.729806,140.893097 C191.897425,136.585795 203.112663,137.195319 208.639012,142.15278 C210.995838,144.30643 211.971076,146.541351 211.971076,149.83278 C211.971076,152.799129 211.605362,154.099446 210.061235,156.334367 C208.070123,159.178811 204.006631,161.576272 192.466314,166.574367 C179.259965,172.263256 173.571076,175.798494 168.369806,181.406113 C165.362822,184.656907 162.518377,189.858176 161.339965,194.206113 C160.364727,197.822621 160.120917,206.884208 160.892981,210.541351 C163.61552,223.300716 173.245996,232.199764 187.143139,234.841034 C191.653616,235.694367 202.137425,235.369287 206.566631,234.272145 Z" fill="#FFFFFF" transform="translate(194.578507, 176.190240) scale(1, -1) translate(-194.578507, -176.190240) ">
+
+</path>
+	</g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 -2 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+		<g fill="#8E75FF">
+				<path d="M249.868148,1.42108547e-14 L81.6129672,1.42108547e-14 L81.6129672,84.3619834 L164.402564,84.3619834 C167.35201,84.3619834 169.744773,86.7547464 169.744773,89.7041929 L169.744773,171.351123 L255.210366,171.351123 L255.210366,5.3519758 C255.212951,3.93344238 254.651257,2.57212016 253.649118,1.56814827 C252.646978,0.56417638 251.286684,1.42108547e-14 249.868148,1.42108547e-14 Z">
+
+</path>
+				<path d="M81.6032009,0 L81.6032009,84.3619834 L2.67132424,84.3619834 C1.58669272,84.3600599 0.610497706,83.7036101 0.199569944,82.6998335 C-0.211357818,81.6960568 0.0242672254,80.5435101 0.796179436,79.7815516 L81.6032009,0 L81.6032009,0 Z M174.295906,251.220572 C173.527464,251.975341 172.381399,252.195816 171.387771,251.780027 C170.394142,251.364238 169.746654,250.393242 169.744773,249.316128 L169.744773,171.351123 L255.210357,171.351123 L174.295906,251.210806 L174.295906,251.220572 L174.295906,251.220572 Z" opacity="0.405">
+
+</path>
+				<path d="M81.6032009,84.3619834 L167.078552,84.3619834 C168.543508,84.3619834 169.744773,85.5534817 169.744773,87.028205 L169.744773,171.351123 L86.9551767,171.351123 C84.0047559,171.351123 81.6129672,168.959334 81.6129672,166.008913 L81.6129672,84.3619834 L81.6032009,84.3619834 L81.6032009,84.3619834 Z" fill-rule="nonzero" opacity="0.405">
+
+</path>
+		</g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 -0.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <defs>
+        <linearGradient x1="12.9593594%" y1="12.0393928%" x2="79.6388325%" y2="78.2008538%" id="linearGradient-1">
+            <stop stop-color="#387EB8" offset="0%">
+
+</stop>
+            <stop stop-color="#366994" offset="100%">
+
+</stop>
+        </linearGradient>
+        <linearGradient x1="19.127525%" y1="20.5791813%" x2="90.7415328%" y2="88.4290372%" id="linearGradient-2">
+            <stop stop-color="#FFE052" offset="0%">
+
+</stop>
+            <stop stop-color="#FFC331" offset="100%">
+
+</stop>
+        </linearGradient>
+    </defs>
+    <g>
+        <path d="M126.915866,0.0722755491 C62.0835831,0.0722801733 66.1321288,28.1874648 66.1321288,28.1874648 L66.2044043,57.3145115 L128.072276,57.3145115 L128.072276,66.0598532 L41.6307171,66.0598532 C41.6307171,66.0598532 0.144551098,61.3549438 0.144551098,126.771315 C0.144546474,192.187673 36.3546019,189.867871 36.3546019,189.867871 L57.9649915,189.867871 L57.9649915,159.51214 C57.9649915,159.51214 56.8001363,123.302089 93.5968379,123.302089 L154.95878,123.302089 C154.95878,123.302089 189.434218,123.859386 189.434218,89.9830604 L189.434218,33.9695088 C189.434218,33.9695041 194.668541,0.0722755491 126.915866,0.0722755491 L126.915866,0.0722755491 L126.915866,0.0722755491 Z M92.8018069,19.6589497 C98.9572068,19.6589452 103.932242,24.6339846 103.932242,30.7893845 C103.932246,36.9447844 98.9572068,41.9198193 92.8018069,41.9198193 C86.646407,41.9198239 81.6713721,36.9447844 81.6713721,30.7893845 C81.6713674,24.6339846 86.646407,19.6589497 92.8018069,19.6589497 L92.8018069,19.6589497 L92.8018069,19.6589497 Z" fill="url(#linearGradient-1)">
+
+</path>
+        <path d="M128.757101,254.126271 C193.589403,254.126271 189.540839,226.011081 189.540839,226.011081 L189.468564,196.884035 L127.600692,196.884035 L127.600692,188.138693 L214.042251,188.138693 C214.042251,188.138693 255.528417,192.843589 255.528417,127.427208 C255.52844,62.0108566 219.318366,64.3306589 219.318366,64.3306589 L197.707976,64.3306589 L197.707976,94.6863832 C197.707976,94.6863832 198.87285,130.896434 162.07613,130.896434 L100.714182,130.896434 C100.714182,130.896434 66.238745,130.339138 66.238745,164.215486 L66.238745,220.229038 C66.238745,220.229038 61.0044225,254.126271 128.757101,254.126271 L128.757101,254.126271 L128.757101,254.126271 Z M162.87116,234.539597 C156.715759,234.539597 151.740726,229.564564 151.740726,223.409162 C151.740726,217.253759 156.715759,212.278727 162.87116,212.278727 C169.026563,212.278727 174.001595,217.253759 174.001595,223.409162 C174.001618,229.564564 169.026563,234.539597 162.87116,234.539597 L162.87116,234.539597 L162.87116,234.539597 Z" fill="url(#linearGradient-2)">
+
+</path>
+    </g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 -99 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <defs>
+        <linearGradient x1="68.1884411%" y1="17.4868311%" x2="27.8226935%" y2="89.7551419%" id="linearGradient-1">
+            <stop stop-color="#41873F" offset="0%">
+
+</stop>
+            <stop stop-color="#418B3D" offset="32.88%">
+
+</stop>
+            <stop stop-color="#419637" offset="63.52%">
+
+</stop>
+            <stop stop-color="#3FA92D" offset="93.19%">
+
+</stop>
+            <stop stop-color="#3FAE2A" offset="100%">
+
+</stop>
+        </linearGradient>
+        <path id="path-2" d="M57.903386,1.84920993 C56.0541761,0.809029345 53.8582393,0.809029345 52.0090293,1.84920993 L3.351693,29.9340858 C1.50248307,30.9742664 0.462302483,32.9390519 0.462302483,35.0194131 L0.462302483,91.3047404 C0.462302483,93.3851016 1.61805869,95.3498871 3.351693,96.3900677 L52.0090293,124.474944 C53.8582393,125.515124 56.0541761,125.515124 57.903386,124.474944 L106.560722,96.3900677 C108.409932,95.3498871 109.450113,93.3851016 109.450113,91.3047404 L109.450113,35.0194131 C109.450113,32.9390519 108.294357,30.9742664 106.560722,29.9340858 L57.903386,1.84920993 L57.903386,1.84920993 Z">
+
+</path>
+        <linearGradient x1="43.2765472%" y1="55.168777%" x2="159.245277%" y2="-18.3061379%" id="linearGradient-4">
+            <stop stop-color="#41873F" offset="13.76%">
+
+</stop>
+            <stop stop-color="#54A044" offset="40.32%">
+
+</stop>
+            <stop stop-color="#66B848" offset="71.36%">
+
+</stop>
+            <stop stop-color="#6CC04A" offset="90.81%">
+
+</stop>
+        </linearGradient>
+        <linearGradient x1="-4413.77%" y1="13.43%" x2="5327.93%" y2="13.43%" id="linearGradient-5">
+            <stop stop-color="#6CC04A" offset="9.191646%">
+
+</stop>
+            <stop stop-color="#66B848" offset="28.64%">
+
+</stop>
+            <stop stop-color="#54A044" offset="59.68%">
+
+</stop>
+            <stop stop-color="#41873F" offset="86.24%">
+
+</stop>
+        </linearGradient>
+        <linearGradient x1="-4.38880435%" y1="49.9972065%" x2="101.499239%" y2="49.9972065%" id="linearGradient-6">
+            <stop stop-color="#6CC04A" offset="9.191646%">
+
+</stop>
+            <stop stop-color="#66B848" offset="28.64%">
+
+</stop>
+            <stop stop-color="#54A044" offset="59.68%">
+
+</stop>
+            <stop stop-color="#41873F" offset="86.24%">
+
+</stop>
+        </linearGradient>
+        <linearGradient x1="-9713.77%" y1="36.21%" x2="27.93%" y2="36.21%" id="linearGradient-7">
+            <stop stop-color="#6CC04A" offset="9.191646%">
+
+</stop>
+            <stop stop-color="#66B848" offset="28.64%">
+
+</stop>
+            <stop stop-color="#54A044" offset="59.68%">
+
+</stop>
+            <stop stop-color="#41873F" offset="86.24%">
+
+</stop>
+        </linearGradient>
+        <linearGradient x1="-103.860714%" y1="50.2754209%" x2="100.796849%" y2="50.2754209%" id="linearGradient-8">
+            <stop stop-color="#6CC04A" offset="9.191646%">
+
+</stop>
+            <stop stop-color="#66B848" offset="28.64%">
+
+</stop>
+            <stop stop-color="#54A044" offset="59.68%">
+
+</stop>
+            <stop stop-color="#41873F" offset="86.24%">
+
+</stop>
+        </linearGradient>
+        <linearGradient x1="130.613025%" y1="-211.06936%" x2="4.39327731%" y2="201.605387%" id="linearGradient-9">
+            <stop stop-color="#41873F" offset="0%">
+
+</stop>
+            <stop stop-color="#418B3D" offset="32.88%">
+
+</stop>
+            <stop stop-color="#419637" offset="63.52%">
+
+</stop>
+            <stop stop-color="#3FA92D" offset="93.19%">
+
+</stop>
+            <stop stop-color="#3FAE2A" offset="100%">
+
+</stop>
+        </linearGradient>
+    </defs>
+	<g fill="none">
+		<path d="M253.110609,313.094357 C251.376975,313.094357 249.758916,312.632054 248.256433,311.823025 L232.884876,302.692551 C230.573363,301.421219 231.72912,300.958916 232.422573,300.727765 C235.543115,299.687585 236.120993,299.456433 239.357111,297.607223 C239.703837,297.376072 240.16614,297.491648 240.512867,297.722799 L252.30158,304.772912 C252.763883,305.004063 253.341761,305.004063 253.688488,304.772912 L299.80316,278.074944 C300.265463,277.843792 300.496614,277.38149 300.496614,276.803612 L300.496614,223.523251 C300.496614,222.945372 300.265463,222.48307 299.80316,222.251919 L253.688488,195.669526 C253.226185,195.438375 252.648307,195.438375 252.30158,195.669526 L206.186907,222.251919 C205.724605,222.48307 205.493454,223.060948 205.493454,223.523251 L205.493454,276.803612 C205.493454,277.265914 205.724605,277.843792 206.186907,278.074944 L218.78465,285.356208 C225.603612,288.823476 229.87991,284.77833 229.87991,280.733183 L229.87991,228.146275 C229.87991,227.452822 230.457788,226.759368 231.266817,226.759368 L237.161174,226.759368 C237.854628,226.759368 238.548081,227.337246 238.548081,228.146275 L238.548081,280.733183 C238.548081,289.863657 233.57833,295.180135 224.910158,295.180135 C222.251919,295.180135 220.171558,295.180135 214.277201,292.290745 L202.141761,285.356208 C199.136795,283.622573 197.287585,280.386456 197.287585,276.919187 L197.287585,223.638826 C197.287585,220.171558 199.136795,216.93544 202.141761,215.201806 L248.256433,188.503837 C251.145824,186.885779 255.075395,186.885779 257.964786,188.503837 L304.079458,215.201806 C307.084424,216.93544 308.933634,220.171558 308.933634,223.638826 L308.933634,276.919187 C308.933634,280.386456 307.084424,283.622573 304.079458,285.356208 L257.964786,312.054176 C256.462302,312.74763 254.728668,313.094357 253.110609,313.094357 Z M267.326411,276.456885 C247.100677,276.456885 242.939955,267.210835 242.939955,259.351693 C242.939955,258.658239 243.517833,257.964786 244.326862,257.964786 L250.336795,257.964786 C251.030248,257.964786 251.608126,258.427088 251.608126,259.120542 C252.532731,265.24605 255.190971,268.251016 267.441986,268.251016 C277.150339,268.251016 281.311061,266.055079 281.311061,260.854176 C281.311061,257.84921 280.155305,255.653273 265.014898,254.15079 C252.417156,252.879458 244.558014,250.105643 244.558014,240.050564 C244.558014,230.688939 252.417156,225.141309 265.592777,225.141309 C280.386456,225.141309 287.66772,230.226637 288.592325,241.321896 C288.592325,241.668623 288.476749,242.01535 288.245598,242.362077 C288.014447,242.593228 287.66772,242.824379 287.320993,242.824379 L281.311061,242.824379 C280.733183,242.824379 280.155305,242.362077 280.039729,241.784199 C278.652822,235.42754 275.069977,233.347178 265.592777,233.347178 C254.959819,233.347178 253.688488,237.045598 253.688488,239.819413 C253.688488,243.171106 255.190971,244.211287 269.522348,246.060497 C283.738149,247.909707 290.441535,250.567946 290.441535,260.507449 C290.325959,270.678104 282.004515,276.456885 267.326411,276.456885 Z" fill="#539E43">
+
+</path>
+		<path d="M110.027991,104.711512 C110.027991,102.631151 108.872235,100.666366 107.023025,99.6261851 L58.0189616,71.4257336 C57.2099323,70.9634312 56.2853273,70.7322799 55.3607223,70.6167043 L54.8984199,70.6167043 C53.9738149,70.6167043 53.0492099,70.9634312 52.2401806,71.4257336 L3.23611738,99.6261851 C1.38690745,100.666366 0.231151242,102.631151 0.231151242,104.711512 L0.346726862,180.52912 C0.346726862,181.5693 0.924604966,182.609481 1.84920993,183.071783 C2.7738149,183.649661 3.92957111,183.649661 4.73860045,183.071783 L33.8636569,166.428894 C35.7128668,165.388713 36.868623,163.423928 36.868623,161.343567 L36.868623,125.861851 C36.868623,123.78149 38.0243792,121.816704 39.8735892,120.776524 L52.2401806,113.610835 C53.1647856,113.032957 54.2049661,112.801806 55.2451467,112.801806 C56.2853273,112.801806 57.3255079,113.032957 58.1345372,113.610835 L70.5011287,120.776524 C72.3503386,121.816704 73.5060948,123.78149 73.5060948,125.861851 L73.5060948,161.343567 C73.5060948,163.423928 74.661851,165.388713 76.5110609,166.428894 L105.636117,183.071783 C106.560722,183.649661 107.716479,183.649661 108.641084,183.071783 C109.565688,182.609481 110.143567,181.5693 110.143567,180.52912 L110.027991,104.711512 L110.027991,104.711512 Z" fill="#333333">
+
+</path>
+		<path d="M345.571106,0.346726862 C344.646501,-0.115575621 343.490745,-0.115575621 342.681716,0.346726862 C341.757111,0.924604966 341.179233,1.84920993 341.179233,2.88939052 L341.179233,78.013544 C341.179233,78.7069977 340.832506,79.4004515 340.139052,79.862754 C339.445598,80.2094808 338.752144,80.2094808 338.058691,79.862754 L325.807675,72.8126411 C323.958465,71.7724605 321.762528,71.7724605 319.913318,72.8126411 L270.909255,101.128668 C269.060045,102.168849 267.904289,104.133634 267.904289,106.213995 L267.904289,162.730474 C267.904289,164.810835 269.060045,166.775621 270.909255,167.815801 L319.913318,196.131828 C321.762528,197.172009 323.958465,197.172009 325.807675,196.131828 L374.811738,167.815801 C376.660948,166.775621 377.816704,164.810835 377.816704,162.730474 L377.816704,21.8437923 C377.816704,19.6478555 376.660948,17.68307 374.811738,16.6428894 L345.571106,0.346726862 L345.571106,0.346726862 Z M341.063657,144.122799 C341.063657,144.700677 340.832506,145.16298 340.370203,145.394131 L323.611738,155.102483 C323.149436,155.333634 322.571558,155.333634 322.109255,155.102483 L305.35079,145.394131 C304.888488,145.16298 304.657336,144.585102 304.657336,144.122799 L304.657336,124.706095 C304.657336,124.128217 304.888488,123.665914 305.35079,123.434763 L322.109255,113.726411 C322.571558,113.49526 323.149436,113.49526 323.611738,113.726411 L340.370203,123.434763 C340.832506,123.665914 341.063657,124.243792 341.063657,124.706095 L341.063657,144.122799 L341.063657,144.122799 Z" fill="#333333">
+
+</path>
+		<g transform="translate(401.047404, 70.501129)">
+			<path d="M107.600903,53.7426637 C109.450113,52.7024831 110.490293,50.7376975 110.490293,48.6573363 L110.490293,34.9038375 C110.490293,32.8234763 109.334537,30.8586907 107.600903,29.8185102 L58.9435666,1.61805869 C57.0943567,0.577878104 54.8984199,0.577878104 53.0492099,1.61805869 L4.04514673,29.9340858 C2.19593679,30.9742664 1.04018059,32.9390519 1.04018059,35.0194131 L1.04018059,91.5358916 C1.04018059,93.6162528 2.19593679,95.5810384 4.04514673,96.621219 L52.7024831,124.359368 C54.551693,125.399549 56.7476298,125.399549 58.4812641,124.359368 L87.9530474,107.94763 C88.8776524,107.485327 89.4555305,106.445147 89.4555305,105.404966 C89.4555305,104.364786 88.8776524,103.324605 87.9530474,102.862302 L38.717833,74.5462754 C37.793228,73.9683973 37.2153499,73.0437923 37.2153499,72.0036117 L37.2153499,54.3205418 C37.2153499,53.2803612 37.793228,52.2401806 38.717833,51.7778781 L54.0893905,42.9941309 C55.0139955,42.4162528 56.1697517,42.4162528 57.0943567,42.9941309 L72.4659142,51.7778781 C73.3905192,52.3557562 73.9683973,53.2803612 73.9683973,54.3205418 L73.9683973,68.1896163 C73.9683973,69.2297968 74.5462754,70.2699774 75.4708804,70.7322799 C76.3954853,71.310158 77.5512415,71.310158 78.4758465,70.7322799 L107.600903,53.7426637 L107.600903,53.7426637 Z" fill="#333333">
+
+</path>
+			<path d="M55.2451467,51.0844244 C55.5918736,50.8532731 56.0541761,50.8532731 56.4009029,51.0844244 L65.7625282,56.5164786 C66.1092551,56.7476298 66.3404063,57.0943567 66.3404063,57.5566591 L66.3404063,68.4207675 C66.3404063,68.88307 66.1092551,69.2297968 65.7625282,69.4609481 L56.4009029,74.8930023 C56.0541761,75.1241535 55.5918736,75.1241535 55.2451467,74.8930023 L45.8835214,69.4609481 C45.5367946,69.2297968 45.3056433,68.88307 45.3056433,68.4207675 L45.3056433,57.5566591 C45.3056433,57.0943567 45.5367946,56.7476298 45.8835214,56.5164786 L55.2451467,51.0844244 L55.2451467,51.0844244 Z" fill="#539E43">
+
+</path>
+		</g>
+		<g transform="translate(134.067720, 70.501129)">
+			<mask id="mask-3" fill="white">
+				<use xlink:href="#path-2">
+
+</use>
+			</mask>
+			<use fill="url(#linearGradient-1)" xlink:href="#path-2">
+
+</use>
+			<g mask="url(#mask-3)">
+				<path d="M51.8934537,1.84920993 L3.12054176,29.9340858 C1.27133183,30.9742664 0,32.9390519 0,35.0194131 L0,91.3047404 C0,92.6916479 0.577878104,93.9629797 1.50248307,95.0031603 L56.2853273,1.15575621 C54.8984199,0.924604966 53.2803612,1.04018059 51.8934537,1.84920993 L51.8934537,1.84920993 Z">
+
+</path>
+				<path d="M56.6320542,125.052822 C57.0943567,124.937246 57.5566591,124.706095 58.0189616,124.474944 L106.791874,96.3900677 C108.641084,95.3498871 109.79684,93.3851016 109.79684,91.3047404 L109.79684,35.0194131 C109.79684,33.51693 109.103386,32.014447 108.063205,30.9742664 L56.6320542,125.052822 L56.6320542,125.052822 Z">
+
+</path>
+				<path d="M106.676298,29.9340858 L57.7878104,1.84920993 C57.3255079,1.61805869 56.7476298,1.38690745 56.2853273,1.27133183 L1.50248307,95.1187359 C1.96478555,95.696614 2.54266366,96.1589165 3.12054176,96.5056433 L52.0090293,124.590519 C53.3959368,125.399549 55.0139955,125.6307 56.5164786,125.168397 L107.94763,31.089842 C107.600903,30.6275395 107.1386,30.2808126 106.676298,29.9340858 L106.676298,29.9340858 Z" fill="url(#linearGradient-4)">
+
+</path>
+			</g>
+			<g mask="url(#mask-3)">
+				<g transform="translate(0.000000, -9.246050)">
+					<path d="M109.79684,100.55079 L109.79684,44.2654628 C109.79684,42.1851016 108.525508,40.220316 106.676298,39.1801354 L57.7878104,11.0952596 C57.2099323,10.7485327 56.6320542,10.5173815 55.9386005,10.4018059 L109.450113,101.822122 C109.681264,101.475395 109.79684,101.013093 109.79684,100.55079 L109.79684,100.55079 Z" fill="none">
+
+</path>
+					<path d="M3.12054176,39.1801354 C1.27133183,40.220316 0,42.1851016 0,44.2654628 L0,100.55079 C0,102.631151 1.38690745,104.595937 3.12054176,105.636117 L52.0090293,133.720993 C53.1647856,134.414447 54.4361174,134.645598 55.8230248,134.414447 L3.46726862,39.0645598 L3.12054176,39.1801354 L3.12054176,39.1801354 Z" fill="none">
+
+</path>
+					<path fill="url(#linearGradient-5)" fill-rule="evenodd" d="M50.3909707,0.809029345 L49.6975169,1.15575621 L50.6221219,1.15575621 L50.3909707,0.809029345 Z">
+
+</path>
+					<path d="M106.791874,105.636117 C108.178781,104.827088 109.218962,103.440181 109.681264,101.937698 L56.0541761,10.4018059 C54.6672686,10.1706546 53.1647856,10.2862302 51.8934537,11.0952596 L3.351693,39.0645598 L55.7074492,134.530023 C56.4009029,134.414447 57.2099323,134.183296 57.903386,133.836569 L106.791874,105.636117 L106.791874,105.636117 Z" fill="url(#linearGradient-6)" fill-rule="evenodd">
+
+</path>
+					<path fill="url(#linearGradient-7)" fill-rule="evenodd" d="M111.299323,104.711512 L110.952596,104.133634 L110.952596,104.942664 L111.299323,104.711512 Z">
+
+</path>
+					<path d="M106.791874,105.636117 L58.0189616,133.720993 C57.3255079,134.06772 56.6320542,134.298871 55.8230248,134.414447 L56.7476298,136.148081 L110.83702,104.827088 L110.83702,104.133634 L109.450113,101.822122 C109.218962,103.440181 108.178781,104.827088 106.791874,105.636117 L106.791874,105.636117 Z" fill="url(#linearGradient-8)" fill-rule="evenodd">
+
+</path>
+					<path d="M106.791874,105.636117 L58.0189616,133.720993 C57.3255079,134.06772 56.6320542,134.298871 55.8230248,134.414447 L56.7476298,136.148081 L110.83702,104.827088 L110.83702,104.133634 L109.450113,101.822122 C109.218962,103.440181 108.178781,104.827088 106.791874,105.636117 L106.791874,105.636117 Z" fill="url(#linearGradient-9)" fill-rule="evenodd">
+
+</path>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <defs>
+        <linearGradient x1="26.599%" y1="146.559136%" x2="73.8446667%" y2="52.3813953%" id="linearGradient-1">
+            <stop stop-color="#0095D5" offset="9.677%">
+
+</stop>
+            <stop stop-color="#238AD9" offset="30.07%">
+
+</stop>
+            <stop stop-color="#557BDE" offset="62.11%">
+
+</stop>
+            <stop stop-color="#7472E2" offset="86.43%">
+
+</stop>
+            <stop stop-color="#806EE3" offset="100%">
+
+</stop>
+        </linearGradient>
+        <linearGradient x1="13.9840532%" y1="37.1049231%" x2="68.682392%" y2="-13.5538462%" id="linearGradient-2">
+            <stop stop-color="#0095D5" offset="11.83%">
+
+</stop>
+            <stop stop-color="#3C83DC" offset="41.78%">
+
+</stop>
+            <stop stop-color="#6D74E1" offset="69.62%">
+
+</stop>
+            <stop stop-color="#806EE3" offset="83.33%">
+
+</stop>
+        </linearGradient>
+        <linearGradient x1="-16.8361667%" y1="91.9396667%" x2="76.2191667%" y2="-1.11566667%" id="linearGradient-3">
+            <stop stop-color="#C757BC" offset="10.75%">
+
+</stop>
+            <stop stop-color="#D0609A" offset="21.38%">
+
+</stop>
+            <stop stop-color="#E1725C" offset="42.54%">
+
+</stop>
+            <stop stop-color="#EE7E2F" offset="60.48%">
+
+</stop>
+            <stop stop-color="#F58613" offset="74.3%">
+
+</stop>
+            <stop stop-color="#F88909" offset="82.32%">
+
+</stop>
+        </linearGradient>
+    </defs>
+    <g>
+				<polygon fill="url(#linearGradient-1)" points="0 256 128.426667 127.573333 256 256">
+
+</polygon>
+				<polygon fill="url(#linearGradient-2)" points="0 0 128.426667 0 0 138.666667">
+
+</polygon>
+				<polygon fill="url(#linearGradient-3)" points="128.426667 0 0 135.253333 0 256 128.426667 127.573333 256 0">
+
+</polygon>
+    </g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg id="Ebene_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 466.73 532.09">
+  <!-- Generator: Adobe Illustrator 29.6.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 9)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #edecec;
+      }
+    </style>
+  </defs>
+  <path class="st0" d="M457.43,125.94L244.42,2.96c-6.84-3.95-15.28-3.95-22.12,0L9.3,125.94c-5.75,3.32-9.3,9.46-9.3,16.11v247.99c0,6.65,3.55,12.79,9.3,16.11l213.01,122.98c6.84,3.95,15.28,3.95,22.12,0l213.01-122.98c5.75-3.32,9.3-9.46,9.3-16.11v-247.99c0-6.65-3.55-12.79-9.3-16.11h-.01ZM444.05,151.99l-205.63,356.16c-1.39,2.4-5.06,1.42-5.06-1.36v-233.21c0-4.66-2.49-8.97-6.53-11.31L24.87,145.67c-2.4-1.39-1.42-5.06,1.36-5.06h411.26c5.84,0,9.49,6.33,6.57,11.39h-.01Z"/>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 -60.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+	<defs>
+		<radialGradient id="radialGradient-1" cx="0.8366" cy="-125.811" r="363.0565" gradientTransform="matrix(0.463 0 0 0.463 76.4644 81.9182)" gradientUnits="userSpaceOnUse">
+			<stop offset="0" style="stop-color:#FFFFFF"/>
+			<stop offset="0.5" style="stop-color:#4C6B97"/>
+			<stop offset="1" style="stop-color:#231F20"/>
+		</radialGradient>
+	</defs>
+	<g>
+		<ellipse fill="url(#radialGradient-1)" cx="128" cy="67.3" rx="128" ry="67.3"/>
+		<ellipse fill="#6181B6" cx="128" cy="67.3" rx="123" ry="62.3"/>
+		<g>
+			<path fill="#FFFFFF" d="M152.9,87.5c0,0,6.1-31.4,6.1-31.4c1.4-7.1,0.2-12.4-3.4-15.7c-3.5-3.2-9.5-4.8-18.3-4.8h-10.6l3-15.6
+				c0.1-0.6,0-1.2-0.4-1.7c-0.4-0.5-0.9-0.7-1.5-0.7h-14.6c-1,0-1.8,0.7-2,1.6l-6.5,33.3c-0.6-3.8-2-7-4.4-9.6
+				c-4.3-4.9-11-7.4-20.1-7.4H52.1c-1,0-1.8,0.7-2,1.6L37,104.7c-0.1,0.6,0,1.2,0.4,1.7c0.4,0.5,0.9,0.7,1.5,0.7h14.7
+				c1,0,1.8-0.7,2-1.6l3.2-16.3h10.9c5.7,0,10.6-0.6,14.3-1.8c3.9-1.3,7.4-3.4,10.5-6.3c2.5-2.3,4.6-4.9,6.2-7.7l-2.6,13.5
+				c-0.1,0.6,0,1.2,0.4,1.7s0.9,0.7,1.5,0.7h14.6c1,0,1.8-0.7,2-1.6l7.2-37h10c4.3,0,5.5,0.8,5.9,1.2c0.3,0.3,0.9,1.5,0.2,5.2
+				l-5.8,29.9c-0.1,0.6,0,1.2,0.4,1.7c0.4,0.5,0.9,0.7,1.5,0.7H151C151.9,89.1,152.7,88.4,152.9,87.5z M85.3,61.5
+				c-0.9,4.7-2.6,8.1-5.1,10c-2.5,1.9-6.6,2.9-12,2.9h-6.5l4.7-24.2h8.4c6.2,0,8.7,1.3,9.7,2.4C85.8,54.2,86.1,57.3,85.3,61.5z"/>
+			<path fill="#FFFFFF" d="M215.3,42.9c-4.3-4.9-11-7.4-20.1-7.4h-28.3c-1,0-1.8,0.7-2,1.6l-13.1,67.5c-0.1,0.6,0,1.2,0.4,1.7
+				c0.4,0.5,0.9,0.7,1.5,0.7h14.7c1,0,1.8-0.7,2-1.6l3.2-16.3h10.9c5.7,0,10.6-0.6,14.3-1.8c3.9-1.3,7.4-3.4,10.5-6.3
+				c2.6-2.4,4.8-5.1,6.4-8c1.6-2.9,2.8-6.1,3.5-9.6C220.9,54.7,219.6,47.9,215.3,42.9z M200,61.5c-0.9,4.7-2.6,8.1-5.1,10
+				c-2.5,1.9-6.6,2.9-12,2.9h-6.5l4.7-24.2h8.4c6.2,0,8.7,1.3,9.7,2.4C200.6,54.2,200.9,57.3,200,61.5z"/>
+		</g>
+		<g>
+			<path fill="#000004" d="M74.8,48.2c5.6,0,9.3,1,11.2,3.1c1.9,2.1,2.3,5.6,1.3,10.6c-1,5.2-3,9-5.9,11.2c-2.9,2.2-7.3,3.3-13.2,3.3
+				h-8.9l5.5-28.2H74.8z M39,105h14.7l3.5-17.9h12.6c5.6,0,10.1-0.6,13.7-1.8c3.6-1.2,6.8-3.1,9.8-5.9c2.5-2.3,4.5-4.8,6-7.5
+				c1.5-2.7,2.6-5.7,3.2-9c1.6-8,0.4-14.2-3.5-18.7c-3.9-4.5-10.1-6.7-18.6-6.7H52.1L39,105z"/>
+			<path fill="#000004" d="M113.3,19.6h14.6l-3.5,17.9h13c8.2,0,13.8,1.4,16.9,4.3c3.1,2.9,4,7.5,2.8,13.9L151,87.1h-14.8l5.8-29.9
+				c0.7-3.4,0.4-5.7-0.7-6.9c-1.1-1.2-3.6-1.9-7.3-1.9h-11.7l-7.5,38.7h-14.6L113.3,19.6z"/>
+			<path fill="#000004" d="M189.5,48.2c5.6,0,9.3,1,11.2,3.1c1.9,2.1,2.3,5.6,1.3,10.6c-1,5.2-3,9-5.9,11.2c-2.9,2.2-7.3,3.3-13.2,3.3
+				h-8.9l5.5-28.2H189.5z M153.7,105h14.7l3.5-17.9h12.6c5.6,0,10.1-0.6,13.7-1.8c3.6-1.2,6.8-3.1,9.8-5.9c2.5-2.3,4.5-4.8,6-7.5
+				c1.5-2.7,2.6-5.7,3.2-9c1.6-8,0.4-14.2-3.5-18.7c-3.9-4.5-10.1-6.7-18.6-6.7h-28.3L153.7,105z"/>
+		</g>
+	</g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="85" height="107" viewBox="0 0 85 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M27.5894 91.1365C22.7555 86.7178 21.3444 77.4335 23.3583 70.7072C26.8503 74.948 31.6888 76.2914 36.7005 77.0497C44.4375 78.2199 52.0359 77.7822 59.2232 74.2459C60.0454 73.841 60.8052 73.3027 61.7036 72.7574C62.378 74.714 62.5535 76.6892 62.318 78.6996C61.7452 83.5957 59.3086 87.3778 55.4332 90.2448C53.8835 91.3916 52.2437 92.4167 50.6432 93.4979C45.7262 96.8213 44.3959 100.718 46.2435 106.386C46.2874 106.525 46.3267 106.663 46.426 107C43.9155 105.876 42.0817 104.24 40.6845 102.089C39.2087 99.8193 38.5066 97.3081 38.4696 94.5909C38.4511 93.2686 38.4511 91.9345 38.2733 90.6309C37.8391 87.4527 36.3471 86.0297 33.5364 85.9478C30.6518 85.8636 28.37 87.6469 27.7649 90.4554C27.7187 90.6707 27.6517 90.8837 27.5847 91.1341L27.5894 91.1365Z" fill="white"/>
+<path d="M27.5894 91.1365C22.7555 86.7178 21.3444 77.4335 23.3583 70.7072C26.8503 74.948 31.6888 76.2914 36.7005 77.0497C44.4375 78.2199 52.0359 77.7822 59.2232 74.2459C60.0454 73.841 60.8052 73.3027 61.7036 72.7574C62.378 74.714 62.5535 76.6892 62.318 78.6996C61.7452 83.5957 59.3086 87.3778 55.4332 90.2448C53.8835 91.3916 52.2437 92.4167 50.6432 93.4979C45.7262 96.8213 44.3959 100.718 46.2435 106.386C46.2874 106.525 46.3267 106.663 46.426 107C43.9155 105.876 42.0817 104.24 40.6845 102.089C39.2087 99.8193 38.5066 97.3081 38.4696 94.5909C38.4511 93.2686 38.4511 91.9345 38.2733 90.6309C37.8391 87.4527 36.3471 86.0297 33.5364 85.9478C30.6518 85.8636 28.37 87.6469 27.7649 90.4554C27.7187 90.6707 27.6517 90.8837 27.5847 91.1341L27.5894 91.1365Z" fill="url(#paint0_linear_1_59)"/>
+<path d="M0 69.5866C0 69.5866 14.3139 62.6137 28.6678 62.6137L39.4901 29.1204C39.8953 27.5007 41.0783 26.3999 42.4139 26.3999C43.7495 26.3999 44.9325 27.5007 45.3377 29.1204L56.1601 62.6137C73.1601 62.6137 84.8278 69.5866 84.8278 69.5866C84.8278 69.5866 60.5145 3.35233 60.467 3.21944C59.7692 1.2612 58.5911 0 57.0029 0H27.8274C26.2392 0 25.1087 1.2612 24.3634 3.21944C24.3108 3.34983 0 69.5866 0 69.5866Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear_1_59" x1="22.4702" y1="107" x2="69.1451" y2="84.9468" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D83333"/>
+<stop offset="1" stop-color="#F041FF"/>
+</linearGradient>
+</defs>
+</svg>
+</span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"><li class="flex items-center gap-2    px-3 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="14:89"> <span aria-hidden="true" class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale hover:grayscale-0 transition-all duration-300" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="16:34"><svg width="800px" height="800px" viewBox="0 -51 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <defs>
+        <linearGradient x1="-2.77777778%" y1="32%" x2="100%" y2="67.5555556%" id="linearGradient-1">
+            <stop stop-color="#2298BD" offset="0%">
+
+</stop>
+            <stop stop-color="#0ED7B5" offset="100%">
+
+</stop>
+        </linearGradient>
+    </defs>
+    <g>
+        <path d="M128,-1.0658141e-14 C93.8666667,-1.0658141e-14 72.5333333,17.0666667 64,51.2 C76.8,34.1333333 91.7333333,27.7333333 108.8,32 C118.537481,34.4343704 125.497363,41.4985481 133.201067,49.3184 C145.750756,62.0567704 160.275437,76.8 192,76.8 C226.133333,76.8 247.466667,59.7333333 256,25.6 C243.2,42.6666667 228.266667,49.0666667 211.2,44.8 C201.462519,42.3656296 194.502637,35.3014519 186.798933,27.4816 C174.249244,14.7432296 159.724563,-1.0658141e-14 128,-1.0658141e-14 Z M64,76.8 C29.8666667,76.8 8.53333333,93.8666667 0,128 C12.8,110.933333 27.7333333,104.533333 44.8,108.8 C54.5374815,111.23437 61.497363,118.298548 69.2010667,126.1184 C81.7507556,138.85677 96.275437,153.6 128,153.6 C162.133333,153.6 183.466667,136.533333 192,102.4 C179.2,119.466667 164.266667,125.866667 147.2,121.6 C137.462519,119.16563 130.502637,112.101452 122.798933,104.2816 C110.249244,91.5432296 95.724563,76.8 64,76.8 Z" fill="url(#linearGradient-1)">
+
+</path>
+    </g>
+</svg></span> </li>
+                    <img src="/@fs/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/assets/elipse.svg?origWidth=7&#38;origHeight=7&#38;origFormat=svg" alt="" aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/technologiesStack/index.astro" data-astro-source-loc="23:22"> </ul> </section><section class="block mx-auto w-full max-w-600 px-6 py-4 mb-48 " data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Container/index.astro" data-astro-source-loc="7:80">  <div class="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/aboutMe/index.astro" data-astro-source-loc="20:91"> <div data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/aboutMe/index.astro" data-astro-source-loc="21:14"> <div class="space-y-2 max-w-xl" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/SectionHeader/index.astro" data-astro-source-loc="15:39"> <p class="font-semibold uppercase text-paper" style="font-size: var(--font-size-p); line-height: 1.2; font-size: var(--font-size-sm);"> A little </p> <h2 class="leading-tight text-paper" style="font-size: var(--font-size-h2); line-height: 1.1; font-size: var(--font-size-4xl);"> About me </h2> <p class="leading-7 text-paper" style="font-size: var(--font-size-p); line-height: 1.2; font-size: var(--font-size-lg);"> I’m frontend developer aspirating to become fullstack developer. I started work as developer in 2019. I like to understand horizontally </p> </div> <a class="mt-8 inline-flex items-center rounded-lg border border-paper/70 px-4 py-2 text-sm font-medium text-paper hover:border-paper" href="/about" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Link/index.astro" data-astro-source-loc="14:10">See more</a> </div> <ul class="grid grid-cols-1 gap-4 md:h-[58vw] md:grid-cols-2 md:grid-rows-2 lg:h-[44vw] lg:gap-5 xl:h-[38vw] lg:mt-4 lg:justify-self-end" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/ImageGrid/index.astro" data-astro-source-loc="26:10"><li class="overflow-hidden hidden md:block md:[grid-area:1/1/2/2]" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/ImageGrid/index.astro" data-astro-source-loc="45:91"><img src="/_image?href=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F11djiifo%2Fproduction%2F964b471711deb979d0754c346954a98fed3c3c85-256x385.jpg&#38;w=256&#38;h=385&#38;f=webp" data-image-component="true" alt="Grzegorz with phone and laptop" loading="lazy" decoding="async" width="256" height="385" class="ml-auto h-full w-[46%] object-cover" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/node_modules/astro/components/Image.astro" data-astro-source-loc="53:2"></li><li class="overflow-hidden block md:[grid-area:1/2/3/3]" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/ImageGrid/index.astro" data-astro-source-loc="45:91"><img src="/_image?href=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F11djiifo%2Fproduction%2Fbb397a963114de303cecb58572ff3db13d108b32-470x705.jpg&#38;w=470&#38;h=705&#38;f=webp" data-image-component="true" alt="Grzegorz smiling" loading="lazy" decoding="async" width="470" height="705" class="h-full w-full object-cover" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/node_modules/astro/components/Image.astro" data-astro-source-loc="53:2"></li><li class="overflow-hidden hidden md:block md:[grid-area:2/1/3/2]" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/ImageGrid/index.astro" data-astro-source-loc="45:91"><img src="/_image?href=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F11djiifo%2Fproduction%2Fa0606f52fc2599eb16cc1d1e4118b3cbdec11cbf-452x302.jpg&#38;w=452&#38;h=302&#38;f=webp" data-image-component="true" alt="laptop" loading="lazy" decoding="async" width="452" height="302" class="h-full w-full object-cover" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/node_modules/astro/components/Image.astro" data-astro-source-loc="53:2"></li></ul> </div>  </section><section class="block mx-auto w-full max-w-600 px-6 py-4 mb-48 " data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Container/index.astro" data-astro-source-loc="7:80">  <div class="mb-8 flex items-center justify-between gap-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/projectsShowcase/index.astro" data-astro-source-loc="18:63"> <div class="space-y-2 " data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/SectionHeader/index.astro" data-astro-source-loc="15:39">  <h2 class="leading-tight text-paper" style="font-size: var(--font-size-h2); line-height: 1.1; font-size: var(--font-size-4xl);"> Work </h2>  </div>  </div> <ul class="space-y-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/projectsShowcase/index.astro" data-astro-source-loc="32:35"> <li data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/projectsShowcase/index.astro" data-astro-source-loc="34:25"> <article class="overflow-hidden rounded-2xl border border-paper/50  " data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="50:2"> <div class="grid md:grid-cols-2" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="51:38"> <div class="flex flex-col justify-between gap-8 p-6 md:p-8" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="52:69"> <div class="space-y-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="53:36"> <div class="w-fit rounded-full border px-3 py-1 text-xs uppercase flex items-center gap-2 border-accent-green text-accent-green" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="58:26"> Done  <div class="w-1 h-1 rounded-full bg-accent-green" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="60:30"></div> </div> <h3 class="text-1xl font-semibold text-paper" style="font-size: var(--font-size-h3); line-height: 1.12;"> Letki wspin </h3> <div class="max-w-xl text-lg text-paper/85" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/RichText/index.astro" data-astro-source-loc="132:32">Szybki projekt</div> <a class="inline-flex w-fit text-sm text-accent-orange underline underline-offset-4 transition-opacity duration-200 hover:opacity-80" href="https://letkiwspin.pl/" target="_blank" rel="noreferrer noopener" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Link/index.astro" data-astro-source-loc="14:10">
+See project
+</a>  </div> <div class="space-y-3" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="105:44"> <p class="text-paper" style="font-size: var(--font-size-p); line-height: 1.2;"> Technologies: </p> <ul class="flex flex-wrap items-center gap-3" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="107:71"> <li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="103" height="103" viewBox="0 0 103 103" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_266_2082)">
+<path d="M48.1271 0.0277177C47.9056 0.0478516 47.2008 0.11832 46.5665 0.168655C31.937 1.48742 18.2339 9.37991 9.55494 21.5106C4.72209 28.2554 1.63109 35.9063 0.463148 44.0102C0.0503421 46.839 0 47.6746 0 51.5101C0 55.3456 0.0503421 56.1811 0.463148 59.01C3.26217 78.3486 17.0257 94.5966 35.6926 100.617C39.0353 101.694 42.5592 102.429 46.5665 102.872C48.1271 103.043 54.8729 103.043 56.4335 102.872C63.3505 102.107 69.2104 100.395 74.9896 97.4456C75.8757 96.9925 76.0468 96.8717 75.926 96.7711C75.8455 96.7107 72.0698 91.647 67.539 85.5263L59.303 74.4023L48.9829 59.1308C43.3043 50.7349 38.6326 43.8693 38.5923 43.8693C38.552 43.8592 38.5117 50.6443 38.4916 58.9294C38.4614 73.4359 38.4513 74.0198 38.2701 74.3621C38.0083 74.8553 37.8069 75.0567 37.3841 75.2781C37.0619 75.4392 36.78 75.4694 35.2596 75.4694H33.5178L33.0546 75.1775C32.7526 74.9862 32.5311 74.7345 32.3801 74.4426L32.1686 73.9896L32.1888 53.8053L32.219 33.6111L32.5311 33.2184C32.6922 33.007 33.0345 32.7352 33.2761 32.6044C33.689 32.403 33.85 32.3829 35.5919 32.3829C37.6458 32.3829 37.9882 32.4634 38.5218 33.0473C38.6728 33.2084 44.2608 41.6243 50.9462 51.7618C57.6317 61.8992 66.7738 75.7412 71.2643 82.5364L79.4197 94.8886L79.8325 94.6167C83.4874 92.2409 87.3537 88.8585 90.4145 85.335C96.9287 77.8553 101.127 68.7346 102.537 59.01C102.95 56.1811 103 55.3456 103 51.5101C103 47.6746 102.95 46.839 102.537 44.0102C99.7378 24.6716 85.9743 8.42355 67.3074 2.40352C64.0151 1.33642 60.5112 0.601534 56.5846 0.158588C55.618 0.0579185 48.9628 -0.0528179 48.1271 0.0277177ZM69.2104 31.1749C69.6936 31.4165 70.0863 31.8795 70.2273 32.3628C70.3078 32.6245 70.328 38.2217 70.3078 50.8356L70.2776 68.936L67.0859 64.0434L63.8842 59.1509V45.9934C63.8842 37.4868 63.9244 32.705 63.9848 32.4735C64.1459 31.9097 64.4983 31.4668 64.9816 31.2051C65.3944 30.9936 65.5455 30.9735 67.1262 30.9735C68.6163 30.9735 68.8781 30.9936 69.2104 31.1749Z" fill="#ECECE7"/>
+</g>
+<defs>
+<clipPath id="clip0_266_2082">
+<rect width="103" height="103" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+</span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="800px" height="800px" viewBox="0 -204 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+	<g>
+		<polygon fill="#F37368" points="381.461756 36.9858357 381.461756 101.81983 360.575637 101.81983 360.575637 26.8328612">
+
+</polygon>
+		<path d="M85.8651558,89.7813031 L101.529745,103.415297 L167.524079,69.0402266 L160.707082,52.6504249 L85.8651558,89.7813031 Z M360.575637,48.0090652 L413.66119,20.4509915 L404.668555,4.93144476 L360.575637,26.8328612 L360.575637,48.0090652 Z" fill="#F7A199">
+
+</path>
+		<path d="M211.18187,31.9093484 L211.18187,101.81983 L191.166006,101.81983 L191.166006,2.17563739 L211.18187,31.9093484 Z M85.8651558,89.7813031 L101.529745,103.415297 L131.698584,27.9932011 L121.980737,2.17563739 L85.8651558,89.7813031 Z" fill="#F37368">
+
+</path>
+		<path d="M121.980737,2.17563739 L142.576771,2.17563739 L180.722946,101.81983 L159.546742,101.81983 L121.980737,2.17563739 Z M214.227762,2.17563739 L258.175637,70.2005666 L258.175637,101.81983 L191.166006,2.17563739 L214.227762,2.17563739 Z M295.886686,2.17563739 L316.627762,2.17563739 L316.627762,101.81983 L295.886686,101.81983 L295.886686,2.17563739 Z M360.575637,20.4509915 L328.666289,20.4509915 L328.666289,2.17563739 L403.073088,2.17563739 L413.66119,20.4509915 L381.461756,20.4509915 L360.575637,20.4509915 Z" fill="#F04939">
+
+</path>
+		<polyline fill="#F7A199" points="475.014164 63.9637394 475.014164 101.81983 454.41813 101.81983 454.41813 63.9637394">
+
+</polyline>
+		<polygon fill="#F04939" points="489.228329 2.17563739 454.41813 63.9637394 475.014164 63.9637394 511.129745 2.17563739">
+
+</polygon>
+		<polygon fill="#F37368" points="454.41813 63.9637394 418.447592 2.17563739 441.074221 2.17563739 465.296317 44.5280453">
+
+</polygon>
+		<path d="M8.55750708,13.7790368 C8.55750708,27.5580737 17.1150142,35.8254958 34.2300283,40.1767705 L52.3603399,44.3830028 C68.6050992,48.1541076 78.4679887,57.4368272 78.4679887,72.5212465 C78.6130312,79.0481586 76.4373938,85.4300283 72.5212465,90.6515581 C72.5212465,75.5671388 64.6889518,67.4447592 45.9784703,62.5133144 L28.1382436,58.4521246 C13.7790368,55.2611898 2.75580737,47.5739377 2.75580737,31.184136 C2.75580737,24.9473088 4.78640227,18.7104816 8.55750708,13.7790368" fill="#F04939">
+
+</path>
+		<polygon fill="#F37368" points="258.175637 65.1240793 258.175637 2.17563739 278.191501 2.17563739 278.191501 101.81983 258.175637 101.81983">
+
+</polygon>
+		<path d="M61.3529745,68.7501416 C69.0402266,73.6815864 72.5212465,80.6436261 72.5212465,90.6515581 C65.9943343,98.9189802 54.8260623,103.415297 41.6271955,103.415297 C19.4356941,103.415297 3.62606232,92.392068 0.290084986,73.3915014 L21.6113314,73.3915014 C24.3671388,82.094051 31.6192635,86.1552408 41.482153,86.1552408 C53.2305949,86.3002833 61.207932,79.9184136 61.3529745,68.7501416 M8.55750708,13.6339943 C14.7943343,5.51161473 25.5274788,0.580169972 38.5813031,0.580169972 C61.3529745,0.580169972 74.4067989,12.6186969 77.7427762,29.4436261 L57.1467422,29.4436261 C54.8260623,22.7716714 49.1694051,17.5501416 38.8713881,17.5501416 C27.7031161,17.6951841 20.1609065,24.0770538 19.725779,34.2300283 C12.2517705,30.1081799 8.2674221,22.0464589 8.55750708,13.6339943 Z" fill="#F37368">
+
+</path>
+	</g>
+</svg></span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="400" height="600" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 500C0 444.772 44.772 400 100 400H200V500C200 555.228 155.228 600 100 600C44.772 600 0 555.228 0 500Z" fill="#24CB71"/>
+<path d="M200 0V200H300C355.228 200 400 155.228 400 100C400 44.772 355.228 0 300 0H200Z" fill="#FF7237"/>
+<path d="M299.167 400C354.395 400 399.167 355.228 399.167 300C399.167 244.772 354.395 200 299.167 200C243.939 200 199.167 244.772 199.167 300C199.167 355.228 243.939 400 299.167 400Z" fill="#00B6FF"/>
+<path d="M0 100C0 155.228 44.772 200 100 200H200V0H100C44.772 0 0 44.772 0 100Z" fill="#FF3737"/>
+<path d="M0 300C0 355.228 44.772 400 100 400H200V200H100C44.772 200 0 244.772 0 300Z" fill="#874FFF"/>
+</svg>
+</span> </li> </ul> </div> </div> <img src="https://cdn.sanity.io/images/11djiifo/production/60bacef6974f891c046a0f7649733c94b6511c83-2704x1794.png" alt="Letki wspin" width="2704" height="1794" class="h-full w-full object-cover" loading="lazy" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="132:18"> </div> </article> </li><li data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/projectsShowcase/index.astro" data-astro-source-loc="34:25"> <article class="overflow-hidden rounded-2xl border border-paper/50  " data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="50:2"> <div class="grid md:grid-cols-2" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="51:38"> <div class="flex flex-col justify-between gap-8 p-6 md:p-8" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="52:69"> <div class="space-y-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="53:36"> <div class="w-fit rounded-full border px-3 py-1 text-xs uppercase flex items-center gap-2 border-accent-green text-accent-green" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="58:26"> Done  <div class="w-1 h-1 rounded-full bg-accent-green" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="60:30"></div> </div> <h3 class="text-1xl font-semibold text-paper" style="font-size: var(--font-size-h3); line-height: 1.12;"> Move with Nat </h3> <div class="max-w-xl text-lg text-paper/85" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/RichText/index.astro" data-astro-source-loc="132:32"></div> <a class="inline-flex w-fit text-sm text-accent-orange underline underline-offset-4 transition-opacity duration-200 hover:opacity-80" href="https://movewithnat.pl/" target="_blank" rel="noreferrer noopener" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Link/index.astro" data-astro-source-loc="14:10">
+See project
+</a>  </div> <div class="space-y-3" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="105:44"> <p class="text-paper" style="font-size: var(--font-size-p); line-height: 1.2;"> Technologies: </p> <ul class="flex flex-wrap items-center gap-3" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="107:71"> <li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg id="Ebene_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 466.73 532.09">
+  <!-- Generator: Adobe Illustrator 29.6.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 9)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #edecec;
+      }
+    </style>
+  </defs>
+  <path class="st0" d="M457.43,125.94L244.42,2.96c-6.84-3.95-15.28-3.95-22.12,0L9.3,125.94c-5.75,3.32-9.3,9.46-9.3,16.11v247.99c0,6.65,3.55,12.79,9.3,16.11l213.01,122.98c6.84,3.95,15.28,3.95,22.12,0l213.01-122.98c5.75-3.32,9.3-9.46,9.3-16.11v-247.99c0-6.65-3.55-12.79-9.3-16.11h-.01ZM444.05,151.99l-205.63,356.16c-1.39,2.4-5.06,1.42-5.06-1.36v-233.21c0-4.66-2.49-8.97-6.53-11.31L24.87,145.67c-2.4-1.39-1.42-5.06,1.36-5.06h411.26c5.84,0,9.49,6.33,6.57,11.39h-.01Z"/>
+</svg></span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="800px" height="800px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+	<g>
+		<polygon fill="#007ACC" transform="translate(128.000000, 128.000000) scale(1, -1) translate(-128.000000, -128.000000) " points="0 128 0 0 128 0 256 0 256 128 256 256 128 256 0 256">
+
+</polygon>
+		<path d="M146.658132,223.436863 L146.739401,212.953054 L130.079084,212.953054 L113.418767,212.953054 L113.418767,165.613371 L113.418767,118.273689 L101.63464,118.273689 L89.8505126,118.273689 L89.8505126,165.613371 L89.8505126,212.953054 L73.1901951,212.953054 L56.5298776,212.953054 L56.5298776,223.233689 C56.5298776,228.922577 56.6517824,233.676863 56.8143221,233.798768 C56.9362269,233.961308 77.2130522,234.042577 101.797179,234.001943 L146.536227,233.880038 L146.658132,223.436863 Z" fill="#FFFFFF" transform="translate(101.634640, 176.142993) rotate(-180.000000) translate(-101.634640, -176.142993) ">
+
+</path>
+		<path d="M206.566631,234.272145 C213.068219,232.646748 218.025679,229.761668 222.57679,225.048018 C224.933616,222.528653 228.428219,217.936907 228.712663,216.839764 C228.793933,216.514684 217.659965,209.037859 210.914568,204.852462 C210.670758,204.689922 209.69552,205.74643 208.598377,207.371827 C205.306949,212.166748 201.852981,214.239129 196.570441,214.604843 C188.809171,215.133097 183.811076,211.069605 183.851711,204.283573 C183.851711,202.292462 184.136155,201.114049 184.948854,199.488653 C186.65552,195.953414 189.825044,193.840399 199.7806,189.533097 C218.106949,181.649922 225.949489,176.448653 230.825679,169.053097 C236.270758,160.804208 237.489806,147.638494 233.792028,137.845478 C229.728536,127.199129 219.651076,119.966113 205.469489,117.568653 C201.080917,116.796589 190.678377,116.918494 185.964727,117.771827 C175.684092,119.600399 165.931711,124.679764 159.917743,131.343891 C157.560917,133.944526 152.969171,140.730557 153.253616,141.218176 C153.37552,141.380716 154.432028,142.030875 155.610441,142.721668 C156.748219,143.371827 161.05552,145.850557 165.119012,148.207383 L172.473933,152.474049 L174.01806,150.198494 C176.171711,146.907065 180.885362,142.396589 183.729806,140.893097 C191.897425,136.585795 203.112663,137.195319 208.639012,142.15278 C210.995838,144.30643 211.971076,146.541351 211.971076,149.83278 C211.971076,152.799129 211.605362,154.099446 210.061235,156.334367 C208.070123,159.178811 204.006631,161.576272 192.466314,166.574367 C179.259965,172.263256 173.571076,175.798494 168.369806,181.406113 C165.362822,184.656907 162.518377,189.858176 161.339965,194.206113 C160.364727,197.822621 160.120917,206.884208 160.892981,210.541351 C163.61552,223.300716 173.245996,232.199764 187.143139,234.841034 C191.653616,235.694367 202.137425,235.369287 206.566631,234.272145 Z" fill="#FFFFFF" transform="translate(194.578507, 176.190240) scale(1, -1) translate(-194.578507, -176.190240) ">
+
+</path>
+	</g>
+</svg></span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="800px" height="800px" viewBox="0 -51 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <defs>
+        <linearGradient x1="-2.77777778%" y1="32%" x2="100%" y2="67.5555556%" id="linearGradient-1">
+            <stop stop-color="#2298BD" offset="0%">
+
+</stop>
+            <stop stop-color="#0ED7B5" offset="100%">
+
+</stop>
+        </linearGradient>
+    </defs>
+    <g>
+        <path d="M128,-1.0658141e-14 C93.8666667,-1.0658141e-14 72.5333333,17.0666667 64,51.2 C76.8,34.1333333 91.7333333,27.7333333 108.8,32 C118.537481,34.4343704 125.497363,41.4985481 133.201067,49.3184 C145.750756,62.0567704 160.275437,76.8 192,76.8 C226.133333,76.8 247.466667,59.7333333 256,25.6 C243.2,42.6666667 228.266667,49.0666667 211.2,44.8 C201.462519,42.3656296 194.502637,35.3014519 186.798933,27.4816 C174.249244,14.7432296 159.724563,-1.0658141e-14 128,-1.0658141e-14 Z M64,76.8 C29.8666667,76.8 8.53333333,93.8666667 0,128 C12.8,110.933333 27.7333333,104.533333 44.8,108.8 C54.5374815,111.23437 61.497363,118.298548 69.2010667,126.1184 C81.7507556,138.85677 96.275437,153.6 128,153.6 C162.133333,153.6 183.466667,136.533333 192,102.4 C179.2,119.466667 164.266667,125.866667 147.2,121.6 C137.462519,119.16563 130.502637,112.101452 122.798933,104.2816 C110.249244,91.5432296 95.724563,76.8 64,76.8 Z" fill="url(#linearGradient-1)">
+
+</path>
+    </g>
+</svg></span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="85" height="107" viewBox="0 0 85 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M27.5894 91.1365C22.7555 86.7178 21.3444 77.4335 23.3583 70.7072C26.8503 74.948 31.6888 76.2914 36.7005 77.0497C44.4375 78.2199 52.0359 77.7822 59.2232 74.2459C60.0454 73.841 60.8052 73.3027 61.7036 72.7574C62.378 74.714 62.5535 76.6892 62.318 78.6996C61.7452 83.5957 59.3086 87.3778 55.4332 90.2448C53.8835 91.3916 52.2437 92.4167 50.6432 93.4979C45.7262 96.8213 44.3959 100.718 46.2435 106.386C46.2874 106.525 46.3267 106.663 46.426 107C43.9155 105.876 42.0817 104.24 40.6845 102.089C39.2087 99.8193 38.5066 97.3081 38.4696 94.5909C38.4511 93.2686 38.4511 91.9345 38.2733 90.6309C37.8391 87.4527 36.3471 86.0297 33.5364 85.9478C30.6518 85.8636 28.37 87.6469 27.7649 90.4554C27.7187 90.6707 27.6517 90.8837 27.5847 91.1341L27.5894 91.1365Z" fill="white"/>
+<path d="M27.5894 91.1365C22.7555 86.7178 21.3444 77.4335 23.3583 70.7072C26.8503 74.948 31.6888 76.2914 36.7005 77.0497C44.4375 78.2199 52.0359 77.7822 59.2232 74.2459C60.0454 73.841 60.8052 73.3027 61.7036 72.7574C62.378 74.714 62.5535 76.6892 62.318 78.6996C61.7452 83.5957 59.3086 87.3778 55.4332 90.2448C53.8835 91.3916 52.2437 92.4167 50.6432 93.4979C45.7262 96.8213 44.3959 100.718 46.2435 106.386C46.2874 106.525 46.3267 106.663 46.426 107C43.9155 105.876 42.0817 104.24 40.6845 102.089C39.2087 99.8193 38.5066 97.3081 38.4696 94.5909C38.4511 93.2686 38.4511 91.9345 38.2733 90.6309C37.8391 87.4527 36.3471 86.0297 33.5364 85.9478C30.6518 85.8636 28.37 87.6469 27.7649 90.4554C27.7187 90.6707 27.6517 90.8837 27.5847 91.1341L27.5894 91.1365Z" fill="url(#paint0_linear_1_59)"/>
+<path d="M0 69.5866C0 69.5866 14.3139 62.6137 28.6678 62.6137L39.4901 29.1204C39.8953 27.5007 41.0783 26.3999 42.4139 26.3999C43.7495 26.3999 44.9325 27.5007 45.3377 29.1204L56.1601 62.6137C73.1601 62.6137 84.8278 69.5866 84.8278 69.5866C84.8278 69.5866 60.5145 3.35233 60.467 3.21944C59.7692 1.2612 58.5911 0 57.0029 0H27.8274C26.2392 0 25.1087 1.2612 24.3634 3.21944C24.3108 3.34983 0 69.5866 0 69.5866Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear_1_59" x1="22.4702" y1="107" x2="69.1451" y2="84.9468" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D83333"/>
+<stop offset="1" stop-color="#F041FF"/>
+</linearGradient>
+</defs>
+</svg>
+</span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="109" height="113" viewBox="0 0 109 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M63.7076 110.284C60.8481 113.885 55.0502 111.912 54.9813 107.314L53.9738 40.0627L99.1935 40.0627C107.384 40.0627 111.952 49.5228 106.859 55.9374L63.7076 110.284Z" fill="url(#paint0_linear)"/>
+<path d="M63.7076 110.284C60.8481 113.885 55.0502 111.912 54.9813 107.314L53.9738 40.0627L99.1935 40.0627C107.384 40.0627 111.952 49.5228 106.859 55.9374L63.7076 110.284Z" fill="url(#paint1_linear)" fill-opacity="0.2"/>
+<path d="M45.317 2.07103C48.1765 -1.53037 53.9745 0.442937 54.0434 5.041L54.4849 72.2922H9.83113C1.64038 72.2922 -2.92775 62.8321 2.1655 56.4175L45.317 2.07103Z" fill="#3ECF8E"/>
+<defs>
+<linearGradient id="paint0_linear" x1="53.9738" y1="54.974" x2="94.1635" y2="71.8295" gradientUnits="userSpaceOnUse">
+<stop stop-color="#249361"/>
+<stop offset="1" stop-color="#3ECF8E"/>
+</linearGradient>
+<linearGradient id="paint1_linear" x1="36.1558" y1="30.578" x2="54.4844" y2="65.0806" gradientUnits="userSpaceOnUse">
+<stop/>
+<stop offset="1" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
+</span> </li> </ul> </div> </div> <img src="https://cdn.sanity.io/images/11djiifo/production/ce329216fa7e761297a7becd33fb13932cb16e34-2000x1333.png" alt="Move with Nat" width="2000" height="1333" class="h-full w-full object-cover" loading="lazy" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="132:18"> </div> </article> </li><li data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/projectsShowcase/index.astro" data-astro-source-loc="34:25"> <article class="overflow-hidden rounded-2xl border border-paper/50  " data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="50:2"> <div class="grid md:grid-cols-2" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="51:38"> <div class="flex flex-col justify-between gap-8 p-6 md:p-8" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="52:69"> <div class="space-y-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="53:36"> <div class="w-fit rounded-full border px-3 py-1 text-xs uppercase flex items-center gap-2 border-accent-orange text-accent-orange" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="58:26"> Ongoing  <div class="w-1 h-1 rounded-full bg-accent-orange" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="60:30"></div> </div> <h3 class="text-1xl font-semibold text-paper" style="font-size: var(--font-size-h3); line-height: 1.12;"> Codzienny Cud </h3> <div class="max-w-xl text-lg text-paper/85" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/RichText/index.astro" data-astro-source-loc="132:32"></div>   </div> <div class="space-y-3" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="105:44"> <p class="text-paper" style="font-size: var(--font-size-p); line-height: 1.2;"> Technologies: </p> <ul class="flex flex-wrap items-center gap-3" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="107:71"> <li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="85" height="107" viewBox="0 0 85 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M27.5894 91.1365C22.7555 86.7178 21.3444 77.4335 23.3583 70.7072C26.8503 74.948 31.6888 76.2914 36.7005 77.0497C44.4375 78.2199 52.0359 77.7822 59.2232 74.2459C60.0454 73.841 60.8052 73.3027 61.7036 72.7574C62.378 74.714 62.5535 76.6892 62.318 78.6996C61.7452 83.5957 59.3086 87.3778 55.4332 90.2448C53.8835 91.3916 52.2437 92.4167 50.6432 93.4979C45.7262 96.8213 44.3959 100.718 46.2435 106.386C46.2874 106.525 46.3267 106.663 46.426 107C43.9155 105.876 42.0817 104.24 40.6845 102.089C39.2087 99.8193 38.5066 97.3081 38.4696 94.5909C38.4511 93.2686 38.4511 91.9345 38.2733 90.6309C37.8391 87.4527 36.3471 86.0297 33.5364 85.9478C30.6518 85.8636 28.37 87.6469 27.7649 90.4554C27.7187 90.6707 27.6517 90.8837 27.5847 91.1341L27.5894 91.1365Z" fill="white"/>
+<path d="M27.5894 91.1365C22.7555 86.7178 21.3444 77.4335 23.3583 70.7072C26.8503 74.948 31.6888 76.2914 36.7005 77.0497C44.4375 78.2199 52.0359 77.7822 59.2232 74.2459C60.0454 73.841 60.8052 73.3027 61.7036 72.7574C62.378 74.714 62.5535 76.6892 62.318 78.6996C61.7452 83.5957 59.3086 87.3778 55.4332 90.2448C53.8835 91.3916 52.2437 92.4167 50.6432 93.4979C45.7262 96.8213 44.3959 100.718 46.2435 106.386C46.2874 106.525 46.3267 106.663 46.426 107C43.9155 105.876 42.0817 104.24 40.6845 102.089C39.2087 99.8193 38.5066 97.3081 38.4696 94.5909C38.4511 93.2686 38.4511 91.9345 38.2733 90.6309C37.8391 87.4527 36.3471 86.0297 33.5364 85.9478C30.6518 85.8636 28.37 87.6469 27.7649 90.4554C27.7187 90.6707 27.6517 90.8837 27.5847 91.1341L27.5894 91.1365Z" fill="url(#paint0_linear_1_59)"/>
+<path d="M0 69.5866C0 69.5866 14.3139 62.6137 28.6678 62.6137L39.4901 29.1204C39.8953 27.5007 41.0783 26.3999 42.4139 26.3999C43.7495 26.3999 44.9325 27.5007 45.3377 29.1204L56.1601 62.6137C73.1601 62.6137 84.8278 69.5866 84.8278 69.5866C84.8278 69.5866 60.5145 3.35233 60.467 3.21944C59.7692 1.2612 58.5911 0 57.0029 0H27.8274C26.2392 0 25.1087 1.2612 24.3634 3.21944C24.3108 3.34983 0 69.5866 0 69.5866Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear_1_59" x1="22.4702" y1="107" x2="69.1451" y2="84.9468" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D83333"/>
+<stop offset="1" stop-color="#F041FF"/>
+</linearGradient>
+</defs>
+</svg>
+</span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="800px" height="800px" viewBox="0 -204 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+	<g>
+		<polygon fill="#F37368" points="381.461756 36.9858357 381.461756 101.81983 360.575637 101.81983 360.575637 26.8328612">
+
+</polygon>
+		<path d="M85.8651558,89.7813031 L101.529745,103.415297 L167.524079,69.0402266 L160.707082,52.6504249 L85.8651558,89.7813031 Z M360.575637,48.0090652 L413.66119,20.4509915 L404.668555,4.93144476 L360.575637,26.8328612 L360.575637,48.0090652 Z" fill="#F7A199">
+
+</path>
+		<path d="M211.18187,31.9093484 L211.18187,101.81983 L191.166006,101.81983 L191.166006,2.17563739 L211.18187,31.9093484 Z M85.8651558,89.7813031 L101.529745,103.415297 L131.698584,27.9932011 L121.980737,2.17563739 L85.8651558,89.7813031 Z" fill="#F37368">
+
+</path>
+		<path d="M121.980737,2.17563739 L142.576771,2.17563739 L180.722946,101.81983 L159.546742,101.81983 L121.980737,2.17563739 Z M214.227762,2.17563739 L258.175637,70.2005666 L258.175637,101.81983 L191.166006,2.17563739 L214.227762,2.17563739 Z M295.886686,2.17563739 L316.627762,2.17563739 L316.627762,101.81983 L295.886686,101.81983 L295.886686,2.17563739 Z M360.575637,20.4509915 L328.666289,20.4509915 L328.666289,2.17563739 L403.073088,2.17563739 L413.66119,20.4509915 L381.461756,20.4509915 L360.575637,20.4509915 Z" fill="#F04939">
+
+</path>
+		<polyline fill="#F7A199" points="475.014164 63.9637394 475.014164 101.81983 454.41813 101.81983 454.41813 63.9637394">
+
+</polyline>
+		<polygon fill="#F04939" points="489.228329 2.17563739 454.41813 63.9637394 475.014164 63.9637394 511.129745 2.17563739">
+
+</polygon>
+		<polygon fill="#F37368" points="454.41813 63.9637394 418.447592 2.17563739 441.074221 2.17563739 465.296317 44.5280453">
+
+</polygon>
+		<path d="M8.55750708,13.7790368 C8.55750708,27.5580737 17.1150142,35.8254958 34.2300283,40.1767705 L52.3603399,44.3830028 C68.6050992,48.1541076 78.4679887,57.4368272 78.4679887,72.5212465 C78.6130312,79.0481586 76.4373938,85.4300283 72.5212465,90.6515581 C72.5212465,75.5671388 64.6889518,67.4447592 45.9784703,62.5133144 L28.1382436,58.4521246 C13.7790368,55.2611898 2.75580737,47.5739377 2.75580737,31.184136 C2.75580737,24.9473088 4.78640227,18.7104816 8.55750708,13.7790368" fill="#F04939">
+
+</path>
+		<polygon fill="#F37368" points="258.175637 65.1240793 258.175637 2.17563739 278.191501 2.17563739 278.191501 101.81983 258.175637 101.81983">
+
+</polygon>
+		<path d="M61.3529745,68.7501416 C69.0402266,73.6815864 72.5212465,80.6436261 72.5212465,90.6515581 C65.9943343,98.9189802 54.8260623,103.415297 41.6271955,103.415297 C19.4356941,103.415297 3.62606232,92.392068 0.290084986,73.3915014 L21.6113314,73.3915014 C24.3671388,82.094051 31.6192635,86.1552408 41.482153,86.1552408 C53.2305949,86.3002833 61.207932,79.9184136 61.3529745,68.7501416 M8.55750708,13.6339943 C14.7943343,5.51161473 25.5274788,0.580169972 38.5813031,0.580169972 C61.3529745,0.580169972 74.4067989,12.6186969 77.7427762,29.4436261 L57.1467422,29.4436261 C54.8260623,22.7716714 49.1694051,17.5501416 38.8713881,17.5501416 C27.7031161,17.6951841 20.1609065,24.0770538 19.725779,34.2300283 C12.2517705,30.1081799 8.2674221,22.0464589 8.55750708,13.6339943 Z" fill="#F37368">
+
+</path>
+	</g>
+</svg></span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="800px" height="800px" viewBox="0 -51 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <defs>
+        <linearGradient x1="-2.77777778%" y1="32%" x2="100%" y2="67.5555556%" id="linearGradient-1">
+            <stop stop-color="#2298BD" offset="0%">
+
+</stop>
+            <stop stop-color="#0ED7B5" offset="100%">
+
+</stop>
+        </linearGradient>
+    </defs>
+    <g>
+        <path d="M128,-1.0658141e-14 C93.8666667,-1.0658141e-14 72.5333333,17.0666667 64,51.2 C76.8,34.1333333 91.7333333,27.7333333 108.8,32 C118.537481,34.4343704 125.497363,41.4985481 133.201067,49.3184 C145.750756,62.0567704 160.275437,76.8 192,76.8 C226.133333,76.8 247.466667,59.7333333 256,25.6 C243.2,42.6666667 228.266667,49.0666667 211.2,44.8 C201.462519,42.3656296 194.502637,35.3014519 186.798933,27.4816 C174.249244,14.7432296 159.724563,-1.0658141e-14 128,-1.0658141e-14 Z M64,76.8 C29.8666667,76.8 8.53333333,93.8666667 0,128 C12.8,110.933333 27.7333333,104.533333 44.8,108.8 C54.5374815,111.23437 61.497363,118.298548 69.2010667,126.1184 C81.7507556,138.85677 96.275437,153.6 128,153.6 C162.133333,153.6 183.466667,136.533333 192,102.4 C179.2,119.466667 164.266667,125.866667 147.2,121.6 C137.462519,119.16563 130.502637,112.101452 122.798933,104.2816 C110.249244,91.5432296 95.724563,76.8 64,76.8 Z" fill="url(#linearGradient-1)">
+
+</path>
+    </g>
+</svg></span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg xmlns="http://www.w3.org/2000/svg" width="200" fill="none" viewBox="0 0 82 30">
+  <path fill="#0ae448" d="M23.81 14.013v.013l-1.075 4.665c-.058.264-.322.458-.626.458H20.81a.218.218 0 0 0-.208.155c-1.198 4.064-2.82 6.858-4.962 8.535-1.822 1.428-4.068 2.093-7.069 2.093-2.696 0-4.514-.867-6.056-2.578C.478 25.09-.364 21.388.146 16.926 1.065 8.549 5.41.096 13.776.096c2.545-.023 4.543.762 5.933 2.33 1.47 1.657 2.216 4.154 2.22 7.421a.55.55 0 0 1-.549.536h-6.13a.42.42 0 0 1-.407-.41c-.05-2.259-.72-3.36-2.052-3.36-2.35 0-3.736 3.19-4.471 4.959-1.027 2.47-1.55 5.152-1.447 7.824.049 1.244.249 2.994 1.43 3.718 1.047.643 2.541.217 3.446-.495.904-.711 1.632-1.942 1.938-3.065.043-.156.046-.277.005-.332-.043-.055-.162-.068-.253-.068h-1.574a.572.572 0 0 1-.438-.202.42.42 0 0 1-.087-.362l1.076-4.674c.053-.24.27-.42.537-.453v-.011h10.33c.024 0 .049 0 .072.005.268.034.457.284.452.556h.002Z"/>
+  <path fill="#0ae448" d="M41.594 8.65a.548.548 0 0 1-.548.531H35.4c-.37 0-.679-.3-.679-.665 0-1.648-.57-2.45-1.736-2.45s-1.918.717-1.94 1.968c-.025 1.395.764 2.662 3.01 4.84 2.957 2.774 4.142 5.232 4.085 8.48C38.047 26.605 34.476 30 29.042 30c-2.775 0-4.895-.743-6.305-2.207-1.431-1.486-2.087-3.668-1.95-6.485a.548.548 0 0 1 .549-.53h5.84a.55.55 0 0 1 .422.209.48.48 0 0 1 .106.384c-.065 1.016.112 1.775.512 2.195.256.272.613.41 1.058.41 1.079 0 1.711-.763 1.735-2.09.02-1.148-.343-2.155-2.321-4.19-2.555-2.496-4.846-5.075-4.775-9.13.042-2.351.976-4.502 2.631-6.056C28.294.868 30.687 0 33.465 0c2.783.02 4.892.813 6.269 2.359 1.304 1.466 1.932 3.582 1.862 6.29h-.002Z"/>
+  <path fill="#0ae448" d="m59.096 29.012.037-27.932a.525.525 0 0 0-.529-.533h-8.738c-.294 0-.423.252-.507.42L36.707 28.842v.005l-.005.006c-.14.343.126.71.497.71h6.108c.33 0 .548-.1.656-.308l1.213-2.915c.149-.388.177-.424.601-.424h5.836c.406 0 .415.008.408.405l-.131 2.71a.525.525 0 0 0 .529.532h6.17a.522.522 0 0 0 .403-.182.458.458 0 0 0 .104-.369Zm-10.81-9.326c-.057 0-.102-.001-.138-.005a.146.146 0 0 1-.13-.183c.012-.041.029-.095.053-.163l4.377-10.827c.038-.107.086-.212.136-.314.071-.145.157-.155.184-.047.023.09-.502 11.118-.502 11.118-.041.413-.06.43-.467.464l-3.509-.041h-.008l.003-.002Z"/>
+  <path fill="#0ae448" d="M71.545.547h-4.639c-.245 0-.52.13-.585.422l-6.455 28.029a.423.423 0 0 0 .088.364.572.572 0 0 0 .437.202h5.798c.311 0 .525-.153.583-.418 0 0 .703-3.168.704-3.178.05-.247-.036-.439-.258-.555-.105-.054-.209-.108-.312-.163l-1.005-.522-1-.522-.387-.201a.186.186 0 0 1-.102-.17.199.199 0 0 1 .198-.194l3.178.014c.95.005 1.901-.062 2.836-.234 6.58-1.215 10.95-6.485 11.076-13.656.107-6.12-3.309-9.221-10.15-9.221l-.005.003Zm-1.579 16.68h-.124c-.278 0-.328-.03-.337-.04-.004-.007 1.833-8.073 1.834-8.084.047-.233.045-.367-.099-.446-.184-.102-2.866-1.516-2.866-1.516a.188.188 0 0 1-.101-.172.197.197 0 0 1 .197-.192h4.241c1.32.04 2.056 1.221 2.021 3.237-.061 3.492-1.721 7.09-4.766 7.214Z"/>
+</svg>
+</span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="800px" height="800px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+	<g>
+		<polygon fill="#007ACC" transform="translate(128.000000, 128.000000) scale(1, -1) translate(-128.000000, -128.000000) " points="0 128 0 0 128 0 256 0 256 128 256 256 128 256 0 256">
+
+</polygon>
+		<path d="M146.658132,223.436863 L146.739401,212.953054 L130.079084,212.953054 L113.418767,212.953054 L113.418767,165.613371 L113.418767,118.273689 L101.63464,118.273689 L89.8505126,118.273689 L89.8505126,165.613371 L89.8505126,212.953054 L73.1901951,212.953054 L56.5298776,212.953054 L56.5298776,223.233689 C56.5298776,228.922577 56.6517824,233.676863 56.8143221,233.798768 C56.9362269,233.961308 77.2130522,234.042577 101.797179,234.001943 L146.536227,233.880038 L146.658132,223.436863 Z" fill="#FFFFFF" transform="translate(101.634640, 176.142993) rotate(-180.000000) translate(-101.634640, -176.142993) ">
+
+</path>
+		<path d="M206.566631,234.272145 C213.068219,232.646748 218.025679,229.761668 222.57679,225.048018 C224.933616,222.528653 228.428219,217.936907 228.712663,216.839764 C228.793933,216.514684 217.659965,209.037859 210.914568,204.852462 C210.670758,204.689922 209.69552,205.74643 208.598377,207.371827 C205.306949,212.166748 201.852981,214.239129 196.570441,214.604843 C188.809171,215.133097 183.811076,211.069605 183.851711,204.283573 C183.851711,202.292462 184.136155,201.114049 184.948854,199.488653 C186.65552,195.953414 189.825044,193.840399 199.7806,189.533097 C218.106949,181.649922 225.949489,176.448653 230.825679,169.053097 C236.270758,160.804208 237.489806,147.638494 233.792028,137.845478 C229.728536,127.199129 219.651076,119.966113 205.469489,117.568653 C201.080917,116.796589 190.678377,116.918494 185.964727,117.771827 C175.684092,119.600399 165.931711,124.679764 159.917743,131.343891 C157.560917,133.944526 152.969171,140.730557 153.253616,141.218176 C153.37552,141.380716 154.432028,142.030875 155.610441,142.721668 C156.748219,143.371827 161.05552,145.850557 165.119012,148.207383 L172.473933,152.474049 L174.01806,150.198494 C176.171711,146.907065 180.885362,142.396589 183.729806,140.893097 C191.897425,136.585795 203.112663,137.195319 208.639012,142.15278 C210.995838,144.30643 211.971076,146.541351 211.971076,149.83278 C211.971076,152.799129 211.605362,154.099446 210.061235,156.334367 C208.070123,159.178811 204.006631,161.576272 192.466314,166.574367 C179.259965,172.263256 173.571076,175.798494 168.369806,181.406113 C165.362822,184.656907 162.518377,189.858176 161.339965,194.206113 C160.364727,197.822621 160.120917,206.884208 160.892981,210.541351 C163.61552,223.300716 173.245996,232.199764 187.143139,234.841034 C191.653616,235.694367 202.137425,235.369287 206.566631,234.272145 Z" fill="#FFFFFF" transform="translate(194.578507, 176.190240) scale(1, -1) translate(-194.578507, -176.190240) ">
+
+</path>
+	</g>
+</svg></span> </li><li class="flex items-center px-1 py-1 text-sm text-paper" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="109:92"> <span aria-hidden="true" class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="111:42"><svg width="400" height="600" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 500C0 444.772 44.772 400 100 400H200V500C200 555.228 155.228 600 100 600C44.772 600 0 555.228 0 500Z" fill="#24CB71"/>
+<path d="M200 0V200H300C355.228 200 400 155.228 400 100C400 44.772 355.228 0 300 0H200Z" fill="#FF7237"/>
+<path d="M299.167 400C354.395 400 399.167 355.228 399.167 300C399.167 244.772 354.395 200 299.167 200C243.939 200 199.167 244.772 199.167 300C199.167 355.228 243.939 400 299.167 400Z" fill="#00B6FF"/>
+<path d="M0 100C0 155.228 44.772 200 100 200H200V0H100C44.772 0 0 44.772 0 100Z" fill="#FF3737"/>
+<path d="M0 300C0 355.228 44.772 400 100 400H200V200H100C44.772 200 0 244.772 0 300Z" fill="#874FFF"/>
+</svg>
+</span> </li> </ul> </div> </div> <img src="https://cdn.sanity.io/images/11djiifo/production/d1dd73a67cf9a82b95b05770ce36c5769f8ec157-2704x1794.png" alt="Codzienny Cud" width="2704" height="1794" class="h-full w-full object-cover" loading="lazy" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Project/index.astro" data-astro-source-loc="132:18"> </div> </article> </li> </ul> </section><section class="block mx-auto w-full max-w-600 px-6 py-4 mb-48 " data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Container/index.astro" data-astro-source-loc="7:80">  <div class="space-y-2 " data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/SectionHeader/index.astro" data-astro-source-loc="15:39">  <h2 class="leading-tight text-paper" style="font-size: var(--font-size-h2); line-height: 1.1; font-size: var(--font-size-4xl);"> Certificates </h2>  </div> <div class="certificates-gallery mt-8 rounded-2xl border border-paper/10 bg-zinc-900/60 p-4 md:p-6" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="16:113"> <swiper-container class="certificates-swiper" init="false" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro"> <swiper-slide data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro"> <article class="overflow-hidden rounded-xl border border-paper/20 bg-zinc-950" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="32:112"> <img src="/_image?href=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F11djiifo%2Fproduction%2F7e4df207f602dbfac2646fb8b33622f1600d52c4-1280x904.jpg&#38;w=1280&#38;h=904&#38;f=webp" data-image-component="true" alt="Bezpieczny programista" loading="lazy" decoding="async" width="1280" height="904" class="h-56 w-full object-cover md:h-72" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/node_modules/astro/components/Image.astro" data-astro-source-loc="53:2"> <div class="space-y-1 p-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="69:64"> <p class="font-medium text-paper" style="font-size: var(--font-size-p); line-height: 1.2;"> Bezpieczny programista </p>  </div> </article> </swiper-slide><swiper-slide data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro"> <article class="overflow-hidden rounded-xl border border-paper/20 bg-zinc-950" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="32:112"> <img src="/_image?href=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F11djiifo%2Fproduction%2F43f5594e32b2bcd28e78bb00235b82c7b9fa9cd3-494x382.png&#38;w=494&#38;h=382&#38;f=webp" data-image-component="true" alt="Web insider" loading="lazy" decoding="async" width="494" height="382" class="h-56 w-full object-cover md:h-72" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/node_modules/astro/components/Image.astro" data-astro-source-loc="53:2"> <div class="space-y-1 p-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="69:64"> <p class="font-medium text-paper" style="font-size: var(--font-size-p); line-height: 1.2;"> Web insider </p>  </div> </article> </swiper-slide><swiper-slide data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro"> <article class="overflow-hidden rounded-xl border border-paper/20 bg-zinc-950" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="32:112"> <img src="/_image?href=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F11djiifo%2Fproduction%2Fddf1414fc2d75b6c24f3788d4882469aff570ac9-3517x2488.jpg&#38;w=3517&#38;h=2488&#38;f=webp" data-image-component="true" alt="10xDev" loading="lazy" decoding="async" width="3517" height="2488" class="h-56 w-full object-cover md:h-72" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/node_modules/astro/components/Image.astro" data-astro-source-loc="53:2"> <div class="space-y-1 p-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="69:64"> <p class="font-medium text-paper" style="font-size: var(--font-size-p); line-height: 1.2;"> 10xDev </p>  </div> </article> </swiper-slide><swiper-slide data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro"> <article class="overflow-hidden rounded-xl border border-paper/20 bg-zinc-950" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="32:112"> <img src="/_image?href=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F11djiifo%2Fproduction%2F5acfa09b031d878cd244521b8ed6c72ec84d59bf-723x1024.jpg&#38;w=723&#38;h=1024&#38;f=webp" data-image-component="true" alt="EFSET" loading="lazy" decoding="async" width="723" height="1024" class="h-56 w-full object-cover md:h-72" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/node_modules/astro/components/Image.astro" data-astro-source-loc="53:2"> <div class="space-y-1 p-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="69:64"> <p class="font-medium text-paper" style="font-size: var(--font-size-p); line-height: 1.2;"> EFSET </p>  </div> </article> </swiper-slide> </swiper-container> <div class="mt-4 flex items-center justify-center gap-3" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="85:74"> <button type="button" class="certificates-swiper-prev inline-flex h-9 w-9 items-center justify-center rounded-full border border-paper/40 text-paper transition-colors hover:border-paper" aria-label="Previous certificate" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="90:22"> <span aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="91:50">&larr;</span> </button> <button type="button" class="certificates-swiper-next inline-flex h-9 w-9 items-center justify-center rounded-full border border-paper/40 text-paper transition-colors hover:border-paper" aria-label="Next certificate" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="97:22"> <span aria-hidden="true" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/sections/certificatesGallery/index.astro" data-astro-source-loc="98:50">&rarr;</span> </button> </div> </div> </section> <script type="module" src="/src/sections/certificatesGallery/index.astro?astro&type=script&index=0&lang.ts"></script> </main>  <footer class="mt-20 border-t border-paper/20 bg-paper text-ink" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="46:66"> <div class="mx-auto grid w-full max-w-600 gap-10 px-6 py-8 md:grid-cols-[1fr_auto_auto]" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="49:6"> <div class="space-y-4" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="50:32"> <a href="/" aria-label="Go to homepage" class="inline-flex" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="51:73"> <svg width="130" height="87" viewBox="0 0 130 87" fill="none">
+<mask id="path-1-outside-1_234_149" maskUnits="userSpaceOnUse" x="-0.327999" y="-0.231934" width="130" height="87" fill="black">
+<rect fill="white" x="-0.327999" y="-0.231934" width="130" height="87" />
+<path d="M52.176 26.9601C43.984 24.4854 37.968 23.2481 34.128 23.2481C30.3733 23.2481 27.7707 24.9121 26.32 28.2401C24.9547 31.5681 24.272 36.8587 24.272 44.1121C24.272 51.2801 24.912 56.5281 26.192 59.8561C27.5573 63.0987 30.288 64.7201 34.384 64.7201C35.5787 64.7201 37.8827 64.3787 41.296 63.6961V53.9681H35.536V38.8641H59.984V82.7681H44.88L42.832 78.6721H42.32C40.8693 79.8667 39.7173 80.7627 38.864 81.3601C36.4747 83.1521 33.104 84.0481 28.752 84.0481C10.9173 84.0481 2 70.5654 2 43.6001C2 30.1174 4.34667 19.8347 9.04 12.7521C13.7333 5.58406 21.6267 2.00006 32.72 2.00006C41.5947 2.00006 49.232 3.36539 55.632 6.09606L52.176 26.9601ZM125.079 28.4961C125.079 33.2747 124.354 37.2427 122.903 40.4001C121.452 43.5574 119.191 46.4161 116.119 48.9761L126.743 82.7681H103.063L95.127 54.0961H92.183V82.7681H70.679V3.28006H100.375C108.908 3.28006 115.138 5.2854 119.063 9.29607C123.074 13.3067 125.079 19.7067 125.079 28.4961ZM95.511 40.6561C97.7297 40.6561 99.3083 40.0161 100.247 38.7361C101.186 37.4561 101.655 35.1521 101.655 31.8241C101.655 28.4107 101.186 26.0641 100.247 24.7841C99.3083 23.4187 97.7723 22.7361 95.639 22.7361H92.183V40.6561H95.511Z" />
+</mask>
+<path d="M52.176 26.9601L51.5976 28.8746L53.7771 29.533L54.1491 27.2869L52.176 26.9601ZM26.32 28.2401L24.4866 27.4409L24.4779 27.4608L24.4697 27.4809L26.32 28.2401ZM26.192 59.8561L24.3253 60.574L24.3366 60.6033L24.3487 60.6322L26.192 59.8561ZM41.296 63.6961L41.6882 65.6572L43.296 65.3357V63.6961H41.296ZM41.296 53.9681H43.296V51.9681H41.296V53.9681ZM35.536 53.9681H33.536V55.9681H35.536V53.9681ZM35.536 38.8641V36.8641H33.536V38.8641H35.536ZM59.984 38.8641H61.984V36.8641H59.984V38.8641ZM59.984 82.7681V84.7681H61.984V82.7681H59.984ZM44.88 82.7681L43.0912 83.6625L43.6439 84.7681H44.88V82.7681ZM42.832 78.6721L44.6209 77.7776L44.0681 76.6721H42.832V78.6721ZM42.32 78.6721V76.6721H41.6025L41.0486 77.1282L42.32 78.6721ZM38.864 81.3601L37.7171 79.7216L37.6902 79.7404L37.664 79.7601L38.864 81.3601ZM9.04 12.7521L10.7072 13.8568L10.7132 13.8476L9.04 12.7521ZM55.632 6.09606L57.6051 6.4229L57.8618 4.87302L56.4169 4.25651L55.632 6.09606ZM52.176 26.9601L52.7544 25.0455C44.5472 22.5663 38.2865 21.2481 34.128 21.2481V23.2481V25.2481C37.6495 25.2481 43.4208 26.4045 51.5976 28.8746L52.176 26.9601ZM34.128 23.2481V21.2481C31.9517 21.2481 29.969 21.7329 28.2827 22.811C26.5918 23.8921 25.3421 25.4783 24.4866 27.4409L26.32 28.2401L28.1534 29.0392C28.7486 27.6738 29.5256 26.764 30.4373 26.1811C31.3537 25.5952 32.5497 25.2481 34.128 25.2481V23.2481ZM26.32 28.2401L24.4697 27.4809C22.9486 31.1885 22.272 36.8088 22.272 44.1121H24.272H26.272C26.272 36.9086 26.9607 31.9477 28.1703 28.9992L26.32 28.2401ZM24.272 44.1121H22.272C22.272 51.3286 22.9068 56.8859 24.3253 60.574L26.192 59.8561L28.0587 59.1381C26.9172 56.1703 26.272 51.2316 26.272 44.1121H24.272ZM26.192 59.8561L24.3487 60.6322C25.1786 62.6032 26.47 64.1711 28.2429 65.2238C29.9946 66.2638 32.0787 66.7201 34.384 66.7201V64.7201V62.7201C32.5933 62.7201 31.2641 62.3656 30.2851 61.7844C29.3274 61.2157 28.5707 60.3516 28.0353 59.08L26.192 59.8561ZM34.384 64.7201V66.7201C35.8083 66.7201 38.3039 66.3341 41.6882 65.6572L41.296 63.6961L40.9038 61.7349C37.4615 62.4234 35.349 62.7201 34.384 62.7201V64.7201ZM41.296 63.6961H43.296V53.9681H41.296H39.296V63.6961H41.296ZM41.296 53.9681V51.9681H35.536V53.9681V55.9681H41.296V53.9681ZM35.536 53.9681H37.536V38.8641H35.536H33.536V53.9681H35.536ZM35.536 38.8641V40.8641H59.984V38.8641V36.8641H35.536V38.8641ZM59.984 38.8641H57.984V82.7681H59.984H61.984V38.8641H59.984ZM59.984 82.7681V80.7681H44.88V82.7681V84.7681H59.984V82.7681ZM44.88 82.7681L46.6689 81.8736L44.6209 77.7776L42.832 78.6721L41.0432 79.5665L43.0912 83.6625L44.88 82.7681ZM42.832 78.6721V76.6721H42.32V78.6721V80.6721H42.832V78.6721ZM42.32 78.6721L41.0486 77.1282C39.6117 78.3115 38.5067 79.1689 37.7171 79.7216L38.864 81.3601L40.0109 82.9985C40.928 82.3566 42.1269 81.422 43.5914 80.2159L42.32 78.6721ZM38.864 81.3601L37.664 79.7601C35.7471 81.1977 32.8614 82.0481 28.752 82.0481V84.0481V86.0481C33.3466 86.0481 37.2022 85.1064 40.064 82.9601L38.864 81.3601ZM28.752 84.0481V82.0481C20.4241 82.0481 14.4015 78.9492 10.3562 72.8328C6.21488 66.5713 4 56.9257 4 43.6001H2H9.53674e-07C9.53674e-07 57.2398 2.24379 67.8181 7.01985 75.0394C11.8918 82.4056 19.2452 86.0481 28.752 86.0481V84.0481ZM2 43.6001H4C4 30.2989 6.32392 20.4716 10.7072 13.8568L9.04 12.7521L7.37282 11.6473C2.36942 19.1979 9.53674e-07 29.9358 9.53674e-07 43.6001H2ZM9.04 12.7521L10.7132 13.8476C14.9294 7.40839 22.0778 4.00006 32.72 4.00006V2.00006V6.10352e-05C21.1755 6.10352e-05 12.5373 3.75974 7.36676 11.6565L9.04 12.7521ZM32.72 2.00006V4.00006C41.3963 4.00006 48.7534 5.33564 54.8471 7.93562L55.632 6.09606L56.4169 4.25651C49.7106 1.39515 41.793 6.10352e-05 32.72 6.10352e-05V2.00006ZM55.632 6.09606L53.6589 5.76923L50.2029 26.6332L52.176 26.9601L54.1491 27.2869L57.6051 6.4229L55.632 6.09606ZM122.903 40.4001L121.086 39.5651V39.5651L122.903 40.4001ZM116.119 48.9761L114.839 47.4396L113.809 48.2975L114.211 49.5759L116.119 48.9761ZM126.743 82.7681V84.7681H129.468L128.651 82.1682L126.743 82.7681ZM103.063 82.7681L101.135 83.3016L101.541 84.7681H103.063V82.7681ZM95.127 54.0961L97.0545 53.5626L96.6486 52.0961H95.127V54.0961ZM92.183 54.0961V52.0961H90.183V54.0961H92.183ZM92.183 82.7681V84.7681H94.183V82.7681H92.183ZM70.679 82.7681H68.679V84.7681H70.679V82.7681ZM70.679 3.28006V1.28006H68.679V3.28006H70.679ZM119.063 9.29607L117.634 10.695L117.641 10.7027L117.649 10.7103L119.063 9.29607ZM100.247 38.7361L101.86 39.9188H101.86L100.247 38.7361ZM100.247 24.7841L98.5989 25.9171L98.6162 25.9422L98.6342 25.9668L100.247 24.7841ZM92.183 22.7361V20.7361H90.183V22.7361H92.183ZM92.183 40.6561H90.183V42.6561H92.183V40.6561ZM125.079 28.4961H123.079C123.079 33.0882 122.38 36.7486 121.086 39.5651L122.903 40.4001L124.72 41.2351C126.328 37.7369 127.079 33.4612 127.079 28.4961H125.079ZM122.903 40.4001L121.086 39.5651C119.777 42.4134 117.716 45.0417 114.839 47.4396L116.119 48.9761L117.399 50.5125C120.666 47.7904 123.128 44.7014 124.72 41.2351L122.903 40.4001ZM116.119 48.9761L114.211 49.5759L124.835 83.3679L126.743 82.7681L128.651 82.1682L118.027 48.3762L116.119 48.9761ZM126.743 82.7681V80.7681H103.063V82.7681V84.7681H126.743V82.7681ZM103.063 82.7681L104.991 82.2346L97.0545 53.5626L95.127 54.0961L93.1995 54.6296L101.135 83.3016L103.063 82.7681ZM95.127 54.0961V52.0961H92.183V54.0961V56.0961H95.127V54.0961ZM92.183 54.0961H90.183V82.7681H92.183H94.183V54.0961H92.183ZM92.183 82.7681V80.7681H70.679V82.7681V84.7681H92.183V82.7681ZM70.679 82.7681H72.679V3.28006H70.679H68.679V82.7681H70.679ZM70.679 3.28006V5.28006H100.375V3.28006V1.28006H70.679V3.28006ZM100.375 3.28006V5.28006C108.647 5.28006 114.242 7.22918 117.634 10.695L119.063 9.29607L120.492 7.89714C116.034 3.34161 109.17 1.28006 100.375 1.28006V3.28006ZM119.063 9.29607L117.649 10.7103C121.122 14.1839 123.079 19.9528 123.079 28.4961H125.079H127.079C127.079 19.4606 125.025 12.4296 120.477 7.88185L119.063 9.29607ZM95.511 40.6561V42.6561C98.0956 42.6561 100.409 41.8978 101.86 39.9188L100.247 38.7361L98.6342 37.5533C98.2081 38.1344 97.3637 38.6561 95.511 38.6561V40.6561ZM100.247 38.7361L101.86 39.9188C103.207 38.0812 103.655 35.1973 103.655 31.8241H101.655H99.655C99.655 35.1068 99.1639 36.831 98.6342 37.5533L100.247 38.7361ZM101.655 31.8241H103.655C103.655 28.379 103.211 25.4441 101.86 23.6013L100.247 24.7841L98.6342 25.9668C99.1602 26.684 99.655 28.4425 99.655 31.8241H101.655ZM100.247 24.7841L101.895 23.651C100.478 21.5894 98.2196 20.7361 95.639 20.7361V22.7361V24.7361C97.325 24.7361 98.1389 25.248 98.5989 25.9171L100.247 24.7841ZM95.639 22.7361V20.7361H92.183V22.7361V24.7361H95.639V22.7361ZM92.183 22.7361H90.183V40.6561H92.183H94.183V22.7361H92.183ZM92.183 40.6561V42.6561H95.511V40.6561V38.6561H92.183V40.6561Z" fill="#0E0E0D" mask="url(#path-1-outside-1_234_149)" />
+</svg> </a> <div class="flex items-center gap-4 text-sm" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="54:58"> <a href="https://www.linkedin.com/in/grzegorz-ratajczak-388091126/" target="_blank" rel="noreferrer noopener" class="hover:opacity-70" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="62:26">
+LinkedIn
+</a> <a href="https://www.instagram.com/greg___dev/" target="_blank" rel="noreferrer noopener" class="hover:opacity-70" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="74:26">
+Instagram
+</a> </div> </div> <div class="space-y-3" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="84:40"> <p class="text-sm font-semibold" style="font-size: var(--font-size-p); line-height: 1.2;"> Quick links </p> <ul class="space-y-2 text-sm" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="86:51"> <li data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="88:33"> <a href="/home" class="hover:opacity-70" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="92:34"> Home </a> </li> </ul> </div> <div class="space-y-3" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="102:32"> <p class="text-sm font-semibold" style="font-size: var(--font-size-p); line-height: 1.2;"> Contact </p> <ul class="space-y-2 text-sm" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="104:43"> <li data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="107:29"> <a href="tel:+48795451486" class="hover:opacity-70" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="108:79"> +48795451486 </a> </li> <li data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="116:29"> <a href="mailto:g.ratajczak97@gmail.com" class="hover:opacity-70" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="120:30"> g.ratajczak97@gmail.com </a> </li> </ul> </div> </div> <div class="border-t border-ink/20" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="129:41"> <div class="mx-auto flex w-full max-w-600 flex-col gap-3 px-6 py-4 text-xs md:flex-row md:items-center md:justify-between" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="132:10"> <p class style="font-size: var(--font-size-p); line-height: 1.2;"> © 2026 | Grzegorz Ratajczak </p> <p class="flex items-center gap-2" style="font-size: var(--font-size-p); line-height: 1.2;">  <svg width="1280" height="800" viewBox="0 0 16 10" class="h-3 w-4 border border-ink/20"><rect width="16" height="10" fill="#fff" /><rect width="16" height="5" fill="#dc143c" y="5" /></svg>
+Poland
+ </p> <a class="inline-flex items-center gap-2 hover:opacity-70" href="/privacy-policy" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Link/index.astro" data-astro-source-loc="14:10"> <span class="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-ink/70 text-[9px] leading-none" data-astro-source-file="/Users/grzegorzratajczak/Desktop/workspace/portfolio_front/src/components/Footer/index.astro" data-astro-source-loc="144:18">
+P
+</span>
+Privacy Policy
+</a> </div> </div> </footer></body></html>

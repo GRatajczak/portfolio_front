@@ -2,30 +2,140 @@
 import Container from "@/components/Container/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
 import Text from "@/components/Text/index.astro";
+import { Image } from "astro:assets";
 import type { Props } from "./index.type";
 
 const { eyebrow = "", heading = "", certificates = [] } = Astro.props as Props;
 ---
 
-<Container>
-    <SectionHeader eyebrow={eyebrow} heading={heading} />
+<div>
+    <Container className="mb-0!">
+        <SectionHeader eyebrow={eyebrow} heading={heading} />
+    </Container>
 
     {
         certificates.length > 0 ? (
-            <ul class="space-y-2">
-                {certificates.map((certificate) => (
-                    <li class="rounded-2xl border border-zinc-100 px-4 py-3">
-                        <Text className="font-medium text-paper">
-                            {certificate.title || "Untitled certificate"}
-                        </Text>
-                        {certificate.issuer && (
-                            <Text className="text-sm text-paper">{certificate.issuer}</Text>
-                        )}
-                    </li>
-                ))}
-            </ul>
+            <div class="certificates-gallery px-0 py-4 md:p-6">
+                <swiper-container class="certificates-swiper" init="false">
+                    {certificates.map((item) => {
+                        const certificate = item.certificate ?? item;
+                        const imageUrl = certificate.image?.asset?.url;
+                        const imageWidth =
+                            certificate.image?.asset?.metadata?.dimensions
+                                ?.width;
+                        const imageHeight =
+                            certificate.image?.asset?.metadata?.dimensions
+                                ?.height;
+                        const imageAlt =
+                            certificate.image?.alt ||
+                            certificate.title ||
+                            "Certificate preview";
+
+                        return (
+                            <swiper-slide>
+                                <article class="overflow-hidden rounded-xl border border-paper/20 ">
+                                    {imageUrl && imageWidth && imageHeight ? (
+                                        <Image
+                                            src={imageUrl}
+                                            alt={imageAlt}
+                                            width={imageWidth}
+                                            height={imageHeight}
+                                            class="h-56 w-full object-contain md:h-96"
+                                            loading="lazy"
+                                            format="webp"
+                                        />
+                                    ) : (
+                                        <div class="flex h-56 items-center justify-center text-paper/60 md:h-72">
+                                            No certificate image
+                                        </div>
+                                    )}
+                                </article>
+                            </swiper-slide>
+                        );
+                    })}
+                </swiper-container>
+
+                <div class="mt-4 flex items-center justify-center gap-3">
+                    <button
+                        type="button"
+                        class="certificates-swiper-prev inline-flex h-9 w-9 items-center justify-center rounded-full border border-paper/40 text-paper transition-colors hover:border-paper"
+                        aria-label="Previous certificate"
+                    >
+                        <span aria-hidden="true">&larr;</span>
+                    </button>
+                    <button
+                        type="button"
+                        class="certificates-swiper-next inline-flex h-9 w-9 items-center justify-center rounded-full border border-paper/40 text-paper transition-colors hover:border-paper"
+                        aria-label="Next certificate"
+                    >
+                        <span aria-hidden="true">&rarr;</span>
+                    </button>
+                </div>
+            </div>
         ) : (
             <Text className="text-paper">No certificates configured.</Text>
         )
     }
-</Container>
+</div>
+
+<script>
+    import { register } from "swiper/element/bundle";
+
+    register();
+
+    const initCertificatesSwipers = () => {
+        document
+            .querySelectorAll(".certificates-gallery")
+            .forEach((gallery) => {
+                const swiperEl = gallery.querySelector("swiper-container");
+                const nextEl = gallery.querySelector(
+                    ".certificates-swiper-next",
+                );
+                const prevEl = gallery.querySelector(
+                    ".certificates-swiper-prev",
+                );
+
+                if (
+                    !swiperEl ||
+                    !nextEl ||
+                    !prevEl ||
+                    swiperEl.dataset.initialized === "true"
+                ) {
+                    return;
+                }
+
+                Object.assign(swiperEl, {
+                    slidesPerView: 1.15,
+                    spaceBetween: 16,
+                    breakpoints: {
+                        768: {
+                            slidesPerView: 2.1,
+                            spaceBetween: 20,
+                        },
+                        1024: {
+                            slidesPerView: 2.5,
+                            spaceBetween: 24,
+                        },
+                    },
+                    navigation: {
+                        nextEl,
+                        prevEl,
+                    },
+                    keyboard: {
+                        enabled: true,
+                    },
+                });
+
+                swiperEl.initialize();
+                swiperEl.dataset.initialized = "true";
+            });
+    };
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initCertificatesSwipers, {
+            once: true,
+        });
+    } else {
+        initCertificatesSwipers();
+    }
+</script>
