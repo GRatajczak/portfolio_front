@@ -37,6 +37,11 @@ export default defineConfig({
                 optional: true,
                 default: defaultSanityApiVersion,
             }),
+            SANITY_WEBHOOK_SECRET: envField.string({
+                context: "server",
+                access: "secret",
+                optional: true,
+            }),
         },
     },
     vite: {

@@ -18,6 +18,9 @@ export const isSanityConfigured = Boolean(projectId && dataset);
 export const DEFAULT_LOCALE = "en";
 export type { HomePageData, PostPreview };
 
+const sanityDataCache = new Map<string, unknown>();
+const pendingSanityRequests = new Map<string, Promise<unknown>>();
+
 export const sanityClient = isSanityConfigured
     ? createClient({
           projectId,
@@ -28,6 +31,40 @@ export const sanityClient = isSanityConfigured
     : null;
 
 const imageBuilder = sanityClient ? createImageUrlBuilder(sanityClient) : null;
+
+export function invalidateSanityDataCache() {
+    sanityDataCache.clear();
+    pendingSanityRequests.clear();
+}
+
+async function getCachedSanityData<T>(
+    key: string,
+    fetcher: () => Promise<T>,
+): Promise<T> {
+    const cachedValue = sanityDataCache.get(key);
+    if (cachedValue !== undefined) {
+        return cachedValue as T;
+    }
+
+    const pendingRequest = pendingSanityRequests.get(key);
+    if (pendingRequest) {
+        return pendingRequest as Promise<T>;
+    }
+
+    const request = fetcher()
+        .then((data) => {
+            sanityDataCache.set(key, data);
+            pendingSanityRequests.delete(key);
+            return data;
+        })
+        .catch((error) => {
+            pendingSanityRequests.delete(key);
+            throw error;
+        });
+
+    pendingSanityRequests.set(key, request as Promise<unknown>);
+    return request;
+}
 
 export const POSTS_QUERY = defineQuery(`
   *[_type == "articles" && language in [$locale, $baseLocale]]
@@ -344,10 +381,14 @@ export async function getPosts(
     }
 
     try {
-        return await sanityClient.fetch<PostPreview[]>(POSTS_QUERY, {
-            locale,
-            baseLocale,
-        });
+        return await getCachedSanityData(
+            `posts:${locale}:${baseLocale}`,
+            async () =>
+                sanityClient.fetch<PostPreview[]>(POSTS_QUERY, {
+                    locale,
+                    baseLocale,
+                }),
+        );
     } catch (error) {
         if (import.meta.env.DEV) {
             console.warn("[sanity] Failed to fetch posts.", error);
@@ -395,10 +436,14 @@ export async function getPageRouteSlugs(
     }
 
     try {
-        const slugs = await sanityClient.fetch<PageSlugResult[]>(PAGE_SLUGS_QUERY, {
-            locale,
-            baseLocale,
-        });
+        const slugs = await getCachedSanityData(
+            `page-slugs:${locale}:${baseLocale}`,
+            async () =>
+                sanityClient.fetch<PageSlugResult[]>(PAGE_SLUGS_QUERY, {
+                    locale,
+                    baseLocale,
+                }),
+        );
 
         const uniqueSlugs = new Set<string>();
 
@@ -437,12 +482,16 @@ async function getPageBySlug(
     }
 
     try {
-        const data = await sanityClient.fetch<PageQueryResult>(PAGE_QUERY, {
-            locale,
-            baseLocale,
-            pageSlug,
-            fallbackPageSlug,
-        });
+        const data = await getCachedSanityData(
+            `page:${locale}:${baseLocale}:${pageSlug}:${fallbackPageSlug}`,
+            async () =>
+                sanityClient.fetch<PageQueryResult>(PAGE_QUERY, {
+                    locale,
+                    baseLocale,
+                    pageSlug,
+                    fallbackPageSlug,
+                }),
+        );
 
         if (!data.page) {
             return null;
