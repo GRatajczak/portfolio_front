@@ -179,11 +179,6 @@ const {
             });
     };
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initCertificatesSwipers, {
-            once: true,
-        });
-    } else {
-        initCertificatesSwipers();
-    }
+    document.addEventListener("astro:page-load", initCertificatesSwipers);
+    initCertificatesSwipers();
 </script>

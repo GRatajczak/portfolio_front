@@ -15,6 +15,10 @@ export default defineConfig({
     image: {
         domains: ["cdn.sanity.io"],
     },
+    prefetch: {
+        prefetchAll: true,
+        defaultStrategy: "hover",
+    },
     env: {
         schema: {
             PUBLIC_SANITY_PROJECT_ID: envField.string({
