@@ -1,0 +1,53 @@
+---
+import Logo from "@/assets/Logo.svg";
+import type { Props } from "./MobileMenu.type";
+import Link from "@/components/Link/index.astro";
+const { homeHref, menuItems, contactHref } = Astro.props as Props;
+---
+
+<div
+    id="mobile-menu-panel"
+    class="fixed inset-0 z-30 flex h-dvh w-full translate-x-full flex-col backdrop-blur-2xl bg-ink backdrop-opacity-90 px-6 pt-3 pb-10 transition-transform duration-300 ease-out md:hidden"
+    aria-hidden="true"
+    data-mobile-menu-panel
+>
+    <div class="mb-16 flex items-center justify-between">
+        <a href={homeHref} aria-label="Go to homepage" class="inline-flex">
+            <Logo />
+        </a>
+        <button
+            type="button"
+            class="text-sm uppercase transition-colors font-semibold hover:text-paper"
+            data-mobile-menu-close
+        >
+            Close
+        </button>
+    </div>
+
+    <ul class="flex flex-1 flex-col justify-start gap-8">
+        {
+            menuItems.map((item) => (
+                <li>
+                    <Link
+                        href={item.href}
+                        data-mobile-menu-link
+                        size="4xl"
+                        font="display"
+                    >
+                        {item.title}
+                    </Link>
+                </li>
+            ))
+        }
+        <li>
+            <Link
+                href={contactHref}
+                data-mobile-menu-link
+                size="4xl"
+                font="display"
+            >
+                Contact
+            </Link>
+        </li>
+    </ul>
+</div>

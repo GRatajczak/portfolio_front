@@ -1,7 +1,8 @@
 ---
 import Logo from "@/assets/Logo.svg";
 import type { HeaderMenuItem, Props } from "./index.type";
-
+import Link from "@/components/Link/index.astro";
+import MobileMenu from "./MobileMenu.astro";
 const { menuItems = [] } = Astro.props as Props;
 
 type ResolvedHeaderMenuItem = HeaderMenuItem & {
@@ -46,11 +47,20 @@ const getHref = (slug: string) => {
 
     return `${localePrefix}/${localizedSlug}`;
 };
+
+const navigationItems = sanitizedMenuItems.map((item) => ({
+    title: item.title,
+    href: getHref(item.slug),
+}));
 ---
 
-<header class="fixed top-0 left-0 z-20 w-full border-b border-paper/20">
+<header
+    class="fixed top-0 left-0 z-20 w-full border-b border-paper/50"
+    data-desktop-header
+>
     <nav
-        class="mx-auto flex w-full max-w-600 items-center justify-between px-4 py-2 backdrop-blur-sm"
+        class="mx-auto flex w-full max-w-full items-center justify-between px-4 py-2 backdrop-blur-sm transition-[max-width,border-radius,background-color,border-color] duration-300 ease-out md:px-6"
+        data-desktop-header-nav
     >
         <a href={homeHref} aria-label="Go to homepage" class="inline-flex">
             <Logo />
@@ -58,27 +68,186 @@ const getHref = (slug: string) => {
 
         {
             sanitizedMenuItems.length > 0 && (
-                <ul class="flex items-center gap-6">
-                    {sanitizedMenuItems.map((item) => (
+                <>
+                    <button
+                        type="button"
+                        class="text-sm  transition-colors uppercase font-semibold hover:text-paper md:hidden"
+                        aria-expanded="false"
+                        aria-controls="mobile-menu-panel"
+                        data-mobile-menu-toggle
+                    >
+                        Menu
+                    </button>
+
+                    <ul class="hidden items-center gap-6 md:flex">
+                        {navigationItems.map((item) => (
+                            <li>
+                                <Link
+                                    href={item.href}
+                                    className="text-sm  hover:text-paper"
+                                >
+                                    {item.title}
+                                </Link>
+                            </li>
+                        ))}
                         <li>
-                            <a
-                                href={getHref(item.slug)}
-                                class="text-sm text-paper/90 hover:text-paper"
+                            <Link
+                                href={`${localePrefix}/contact`}
+                                className="text-sm  hover:text-paper"
                             >
-                                {item.title}
-                            </a>
+                                Contact
+                            </Link>
                         </li>
-                    ))}
-                    <li>
-                        <a
-                            href={`${localePrefix}/contact`}
-                            class="text-sm text-paper/90 hover:text-paper"
-                        >
-                            Contact
-                        </a>
-                    </li>
-                </ul>
+                    </ul>
+                </>
             )
         }
     </nav>
+
+    {
+        sanitizedMenuItems.length > 0 && (
+            <MobileMenu
+                homeHref={homeHref}
+                menuItems={navigationItems}
+                contactHref={`${localePrefix}/contact`}
+            />
+        )
+    }
 </header>
+
+<script>
+    const setupMobileMenu = () => {
+        const toggleButton = document.querySelector(
+            "[data-mobile-menu-toggle]",
+        );
+        const menuPanel = document.querySelector("[data-mobile-menu-panel]");
+        const menuLinks = document.querySelectorAll("[data-mobile-menu-link]");
+        const closeButton = document.querySelector("[data-mobile-menu-close]");
+
+        if (!toggleButton || !menuPanel) {
+            return;
+        }
+
+        const closeMenu = () => {
+            toggleButton.textContent = "Menu";
+            toggleButton.setAttribute("aria-expanded", "false");
+            menuPanel.classList.add("translate-x-full");
+            menuPanel.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        };
+
+        const openMenu = () => {
+            toggleButton.textContent = "Close";
+            toggleButton.setAttribute("aria-expanded", "true");
+            menuPanel.classList.remove("translate-x-full");
+            menuPanel.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+        };
+
+        toggleButton.addEventListener("click", () => {
+            const isOpen =
+                toggleButton.getAttribute("aria-expanded") === "true";
+            if (isOpen) {
+                closeMenu();
+                return;
+            }
+
+            openMenu();
+        });
+
+        menuLinks.forEach((link) => {
+            link.addEventListener("click", closeMenu);
+        });
+
+        closeButton?.addEventListener("click", closeMenu);
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth >= 768) {
+                closeMenu();
+            }
+        });
+
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeMenu();
+            }
+        });
+    };
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setupMobileMenu, {
+            once: true,
+        });
+    } else {
+        setupMobileMenu();
+    }
+
+    const setupDesktopHeaderScroll = () => {
+        const header = document.querySelector("[data-desktop-header]");
+        const headerNav = document.querySelector("[data-desktop-header-nav]");
+
+        if (!header || !headerNav) {
+            return;
+        }
+
+        const desktopQuery = window.matchMedia("(min-width: 768px)");
+        const scrollThreshold = 24;
+
+        const updateDesktopHeaderState = () => {
+            if (!desktopQuery.matches) {
+                header.removeAttribute("data-scrolled");
+                return;
+            }
+
+            if (window.scrollY > scrollThreshold) {
+                header.setAttribute("data-scrolled", "true");
+                return;
+            }
+
+            header.removeAttribute("data-scrolled");
+        };
+
+        updateDesktopHeaderState();
+        window.addEventListener("scroll", updateDesktopHeaderState, {
+            passive: true,
+        });
+        window.addEventListener("resize", updateDesktopHeaderState);
+        desktopQuery.addEventListener("change", updateDesktopHeaderState);
+    };
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            setupDesktopHeaderScroll,
+            {
+                once: true,
+            },
+        );
+    } else {
+        setupDesktopHeaderScroll();
+    }
+</script>
+
+<style>
+    @media (width >= 48rem) {
+        [data-desktop-header] {
+            border-bottom-color: transparent;
+        }
+
+        [data-desktop-header][data-scrolled="true"] {
+            border-bottom-color: transparent;
+        }
+
+        [data-desktop-header][data-scrolled="true"] [data-desktop-header-nav] {
+            max-width: 600px;
+            border-radius: 9999px;
+            border: 1px solid
+                color-mix(in srgb, var(--color-paper) 20%, transparent);
+            background-color: color-mix(
+                in srgb,
+                var(--color-ink) 88%,
+                transparent
+            );
+        }
+    }
+</style>
