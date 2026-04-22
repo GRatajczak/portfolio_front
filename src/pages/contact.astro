@@ -1,0 +1,28 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ContactBanner from "@/sections/contactBanner/index.astro";
+import { DEFAULT_LOCALE, getHomePage } from "../lib/sanity";
+
+const pageData = await getHomePage(DEFAULT_LOCALE, DEFAULT_LOCALE);
+const email = pageData?.email || "g.ratajczak97@gmail.com";
+const phone = pageData?.phone || "795 451 486";
+---
+
+<Layout
+    headerMenuItems={pageData?.headerMenuItems ?? []}
+    footerMenuItems={pageData?.footerMenuItems ?? []}
+    phone={phone}
+    email={email}
+    instagram={pageData?.instagram ?? ""}
+    linkedin={pageData?.linkedin ?? ""}
+    github={pageData?.github ?? ""}
+>
+    <main>
+        <ContactBanner
+            eyebrow="Get in touch!"
+            heading="Let's talk!"
+            email={email}
+            phone={phone}
+        />
+    </main>
+</Layout>

@@ -28,6 +28,7 @@ export type HomePageData = {
     phone: string;
     email: string;
     linkedin: string;
+    github: string;
 };
 
 export type PageData = HomePageData;
@@ -57,7 +58,13 @@ export type HomePageQueryResult = {
         phone?: string;
         email?: string;
         linkedin?: string;
+        github?: string;
     };
 };
 
 export type PageQueryResult = HomePageQueryResult;
+
+export type PageSlugResult = {
+    slug?: string;
+    language?: string;
+};

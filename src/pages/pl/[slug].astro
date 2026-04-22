@@ -2,10 +2,26 @@
 import Layout from "../../layouts/Layout.astro";
 import PageBuilder from "@/utils/pageBuilder/PageBuilder.astro";
 import Text from "@/components/Text/index.astro";
-import { DEFAULT_LOCALE, getAboutPage, getHomePage } from "../../lib/sanity";
+import {
+    DEFAULT_LOCALE,
+    getPageByRouteSlug,
+    getPageRouteSlugs,
+} from "../../lib/sanity";
 
-const aboutPage = await getAboutPage("pl", DEFAULT_LOCALE);
-const pageData = aboutPage;
+export async function getStaticPaths() {
+    const slugs = await getPageRouteSlugs("pl", DEFAULT_LOCALE);
+
+    return slugs.map((slug) => ({
+        params: { slug },
+    }));
+}
+
+const slug = Astro.params.slug ?? "";
+const pageData = await getPageByRouteSlug(slug, "pl", DEFAULT_LOCALE);
+
+if (!pageData) {
+    Astro.response.status = 404;
+}
 ---
 
 <Layout
@@ -15,6 +31,7 @@ const pageData = aboutPage;
     email={pageData?.email ?? ""}
     instagram={pageData?.instagram ?? ""}
     linkedin={pageData?.linkedin ?? ""}
+    github={pageData?.github ?? ""}
 >
     <main>
         {
@@ -28,7 +45,7 @@ const pageData = aboutPage;
             ) : (
                 <section class="mx-auto max-w-600 px-6 py-24">
                     <Text className="text-paper">
-                        Brak skonfigurowanych sekcji dla strony about.
+                        Brak skonfigurowanych sekcji dla tej strony.
                     </Text>
                 </section>
             )

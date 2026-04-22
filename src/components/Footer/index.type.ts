@@ -10,4 +10,5 @@ export type Props = {
     email?: string;
     instagram?: string;
     linkedin?: string;
+    github?: string;
 };

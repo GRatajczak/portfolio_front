@@ -24,4 +24,5 @@ type PortableTextBlock = {
 export type Props = {
     value?: string | PortableTextBlock[];
     className?: string;
+    smallHeadings?: boolean;
 };

@@ -6,6 +6,7 @@ import type {
     HomePageData,
     PageData,
     PageQueryResult,
+    PageSlugResult,
     PostPreview,
 } from "./sanity.type";
 
@@ -204,6 +205,19 @@ export const PAGE_QUERY = defineQuery(`
             }
           }
         },
+        _type == "richTextSection" => {
+          ...,
+          content[]{
+            ...,
+            markDefs[]{
+              ...,
+              _type == "link" => {
+                ...,
+                href
+              }
+            }
+          }
+        },
         _type == "technologiesStack" => {
           ...,
           technologies[]{
@@ -252,6 +266,30 @@ export const PAGE_QUERY = defineQuery(`
               }
             }
           }
+        },
+        _type == "certificatesGrid" => {
+          ...,
+          certificates[]{
+            _key,
+            "certificate": certificate->{
+              _id,
+              title,
+              issuer,
+              certificateUrl,
+              "image": image{
+                alt,
+                "asset": asset->{
+                  url,
+                  metadata{
+                    dimensions{
+                      width,
+                      height
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -275,12 +313,27 @@ export const PAGE_QUERY = defineQuery(`
       "instagram": coalesce(instagram, ""),
       "phone": coalesce(phone, ""),
       "email": coalesce(email, ""),
-      "linkedin": coalesce(linkedin, "")
+      "linkedin": coalesce(linkedin, ""),
+      "github": coalesce(github, "")
     }
   }
 `);
 
 export const HOME_PAGE_QUERY = PAGE_QUERY;
+export const PAGE_SLUGS_QUERY = defineQuery(`
+  *[
+    _type == "page"
+    && language in [$locale, $baseLocale]
+    && defined(slug.current)
+  ]
+    | order(
+      select(language == $locale => 0, language == $baseLocale => 1, 2) asc,
+      _updatedAt desc
+    ) {
+    "slug": slug.current,
+    language
+  }
+`);
 
 export async function getPosts(
     locale = DEFAULT_LOCALE,
@@ -317,9 +370,60 @@ export async function getAboutPage(
     locale = DEFAULT_LOCALE,
     baseLocale = DEFAULT_LOCALE,
 ): Promise<PageData | null> {
-    const aboutSlug = locale === DEFAULT_LOCALE ? "about" : `about-${locale}`;
-    const fallbackAboutSlug = "about";
-    return getPageBySlug(aboutSlug, locale, baseLocale, fallbackAboutSlug);
+    return getPageByRouteSlug("about", locale, baseLocale);
+}
+
+export async function getPageByRouteSlug(
+    routeSlug: string,
+    locale = DEFAULT_LOCALE,
+    baseLocale = DEFAULT_LOCALE,
+): Promise<PageData | null> {
+    if (!routeSlug) {
+        return null;
+    }
+
+    const localizedSlug = getLocalizedPageSlug(routeSlug, locale);
+    return getPageBySlug(localizedSlug, locale, baseLocale, routeSlug);
+}
+
+export async function getPageRouteSlugs(
+    locale = DEFAULT_LOCALE,
+    baseLocale = DEFAULT_LOCALE,
+): Promise<string[]> {
+    if (!sanityClient) {
+        return [];
+    }
+
+    try {
+        const slugs = await sanityClient.fetch<PageSlugResult[]>(PAGE_SLUGS_QUERY, {
+            locale,
+            baseLocale,
+        });
+
+        const uniqueSlugs = new Set<string>();
+
+        for (const entry of slugs) {
+            if (!entry.slug) {
+                continue;
+            }
+
+            const routeSlug = toRouteSlug(entry.slug, locale);
+
+            if (!routeSlug || routeSlug === "home") {
+                continue;
+            }
+
+            uniqueSlugs.add(routeSlug);
+        }
+
+        return [...uniqueSlugs];
+    } catch (error) {
+        if (import.meta.env.DEV) {
+            console.warn("[sanity] Failed to fetch page slugs.", error);
+        }
+
+        return [];
+    }
 }
 
 async function getPageBySlug(
@@ -354,6 +458,7 @@ async function getPageBySlug(
             phone: data.globals?.phone ?? "",
             email: data.globals?.email ?? "",
             linkedin: data.globals?.linkedin ?? "",
+            github: data.globals?.github ?? "",
         };
     } catch (error) {
         if (import.meta.env.DEV) {
@@ -365,6 +470,34 @@ async function getPageBySlug(
 
         return null;
     }
+}
+
+function getLocalizedPageSlug(routeSlug: string, locale: string) {
+    if (locale === DEFAULT_LOCALE) {
+        return routeSlug;
+    }
+
+    const localeSuffix = `-${locale}`;
+
+    if (routeSlug.endsWith(localeSuffix)) {
+        return routeSlug;
+    }
+
+    return `${routeSlug}${localeSuffix}`;
+}
+
+function toRouteSlug(pageSlug: string, locale: string) {
+    if (locale === DEFAULT_LOCALE) {
+        return pageSlug;
+    }
+
+    const localeSuffix = `-${locale}`;
+
+    if (pageSlug.endsWith(localeSuffix)) {
+        return pageSlug.slice(0, -localeSuffix.length);
+    }
+
+    return pageSlug;
 }
 
 export function urlFor(source: SanityImageSource) {

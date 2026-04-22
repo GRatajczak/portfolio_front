@@ -1,7 +1,11 @@
 ---
 import type { Props } from "./index.type";
 
-const { value = "", className = "" } = Astro.props as Props;
+const {
+    value = "",
+    className = "",
+    smallHeadings = false,
+} = Astro.props as Props;
 
 const escapeHtml = (input: string) =>
     input
@@ -37,30 +41,40 @@ const renderBlockInner = (block: {
     children?: Array<{ text?: string; marks?: string[] }>;
     markDefs?: Array<{ _key: string; href?: string }>;
 }) => {
-    const markDefs = Object.fromEntries((block.markDefs ?? []).map((item) => [item._key, item]));
+    const markDefs = Object.fromEntries(
+        (block.markDefs ?? []).map((item) => [item._key, item]),
+    );
     return (block.children ?? [])
         .map((span) => renderSpan(span.text ?? "", span.marks ?? [], markDefs))
         .join("");
 };
 
-const wrapBlock = (style: string | undefined, content: string) => {
+const wrapBlock = (
+    style: string | undefined,
+    content: string,
+    shouldUseSmallHeadings: boolean,
+) => {
     if (!content.trim()) {
         return "";
     }
 
+    const headingClass = shouldUseSmallHeadings
+        ? ' class="!text-lg md:!text-xl font-semibold leading-snug"'
+        : "";
+
     switch (style) {
         case "h1":
-            return `<h1>${content}</h1>`;
+            return `<h1${headingClass}>${content}</h1>`;
         case "h2":
-            return `<h2>${content}</h2>`;
+            return `<h2${headingClass}>${content}</h2>`;
         case "h3":
-            return `<h3>${content}</h3>`;
+            return `<h3${headingClass}>${content}</h3>`;
         case "h4":
-            return `<h4>${content}</h4>`;
+            return `<h4${headingClass}>${content}</h4>`;
         case "h5":
-            return `<h5>${content}</h5>`;
+            return `<h5${headingClass}>${content}</h5>`;
         case "h6":
-            return `<h6>${content}</h6>`;
+            return `<h6${headingClass}>${content}</h6>`;
         case "blockquote":
             return `<blockquote>${content}</blockquote>`;
         default:
@@ -76,6 +90,7 @@ const renderPortableText = (
         children?: Array<{ text?: string; marks?: string[] }>;
         markDefs?: Array<{ _key: string; href?: string }>;
     }>,
+    shouldUseSmallHeadings: boolean,
 ) => {
     const output: string[] = [];
     let listBuffer: string[] = [];
@@ -93,7 +108,13 @@ const renderPortableText = (
             listType === "number"
                 ? "list-decimal list-outside pl-5 space-y-1"
                 : "list-disc list-outside pl-5 space-y-1";
-        output.push(`<${tag} class="${listClass}">${listBuffer.join("")}</${tag}>`);
+        const listStyle =
+            listType === "number"
+                ? ' style="list-style-type: decimal; list-style-position: outside; padding-left: 1.25rem;"'
+                : ' style="list-style-type: disc; list-style-position: outside; padding-left: 1.25rem;"';
+        output.push(
+            `<${tag} class="${listClass}"${listStyle}>${listBuffer.join("")}</${tag}>`,
+        );
         listBuffer = [];
         listType = null;
     };
@@ -115,14 +136,16 @@ const renderPortableText = (
         }
 
         flushList();
-        output.push(wrapBlock(block.style, inner));
+        output.push(wrapBlock(block.style, inner, shouldUseSmallHeadings));
     }
 
     flushList();
     return output.join("");
 };
 
-const htmlValue = Array.isArray(value) ? renderPortableText(value) : "";
+const htmlValue = Array.isArray(value)
+    ? renderPortableText(value, smallHeadings)
+    : "";
 ---
 
 {

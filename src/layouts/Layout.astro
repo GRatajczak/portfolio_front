@@ -11,6 +11,7 @@ const {
     email = "",
     instagram = "",
     linkedin = "",
+    github = "",
 } = Astro.props as Props;
 ---
 
@@ -24,7 +25,7 @@ const {
         <meta name="generator" content={Astro.generator} />
         <title>Grzegorz Ratajczak</title>
     </head>
-    <body class="min-h-screen antialiased">
+    <body class="min-h-screen antialiased flex flex-col">
         <Header menuItems={headerMenuItems} />
         <slot />
         <Footer
@@ -33,6 +34,7 @@ const {
             email={email}
             instagram={instagram}
             linkedin={linkedin}
+            github={github}
         />
     </body>
 </html>

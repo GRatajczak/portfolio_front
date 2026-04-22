@@ -1,7 +1,39 @@
 ---
 import type { Props } from "./index.type";
 
-const { href = "", label = "", isExternal = false, className = "" } = Astro.props as Props;
+const {
+    href = "",
+    label = "",
+    isExternal = false,
+    className = "",
+    size,
+    font = "sans",
+    style = "",
+} = Astro.props as Props;
+
+const sizeToFontVariable = {
+    "2xs": "var(--font-size-2xs)",
+    xs: "var(--font-size-xs)",
+    sm: "var(--font-size-sm)",
+    base: "var(--font-size-base)",
+    l: "var(--font-size-lg)",
+    lg: "var(--font-size-lg)",
+    xl: "var(--font-size-xl)",
+    "2xl": "var(--font-size-2xl)",
+    "3xl": "var(--font-size-3xl)",
+    "4xl": "var(--font-size-4xl)",
+    "5xl": "var(--font-size-5xl)",
+};
+const fontToFamilyVariable = {
+    sans: "var(--font-sans)",
+    display: "var(--font-display)",
+};
+
+const sizeStyle = size ? `font-size: ${sizeToFontVariable[size]};` : "";
+const fontStyle = `font-family: ${fontToFamilyVariable[font]};`;
+const mergedStyle = style
+    ? `${sizeStyle} ${fontStyle} ${style}`
+    : `${sizeStyle} ${fontStyle}`;
 ---
 
 {
@@ -9,6 +41,7 @@ const { href = "", label = "", isExternal = false, className = "" } = Astro.prop
         <a
             class={className}
             href={href}
+            style={mergedStyle}
             target={isExternal ? "_blank" : undefined}
             rel={isExternal ? "noreferrer noopener" : undefined}
         >

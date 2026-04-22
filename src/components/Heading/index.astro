@@ -3,6 +3,7 @@ import type { Props } from "./index.type";
 
 const {
     as = "h2",
+    size,
     text = "",
     className = "",
     style = "",
@@ -16,11 +17,27 @@ const fluidStyleByTag = {
     h5: "font-size: var(--font-size-h5); line-height: 1.2;",
     h6: "font-size: var(--font-size-h6); line-height: 1.25;",
 };
+const sizeToFontVariable = {
+    "2xs": "var(--font-size-2xs)",
+    xs: "var(--font-size-xs)",
+    sm: "var(--font-size-sm)",
+    base: "var(--font-size-base)",
+    l: "var(--font-size-lg)",
+    lg: "var(--font-size-lg)",
+    xl: "var(--font-size-xl)",
+    "2xl": "var(--font-size-2xl)",
+    "3xl": "var(--font-size-3xl)",
+    "4xl": "var(--font-size-4xl)",
+    "5xl": "var(--font-size-5xl)",
+    display: "var(--font-size-display)",
+};
+const headingBaseStyle = fluidStyleByTag[as];
+const sizeStyle = size ? `font-size: ${sizeToFontVariable[size]};` : "";
 const mergedStyle = style
-    ? `${fluidStyleByTag[as]} ${style}`
-    : fluidStyleByTag[as];
+    ? `${headingBaseStyle} ${sizeStyle} ${style}`
+    : `${headingBaseStyle} ${sizeStyle}`;
 ---
 
-<Tag class={className} style={mergedStyle}>
+<Tag class={`leading-[0.95] ${className}`} style={mergedStyle}>
     <slot>{text}</slot>
 </Tag>

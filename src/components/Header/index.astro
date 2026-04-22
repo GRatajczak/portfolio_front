@@ -19,6 +19,9 @@ const sanitizedMenuItems: ResolvedHeaderMenuItem[] = menuItems.flatMap(
     },
 );
 
+const localePrefix = Astro.url.pathname.startsWith("/pl") ? "/pl" : "";
+const homeHref = localePrefix || "/";
+
 const getHref = (slug: string) => {
     if (slug.startsWith("http://") || slug.startsWith("https://")) {
         return slug;
@@ -28,7 +31,20 @@ const getHref = (slug: string) => {
         return slug;
     }
 
-    return `/${slug}`;
+    const localizedSlug =
+        localePrefix === "/pl" && slug.endsWith("-pl")
+            ? slug.slice(0, -3)
+            : slug;
+
+    if (localizedSlug === "home") {
+        return homeHref;
+    }
+
+    if (!localePrefix) {
+        return `/${localizedSlug}`;
+    }
+
+    return `${localePrefix}/${localizedSlug}`;
 };
 ---
 
@@ -36,7 +52,7 @@ const getHref = (slug: string) => {
     <nav
         class="mx-auto flex w-full max-w-600 items-center justify-between px-4 py-2 backdrop-blur-sm"
     >
-        <a href="/" aria-label="Go to homepage" class="inline-flex">
+        <a href={homeHref} aria-label="Go to homepage" class="inline-flex">
             <Logo />
         </a>
 
@@ -53,6 +69,14 @@ const getHref = (slug: string) => {
                             </a>
                         </li>
                     ))}
+                    <li>
+                        <a
+                            href={`${localePrefix}/contact`}
+                            class="text-sm text-paper/90 hover:text-paper"
+                        >
+                            Contact
+                        </a>
+                    </li>
                 </ul>
             )
         }

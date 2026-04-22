@@ -1,6 +1,10 @@
 ---
 import LogoFooter from "@/assets/Logo_footer.svg";
 import PolandFlag from "@/assets/polandflag.svg";
+import LinkedinIcon from "@/assets/linkedin.svg";
+import InstagramIcon from "@/assets/instagram.svg";
+import GithubIcon from "@/assets/github.svg";
+import { Mail, Phone, Shield } from "@lucide/astro";
 import Text from "@/components/Text/index.astro";
 import type { FooterMenuItem, Props } from "./index.type";
 import Link from "@/components/Link/index.astro";
@@ -11,6 +15,7 @@ const {
     email = "",
     instagram = "",
     linkedin = "",
+    github = "",
 } = Astro.props as Props;
 
 type ResolvedFooterMenuItem = FooterMenuItem & {
@@ -28,6 +33,9 @@ const resolvedMenuItems: ResolvedFooterMenuItem[] = menuItems.flatMap(
     },
 );
 
+const localePrefix = Astro.url.pathname.startsWith("/pl") ? "/pl" : "";
+const homeHref = localePrefix || "/";
+
 const getHref = (slug: string) => {
     if (slug.startsWith("http://") || slug.startsWith("https://")) {
         return slug;
@@ -37,18 +45,35 @@ const getHref = (slug: string) => {
         return slug;
     }
 
-    return `/${slug}`;
+    const localizedSlug =
+        localePrefix === "/pl" && slug.endsWith("-pl")
+            ? slug.slice(0, -3)
+            : slug;
+
+    if (localizedSlug === "home") {
+        return homeHref;
+    }
+
+    if (!localePrefix) {
+        return `/${localizedSlug}`;
+    }
+
+    return `${localePrefix}/${localizedSlug}`;
 };
+
+const privacyPolicyHref = localePrefix
+    ? `${localePrefix}/privacy-policy`
+    : "/privacy-policy";
 
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="mt-20 border-t border-paper/20 bg-paper text-ink">
+<footer class="border-t border-paper/20 bg-paper text-ink mt-auto">
     <div
         class="mx-auto grid w-full max-w-600 gap-10 px-6 py-8 md:grid-cols-[1fr_auto_auto]"
     >
         <div class="space-y-4">
-            <a href="/" aria-label="Go to homepage" class="inline-flex">
+            <a href={homeHref} aria-label="Go to homepage" class="inline-flex">
                 <LogoFooter />
             </a>
             <div class="flex items-center gap-4 text-sm">
@@ -59,8 +84,9 @@ const currentYear = new Date().getFullYear();
                             target="_blank"
                             rel="noreferrer noopener"
                             class="hover:opacity-70"
+                            aria-label="LinkedIn"
                         >
-                            LinkedIn
+                            <LinkedinIcon class="h-5 w-5" />
                         </a>
                     )
                 }
@@ -71,8 +97,22 @@ const currentYear = new Date().getFullYear();
                             target="_blank"
                             rel="noreferrer noopener"
                             class="hover:opacity-70"
+                            aria-label="Instagram"
                         >
-                            Instagram
+                            <InstagramIcon class="h-5 w-5" />
+                        </a>
+                    )
+                }
+                {
+                    github && (
+                        <a
+                            href={github}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            class="hover:opacity-70"
+                            aria-label="GitHub"
+                        >
+                            <GithubIcon class="h-5 w-5" />
                         </a>
                     )
                 }
@@ -94,6 +134,14 @@ const currentYear = new Date().getFullYear();
                                 </a>
                             </li>
                         ))}
+                        <li>
+                            <a
+                                href={`${localePrefix}/contact`}
+                                class="hover:opacity-70"
+                            >
+                                Contact
+                            </a>
+                        </li>
                     </ul>
                 </div>
             )
@@ -105,7 +153,11 @@ const currentYear = new Date().getFullYear();
                 {
                     phone && (
                         <li>
-                            <a href={`tel:${phone}`} class="hover:opacity-70">
+                            <a
+                                href={`tel:${phone}`}
+                                class="inline-flex items-center gap-2 hover:opacity-70"
+                            >
+                                <Phone class="h-4 w-4" aria-hidden="true" />
                                 {phone}
                             </a>
                         </li>
@@ -116,8 +168,9 @@ const currentYear = new Date().getFullYear();
                         <li>
                             <a
                                 href={`mailto:${email}`}
-                                class="hover:opacity-70"
+                                class="inline-flex items-center gap-2 hover:opacity-70"
                             >
+                                <Mail class="h-4 w-4" aria-hidden="true" />
                                 {email}
                             </a>
                         </li>
@@ -136,14 +189,10 @@ const currentYear = new Date().getFullYear();
                 Poland
             </Text>
             <Link
-                href="/privacy-policy"
+                href={privacyPolicyHref}
                 className="inline-flex items-center gap-2 hover:opacity-70"
             >
-                <span
-                    class="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-ink/70 text-[9px] leading-none"
-                >
-                    P
-                </span>
+                <Shield class="h-4 w-4" aria-hidden="true" />
                 Privacy Policy
             </Link>
         </div>

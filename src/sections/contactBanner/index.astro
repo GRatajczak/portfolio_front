@@ -1,0 +1,55 @@
+---
+import type { Props } from "./index.type";
+import Heading from "@/components/Heading/index.astro";
+import Link from "@/components/Link/index.astro";
+const {
+    eyebrow = "Get in touch!",
+    heading = "Let's talk!",
+    email = "",
+    phone = "",
+    className = "",
+} = Astro.props as Props;
+
+const phoneHref = phone ? `tel:${phone.replace(/\s+/g, "")}` : "";
+---
+
+<section class={`mx-auto w-full max-w-600 px-6 pt-32 pb-16 ${className}`}>
+    <div class="grid gap-8 pb-10 md:grid-cols-[1fr_auto] md:items-end mt-[10%]">
+        <div>
+            <p class="text-paper/60">{eyebrow}</p>
+            <Heading
+                as="h1"
+                size="display"
+                className="mt-2 max-w-[12ch] text-paper"
+            >
+                {heading}
+            </Heading>
+        </div>
+        <div class="space-y-2 md:pb-2 md:text-right">
+            {
+                email && (
+                    <Link
+                        href={`mailto:${email}`}
+                        size="4xl"
+                        font="display"
+                        className="block font-semibold text-paper   leading-[0.95]  transition-opacity hover:opacity-75"
+                    >
+                        {email}
+                    </Link>
+                )
+            }
+            {
+                phone && (
+                    <Link
+                        href={phoneHref}
+                        size="4xl"
+                        font="display"
+                        className="block font-semibold text-paper  leading-[0.95] transition-opacity hover:opacity-75"
+                    >
+                        {phone}
+                    </Link>
+                )
+            }
+        </div>
+    </div>
+</section>

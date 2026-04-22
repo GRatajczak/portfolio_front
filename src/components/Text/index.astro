@@ -3,6 +3,7 @@ import type { Props } from "./index.type";
 
 const {
     as = "p",
+    size,
     text = "",
     className = "",
     style = "",
@@ -13,9 +14,24 @@ const fluidStyleByTag = {
     span: "font-size: inherit; line-height: inherit;",
     small: "font-size: var(--font-size-small); line-height: 1.2;",
 };
+const sizeToFontVariable = {
+    "2xs": "var(--font-size-2xs)",
+    xs: "var(--font-size-xs)",
+    sm: "var(--font-size-sm)",
+    base: "var(--font-size-base)",
+    l: "var(--font-size-lg)",
+    lg: "var(--font-size-lg)",
+    xl: "var(--font-size-xl)",
+    "2xl": "var(--font-size-2xl)",
+    "3xl": "var(--font-size-3xl)",
+    "4xl": "var(--font-size-4xl)",
+    "5xl": "var(--font-size-5xl)",
+};
+const tagBaseStyle = fluidStyleByTag[as];
+const sizeStyle = size ? `font-size: ${sizeToFontVariable[size]};` : "";
 const mergedStyle = style
-    ? `${fluidStyleByTag[as]} ${style}`
-    : fluidStyleByTag[as];
+    ? `${tagBaseStyle} ${sizeStyle} ${style}`
+    : `${tagBaseStyle} ${sizeStyle}`;
 ---
 
 <Tag class={className} style={mergedStyle}>

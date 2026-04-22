@@ -226,16 +226,59 @@ export type Subhero = {
     highlightLine?: boolean;
 };
 
+export type RichTextSection = {
+    _type: "richTextSection";
+    content: Array<{
+        children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+        }>;
+        style?:
+            | "normal"
+            | "h1"
+            | "h2"
+            | "h3"
+            | "h4"
+            | "h5"
+            | "h6"
+            | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+    }>;
+};
+
 export type ProjectsShowcase = {
     _type: "projectsShowcase";
     eyebrow?: string;
-    heading: string;
+    heading?: string;
     button?: ProjectsShowcaseButton;
     projects?: Array<
         {
             _key: string;
         } & ProjectReference_2
     >;
+};
+
+export type Highlights = {
+    _type: "highlights";
+    eyebrow?: string;
+    heading: string;
+    items?: Array<{
+        value: string;
+        label: string;
+        description?: string;
+        _type: "item";
+        _key: string;
+    }>;
 };
 
 export type Hero = {
@@ -331,6 +374,59 @@ export type CurrentFocus = {
         _key: string;
     }>;
     project?: CurrentFocusProject;
+};
+
+export type ContactCta = {
+    _type: "contactCta";
+    eyebrow?: string;
+    heading: string;
+    description?: Array<{
+        children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+        }>;
+        style?:
+            | "normal"
+            | "h1"
+            | "h2"
+            | "h3"
+            | "h4"
+            | "h5"
+            | "h6"
+            | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+    }>;
+    primaryButton?: PrimaryButton;
+    secondaryButton?: SecondaryButton;
+    backgroundImage?: {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+    };
+};
+
+export type CertificatesGrid = {
+    _type: "certificatesGrid";
+    eyebrow?: string;
+    heading?: string;
+    certificates?: Array<
+        {
+            _key: string;
+        } & CertificateReference_2
+    >;
 };
 
 export type CertificatesGallery = {
@@ -637,6 +733,7 @@ export type Global = {
     email?: string;
     linkedin?: string;
     instagram?: string;
+    github?: string;
 };
 
 export type Page = {
@@ -675,6 +772,9 @@ export type Page = {
           } & ExperienceTimeline)
         | ({
               _key: string;
+          } & Highlights)
+        | ({
+              _key: string;
           } & TechnologiesOverview)
         | ({
               _key: string;
@@ -684,7 +784,16 @@ export type Page = {
           } & ProjectsShowcase)
         | ({
               _key: string;
+          } & RichTextSection)
+        | ({
+              _key: string;
           } & CertificatesGallery)
+        | ({
+              _key: string;
+          } & CertificatesGrid)
+        | ({
+              _key: string;
+          } & ContactCta)
     >;
 };
 
@@ -870,10 +979,14 @@ export type AllSanitySchemaTypes =
     | TechnologiesOverview
     | TechnologiesStack
     | Subhero
+    | RichTextSection
     | ProjectsShowcase
+    | Highlights
     | Hero
     | ExperienceTimeline
     | CurrentFocus
+    | ContactCta
+    | CertificatesGrid
     | CertificatesGallery
     | AboutMe
     | AboutBanner

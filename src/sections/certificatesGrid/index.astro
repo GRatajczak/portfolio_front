@@ -1,0 +1,74 @@
+---
+import Container from "@/components/Container/index.astro";
+import SectionHeader from "@/components/SectionHeader/index.astro";
+import Text from "@/components/Text/index.astro";
+import { Image } from "astro:assets";
+import type { Props } from "./index.type";
+
+const { eyebrow = "", heading = "", certificates = [] } = Astro.props as Props;
+---
+
+<Container>
+    <SectionHeader eyebrow={eyebrow} heading={heading} />
+
+    {
+        certificates.length > 0 ? (
+            <div class="masonryGrid mt-8 columns-3 gap-3 max-[900px]:columns-2 max-[500px]:columns-1">
+                {certificates.map((item) => {
+                    const certificate = item.certificate ?? item;
+                    const imageUrl = certificate.image?.asset?.url;
+                    const imageWidth =
+                        certificate.image?.asset?.metadata?.dimensions?.width;
+                    const imageHeight =
+                        certificate.image?.asset?.metadata?.dimensions?.height;
+                    const imageAlt =
+                        certificate.image?.alt ||
+                        certificate.title ||
+                        "Certificate preview";
+
+                    return (
+                        <article class="masonryItem mb-3 break-inside-avoid overflow-hidden rounded-md">
+                            {imageUrl && imageWidth && imageHeight ? (
+                                certificate.certificateUrl ? (
+                                    <a
+                                        href={certificate.certificateUrl}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label={imageAlt}
+                                        class="block"
+                                    >
+                                        <Image
+                                            src={imageUrl}
+                                            alt={imageAlt}
+                                            width={imageWidth}
+                                            height={imageHeight}
+                                            class="block h-full w-full rounded-md object-cover"
+                                            loading="lazy"
+                                            format="webp"
+                                        />
+                                    </a>
+                                ) : (
+                                    <Image
+                                        src={imageUrl}
+                                        alt={imageAlt}
+                                        width={imageWidth}
+                                        height={imageHeight}
+                                        class="block h-full w-full rounded-md object-cover"
+                                        loading="lazy"
+                                        format="webp"
+                                    />
+                                )
+                            ) : (
+                                <div class="flex min-h-40 items-center justify-center rounded-md bg-deepBlack text-paper/60">
+                                    No certificate image
+                                </div>
+                            )}
+                        </article>
+                    );
+                })}
+            </div>
+        ) : (
+            <Text className="mt-6 text-paper">No certificates configured.</Text>
+        )
+    }
+</Container>

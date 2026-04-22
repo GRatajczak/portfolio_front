@@ -21,19 +21,27 @@ const { entry, index } = Astro.props as Props;
         >
             {entry.period}
         </Text>
-        <Heading as="h3" className="text-lg font-medium">
+        <Heading as="h3" size="3xl" className="font-medium">
             {entry.company}
         </Heading>
-        {entry.role && <Text className="text-sm  mb-6">{entry.role}</Text>}
+        {
+            entry.role && (
+                <Text size="base" className="mb-6">
+                    {entry.role}
+                </Text>
+            )
+        }
         {
             entry.description && (
-                <Text className="mt-2 ">{toPlainText(entry.description)}</Text>
+                <Text className="mt-2" size="base">
+                    {toPlainText(entry.description)}
+                </Text>
             )
         }
         {
             entry.technologies && entry.technologies.length > 0 && (
                 <div class="mt-3 flex flex-col gap-x-2 gap-y-1">
-                    <Text className="text-xs font-medium text-paper mb-2">
+                    <Text size="base" className="font-medium text-paper mb-2">
                         Technologies I used here:
                     </Text>
                     <ul class="flex flex-wrap items-center gap-4">
