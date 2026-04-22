@@ -119,7 +119,7 @@ const marqueeTechnologies =
                 }
 
                 Object.assign(swiperEl, {
-                    slidesPerView: 12,
+                    slidesPerView: 4,
                     spaceBetween: 8,
                     loop: true,
                     loopAdditionalSlides: slidesCount,
@@ -132,7 +132,12 @@ const marqueeTechnologies =
                     autoplay: {
                         delay: 0,
                         disableOnInteraction: false,
-                        pauseOnMouseEnter: true,
+                        pauseOnMouseEnter: false,
+                    },
+                    breakpoints: {
+                        640: {
+                            slidesPerView: 12,
+                        },
                     },
                     injectStyles: [
                         `

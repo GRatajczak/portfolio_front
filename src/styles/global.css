@@ -162,3 +162,7 @@ small {
     font-size: var(--font-size-small);
     line-height: 1.5;
 }
+
+.contact-banner-link {
+    font-size: 1.5rem !important;
+}

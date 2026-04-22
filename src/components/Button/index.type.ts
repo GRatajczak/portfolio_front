@@ -4,4 +4,5 @@ export type Props = {
     type?: "button" | "submit" | "reset";
     isExternal?: boolean;
     className?: string;
+    showArrowUp?: boolean;
 };

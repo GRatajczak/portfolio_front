@@ -1,8 +1,15 @@
 ---
 import type { Props } from "./index.type";
+import { ArrowUpRight } from "@lucide/astro";
 
-const { href = "", label = "", type = "button", isExternal = false, className = "" } =
-    Astro.props as Props;
+const {
+    href = "",
+    label = "",
+    type = "button",
+    isExternal = false,
+    className = "",
+    showArrowUp = false,
+} = Astro.props as Props;
 ---
 
 {
@@ -14,6 +21,9 @@ const { href = "", label = "", type = "button", isExternal = false, className = 
             rel={isExternal ? "noreferrer noopener" : undefined}
         >
             <slot>{label}</slot>
+            {showArrowUp && (
+                <ArrowUpRight aria-hidden="true" class="ml-2 size-6" />
+            )}
         </a>
     ) : (
         <button
@@ -21,6 +31,9 @@ const { href = "", label = "", type = "button", isExternal = false, className = 
             type={type}
         >
             <slot>{label}</slot>
+            {showArrowUp && (
+                <ArrowUpRight aria-hidden="true" class="ml-2 size-6" />
+            )}
         </button>
     )
 }
