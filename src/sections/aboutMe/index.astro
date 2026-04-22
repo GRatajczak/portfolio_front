@@ -1,11 +1,10 @@
 ---
 import Container from "@/components/Container/index.astro";
-import Link from "@/components/Link/index.astro";
 import ImageGrid from "@/components/ImageGrid/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
 import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
-
+import Button from "@/components/Button/index.astro";
 const {
     eyebrow = "",
     heading = "",
@@ -17,7 +16,9 @@ const descriptionText = toPlainText(description);
 ---
 
 <Container>
-    <div class="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start">
+    <div
+        class="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start"
+    >
         <div>
             <SectionHeader
                 eyebrow={eyebrow}
@@ -25,11 +26,12 @@ const descriptionText = toPlainText(description);
                 description={descriptionText}
                 className="max-w-xl"
             />
-            <Link
+            <Button
                 href={button?.buttonLink}
                 label={button?.buttonText}
                 isExternal={button?.isExternalLink}
-                className="mt-8 inline-flex items-center rounded-lg border border-paper/70 px-4 py-2 text-sm font-medium text-paper hover:border-paper"
+                showArrowUp
+                className="mt-8"
             />
         </div>
         <ImageGrid images={images} className="lg:mt-4 lg:justify-self-end" />

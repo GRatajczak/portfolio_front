@@ -1,4 +1,7 @@
-import type { Certificate as SanityCertificate } from "@/lib/sanity.types";
+import type {
+    CertificatesGalleryButton,
+    Certificate as SanityCertificate,
+} from "@/lib/sanity.types";
 
 export type CertificateImage = {
     alt?: string;
@@ -29,4 +32,5 @@ export type Props = {
     eyebrow?: string;
     heading?: string;
     certificates?: CertificateItem[];
+    button?: CertificatesGalleryButton;
 };

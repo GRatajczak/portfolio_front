@@ -76,13 +76,9 @@ const richContent = project.content?.length
                 />
                 {
                     projectUrl && (
-                        <Link
-                            href={projectUrl}
-                            isExternal
-                            className="inline-flex w-fit text-sm text-accent-orange underline underline-offset-4 transition-opacity duration-200 hover:opacity-80"
-                        >
+                        <Button href={projectUrl} isExternal showArrowUp>
                             See project
-                        </Link>
+                        </Button>
                     )
                 }
 

@@ -73,6 +73,13 @@ export type ProjectsShowcaseButton = {
     buttonLink?: string;
 };
 
+export type CertificatesGalleryButton = {
+    buttonText?: string;
+    isExternalLink?: boolean;
+    isDownload?: boolean;
+    buttonLink?: string;
+};
+
 export type PrimaryButton = {
     buttonText?: string;
     isExternalLink?: boolean;
@@ -433,6 +440,7 @@ export type CertificatesGallery = {
     _type: "certificatesGallery";
     eyebrow?: string;
     heading: string;
+    button?: CertificatesGalleryButton;
     certificates?: Array<
         {
             _key: string;
@@ -963,6 +971,7 @@ export type AllSanitySchemaTypes =
     | CurrentFocusProject
     | ProjectButton
     | ProjectsShowcaseButton
+    | CertificatesGalleryButton
     | PrimaryButton
     | SecondaryButton
     | Locale
