@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { SIGNATURE_HEADER_NAME, isValidSignature } from "@sanity/webhook";
 import { invalidateSanityDataCache } from "@/lib/sanity";
 
 const UNAUTHORIZED_MESSAGE = "Unauthorized webhook request.";
@@ -27,8 +28,12 @@ export const POST: APIRoute = async ({ request, url }) => {
 
     const secretFromQuery = url.searchParams.get("secret") ?? "";
     const bearerToken = getBearerToken(request.headers.get("authorization"));
-    const isAuthorized =
-        secretFromQuery === webhookSecret || bearerToken === webhookSecret;
+    const rawPayload = await request.text();
+    const signature = request.headers.get(SIGNATURE_HEADER_NAME);
+
+    const isAuthorized = signature
+        ? await isValidSignature(rawPayload, signature, webhookSecret)
+        : secretFromQuery === webhookSecret || bearerToken === webhookSecret;
 
     if (!isAuthorized) {
         return new Response(UNAUTHORIZED_MESSAGE, { status: 401 });
@@ -36,7 +41,9 @@ export const POST: APIRoute = async ({ request, url }) => {
 
     let payload: Record<string, unknown> = {};
     try {
-        payload = (await request.json()) as Record<string, unknown>;
+        payload = rawPayload
+            ? (JSON.parse(rawPayload) as Record<string, unknown>)
+            : {};
     } catch {
         payload = {};
     }
