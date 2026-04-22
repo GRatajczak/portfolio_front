@@ -5,4 +5,5 @@ export type Props = {
     isExternal?: boolean;
     className?: string;
     showArrowUp?: boolean;
+    mobileIconOnly?: boolean;
 };

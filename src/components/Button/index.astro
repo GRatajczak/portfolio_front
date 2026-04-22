@@ -9,6 +9,7 @@ const {
     isExternal = false,
     className = "",
     showArrowUp = false,
+    mobileIconOnly = false,
 } = Astro.props as Props;
 ---
 
@@ -20,9 +21,14 @@ const {
             target={isExternal ? "_blank" : undefined}
             rel={isExternal ? "noreferrer noopener" : undefined}
         >
-            <slot>{label}</slot>
+            <span class={mobileIconOnly ? "sr-only md:not-sr-only" : ""}>
+                <slot>{label}</slot>
+            </span>
             {showArrowUp && (
-                <ArrowUpRight aria-hidden="true" class="ml-2 size-6" />
+                <ArrowUpRight
+                    aria-hidden="true"
+                    class={mobileIconOnly ? "size-6 md:ml-2" : "ml-2 size-6"}
+                />
             )}
         </a>
     ) : (
@@ -30,9 +36,14 @@ const {
             class={`inline-flex items-center rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-paper hover:border-zinc-500 ${className}`}
             type={type}
         >
-            <slot>{label}</slot>
+            <span class={mobileIconOnly ? "sr-only md:not-sr-only" : ""}>
+                <slot>{label}</slot>
+            </span>
             {showArrowUp && (
-                <ArrowUpRight aria-hidden="true" class="ml-2 size-6" />
+                <ArrowUpRight
+                    aria-hidden="true"
+                    class={mobileIconOnly ? "size-6 md:ml-2" : "ml-2 size-6"}
+                />
             )}
         </button>
     )
