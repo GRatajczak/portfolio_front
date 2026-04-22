@@ -2,6 +2,7 @@
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
+import cloudflare from "@astrojs/cloudflare";
 import { defineConfig, envField } from "astro/config";
 
 const defaultSanityApiVersion = "2026-04-20";
@@ -9,6 +10,8 @@ const rootDirectory = dirname(fileURLToPath(import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
+    adapter: cloudflare(),
+    output: "server",
     image: {
         domains: ["cdn.sanity.io"],
     },
