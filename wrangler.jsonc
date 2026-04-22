@@ -1,9 +1,9 @@
 {
-    "name": "portfolio-front",
+    "name": "portfolio",
     "main": "@astrojs/cloudflare/entrypoints/server",
     "compatibility_date": "2026-04-22",
     "assets": {
         "directory": "./dist",
-        "binding": "ASSETS"
-    }
+        "binding": "ASSETS",
+    },
 }
