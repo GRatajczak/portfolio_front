@@ -125,7 +125,7 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
         const closeButton = document.querySelector("[data-mobile-menu-close]");
 
         if (!toggleButton || !menuPanel) {
-            return;
+            return () => {};
         }
 
         const closeMenu = () => {
@@ -144,7 +144,7 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
             document.body.style.overflow = "hidden";
         };
 
-        toggleButton.addEventListener("click", () => {
+        const onToggleClick = () => {
             const isOpen =
                 toggleButton.getAttribute("aria-expanded") === "true";
             if (isOpen) {
@@ -153,41 +153,46 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
             }
 
             openMenu();
-        });
+        };
 
-        menuLinks.forEach((link) => {
-            link.addEventListener("click", closeMenu);
-        });
-
-        closeButton?.addEventListener("click", closeMenu);
-
-        window.addEventListener("resize", () => {
+        const onResize = () => {
             if (window.innerWidth >= 768) {
                 closeMenu();
             }
-        });
+        };
 
-        window.addEventListener("keydown", (event) => {
+        const onKeyDown = (event) => {
             if (event.key === "Escape") {
                 closeMenu();
             }
-        });
-    };
+        };
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", setupMobileMenu, {
-            once: true,
+        toggleButton.addEventListener("click", onToggleClick);
+        menuLinks.forEach((link) => {
+            link.addEventListener("click", closeMenu);
         });
-    } else {
-        setupMobileMenu();
-    }
+        closeButton?.addEventListener("click", closeMenu);
+        window.addEventListener("resize", onResize);
+        window.addEventListener("keydown", onKeyDown);
+
+        return () => {
+            toggleButton.removeEventListener("click", onToggleClick);
+            menuLinks.forEach((link) => {
+                link.removeEventListener("click", closeMenu);
+            });
+            closeButton?.removeEventListener("click", closeMenu);
+            window.removeEventListener("resize", onResize);
+            window.removeEventListener("keydown", onKeyDown);
+            document.body.style.overflow = "";
+        };
+    };
 
     const setupDesktopHeaderScroll = () => {
         const header = document.querySelector("[data-desktop-header]");
         const headerNav = document.querySelector("[data-desktop-header-nav]");
 
         if (!header || !headerNav) {
-            return;
+            return () => {};
         }
 
         const desktopQuery = window.matchMedia("(min-width: 768px)");
@@ -213,19 +218,34 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
         });
         window.addEventListener("resize", updateDesktopHeaderState);
         desktopQuery.addEventListener("change", updateDesktopHeaderState);
+
+        return () => {
+            window.removeEventListener("scroll", updateDesktopHeaderState);
+            window.removeEventListener("resize", updateDesktopHeaderState);
+            desktopQuery.removeEventListener("change", updateDesktopHeaderState);
+        };
+    };
+
+    let cleanupMobileMenu = () => {};
+    let cleanupDesktopHeaderScroll = () => {};
+
+    const initializeHeaderScripts = () => {
+        cleanupMobileMenu();
+        cleanupDesktopHeaderScroll();
+
+        cleanupMobileMenu = setupMobileMenu();
+        cleanupDesktopHeaderScroll = setupDesktopHeaderScroll();
     };
 
     if (document.readyState === "loading") {
-        document.addEventListener(
-            "DOMContentLoaded",
-            setupDesktopHeaderScroll,
-            {
-                once: true,
-            },
-        );
+        document.addEventListener("DOMContentLoaded", initializeHeaderScripts, {
+            once: true,
+        });
     } else {
-        setupDesktopHeaderScroll();
+        initializeHeaderScripts();
     }
+
+    document.addEventListener("astro:page-load", initializeHeaderScripts);
 </script>
 
 <style>
