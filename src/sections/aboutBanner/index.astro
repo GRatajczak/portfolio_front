@@ -11,7 +11,9 @@ const imageWidth = image?.asset?.metadata?.dimensions?.width ?? 1200;
 const imageHeight = image?.asset?.metadata?.dimensions?.height ?? 700;
 ---
 
-<Container className="relative h-screen max-h-[630px] flex items-center">
+<Container
+    className="relative h-screen md:max-h-[630px] max-h-none flex items-center"
+>
     <div
         class="space-y-4 backdrop-blur-lg bg-black/30 p-6 rounded-2xl max-w-full flex flex-col justify-center md:max-w-[50%] h-full md:h-auto"
     >
