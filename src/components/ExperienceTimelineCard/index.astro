@@ -9,7 +9,7 @@ const { entry, index } = Astro.props as Props;
 
 <div
     class:list={[
-        "experience-timeline-card grid gap-4 rounded-2xl border border-paper/20 p-4 lg:w-[calc(50%-1.5rem)]  lg:items-center",
+        "experience-timeline-card grid gap-4 rounded-2xl border border-paper/20 p-4 hover:shadow-xl hover:shadow-paper/20 transition-all duration-300 lg:w-[calc(50%-1.5rem)] lg:items-center",
         index % 2 === 0 ? "lg:mr-auto" : "lg:ml-auto",
     ]}
 >
@@ -108,7 +108,9 @@ const { entry, index } = Astro.props as Props;
 <style>
     .experience-timeline-card {
         opacity: 0;
-        transition: opacity 450ms ease-out;
+        transition:
+            opacity 450ms ease-out,
+            box-shadow 300ms ease-out;
     }
 
     .experience-timeline-card.is-visible {
