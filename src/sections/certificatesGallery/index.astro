@@ -17,7 +17,7 @@ const {
 
 <div>
     <Container className="mb-0! flex items-center justify-between">
-        <SectionHeader eyebrow={eyebrow} heading={heading} />
+        <SectionHeader eyebrow={eyebrow} heading={heading} className="flex-1" />
         {
             button && (
                 <Button
@@ -122,7 +122,7 @@ const {
                 </div>
             </div>
         ) : (
-            <Text className="text-paper">No certificates configured.</Text>
+            <Text>No certificates configured.</Text>
         )
     }
 </div>

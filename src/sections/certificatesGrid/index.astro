@@ -9,8 +9,10 @@ const { eyebrow = "", heading = "", certificates = [] } = Astro.props as Props;
 ---
 
 <Container>
-    <SectionHeader eyebrow={eyebrow} heading={heading} />
-
+    {
+        eyebrow ||
+            (heading && <SectionHeader eyebrow={eyebrow} heading={heading} />)
+    }
     {
         certificates.length > 0 ? (
             <div class="masonryGrid mt-8 columns-3 gap-3 max-[900px]:columns-2 max-[500px]:columns-1">
@@ -68,7 +70,7 @@ const { eyebrow = "", heading = "", certificates = [] } = Astro.props as Props;
                 })}
             </div>
         ) : (
-            <Text className="mt-6 text-paper">No certificates configured.</Text>
+            <Text className="mt-6">No certificates configured.</Text>
         )
     }
 </Container>

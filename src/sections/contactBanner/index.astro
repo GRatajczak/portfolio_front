@@ -2,6 +2,8 @@
 import type { Props } from "./index.type";
 import Heading from "@/components/Heading/index.astro";
 import Link from "@/components/Link/index.astro";
+import Text from "@/components/Text/index.astro";
+import { Mail, Phone } from "@lucide/astro";
 const {
     eyebrow = "Get in touch!",
     heading = "Let's talk!",
@@ -16,38 +18,52 @@ const phoneHref = phone ? `tel:${phone.replace(/\s+/g, "")}` : "";
 <section class={`mx-auto w-full max-w-600 px-6 pt-32 pb-16 ${className}`}>
     <div class="grid gap-8 pb-10 md:grid-cols-[1fr_auto] md:items-end mt-[10%]">
         <div>
-            <p class="text-paper/60">{eyebrow}</p>
-            <Heading
-                as="h1"
-                size="display"
-                className="mt-2 max-w-[12ch] text-paper"
-            >
+            <Text className="text-paper/60">{eyebrow}</Text>
+            <Heading as="h1" size="display" className="mt-2 max-w-[12ch]">
                 {heading}
             </Heading>
         </div>
-        <div class="space-y-2 md:pb-2 md:text-right">
+        <div class="space-y-2 md:pb-2 md:text-right flex flex-col items-end">
             {
                 email && (
-                    <Link
-                        href={`mailto:${email}`}
-                        size="4xl"
-                        font="display"
-                        className="contact-banner-link block font-semibold text-paper leading-[0.95] transition-opacity hover:opacity-75"
-                    >
-                        {email}
-                    </Link>
+                    <>
+                        <Link
+                            href={`mailto:${email}`}
+                            className="inline-flex h-20 w-full items-center justify-center rounded-xl border border-paper/40 transition-opacity hover:opacity-75 md:hidden"
+                        >
+                            <Mail class="size-10" aria-hidden="true" />
+                            <span class="sr-only">Send email</span>
+                        </Link>
+                        <Link
+                            href={`mailto:${email}`}
+                            size="4xl"
+                            font="display"
+                            className="hidden font-semiboldleading-[0.95] transition-opacity hover:opacity-75 md:block"
+                        >
+                            {email}
+                        </Link>
+                    </>
                 )
             }
             {
                 phone && (
-                    <Link
-                        href={phoneHref}
-                        size="4xl"
-                        font="display"
-                        className="contact-banner-link block font-semibold text-paper leading-[0.95] transition-opacity hover:opacity-75"
-                    >
-                        {phone}
-                    </Link>
+                    <>
+                        <Link
+                            href={phoneHref}
+                            className="inline-flex h-20 w-full items-center justify-center rounded-xl border border-paper/40 transition-opacity hover:opacity-75 md:hidden"
+                        >
+                            <Phone class="size-10" aria-hidden="true" />
+                            <span class="sr-only">Call phone number</span>
+                        </Link>
+                        <Link
+                            href={phoneHref}
+                            size="4xl"
+                            font="display"
+                            className="hidden font-semibold leading-[0.95] transition-opacity hover:opacity-75 md:block"
+                        >
+                            {phone}
+                        </Link>
+                    </>
                 )
             }
         </div>

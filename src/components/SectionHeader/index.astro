@@ -13,13 +13,10 @@ const {
 } = Astro.props as Props;
 ---
 
-<div class={`space-y-2 ${className}`}>
+<div class={`space-y-2 max-w-300 ${className}`}>
     {
         eyebrow && (
-            <Text
-                className="font-semibold uppercase text-paper"
-                style="font-size: var(--font-size-sm);"
-            >
+            <Text size="xs" className="font-semibold uppercase">
                 {eyebrow}
             </Text>
         )
@@ -29,23 +26,33 @@ const {
             <Heading
                 as={headingAs}
                 text={heading}
-                className="leading-tight text-paper"
-                style={
-                    hero
-                        ? "font-size: var(--font-size-h1);"
-                        : "font-size: var(--font-size-5xl);"
-                }
+                size={hero ? "display" : "5xl"}
             />
         )
     }
     {
         description && (
-            <Text
-                className="leading-7 text-paper"
-                style="font-size: var(--font-size-lg);"
-            >
+            <Text size="lg" className="max-w-[90%] pb-4">
                 {description}
             </Text>
         )
     }
+    <div class="section-header-line h-px w-full bg-paper/30"></div>
 </div>
+
+<style>
+    .section-header-line {
+        transform-origin: left;
+        animation: sectionHeaderLineIn 700ms ease-out forwards;
+        transform: scaleX(0);
+    }
+
+    @keyframes sectionHeaderLineIn {
+        from {
+            transform: scaleX(0);
+        }
+        to {
+            transform: scaleX(1);
+        }
+    }
+</style>

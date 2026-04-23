@@ -54,12 +54,9 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
 }));
 ---
 
-<header
-    class="fixed top-0 left-0 z-20 w-full border-b border-paper/50"
-    data-desktop-header
->
+<header class="fixed top-0 left-0 z-20 w-full" data-desktop-header>
     <nav
-        class="mx-auto flex w-full max-w-full items-center justify-between px-4 py-2 transition-[max-width,border-radius,background-color,border-color] duration-300 ease-out md:px-6 bg-ink/80 backdrop-blur-xl md:bg-transparent md:backdrop-blur-0"
+        class="mx-auto flex w-full max-w-full items-center justify-between border-b border-paper/30 px-4 py-2 transition-[max-width,border-radius,background-color,border-color] duration-300 ease-out md:px-6 bg-ink/80 backdrop-blur-xl md:bg-transparent md:backdrop-blur-0"
         data-desktop-header-nav
     >
         <a href={homeHref} aria-label="Go to homepage" class="inline-flex">
@@ -264,8 +261,7 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
         [data-desktop-header][data-scrolled="true"] [data-desktop-header-nav] {
             max-width: 600px;
             border-radius: 9999px;
-            border: 1px solid
-                color-mix(in srgb, var(--color-paper) 20%, transparent);
+            border: 1px solid rgba(236, 236, 231, 0.3);
             background-color: color-mix(
                 in srgb,
                 var(--color-ink) 88%,

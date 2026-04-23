@@ -58,14 +58,31 @@ html {
     --font-size-4xl: calc(1rem * pow(var(--type-scale), 4));
     --font-size-5xl: calc(1rem * pow(var(--type-scale), 5));
     --font-size-display: clamp(2.75rem, 1.6rem + 6.5vw, 8rem);
-    --font-size-h1: clamp(2.75rem, 1.95rem + 4vw, 5.5rem);
-    --font-size-h2: clamp(2.25rem, 1.7rem + 3vw, 4.25rem);
-    --font-size-h3: clamp(1.9rem, 1.45rem + 2vw, 3.1rem);
-    --font-size-h4: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
-    --font-size-h5: clamp(1.35rem, 1.16rem + 0.8vw, 1.8rem);
-    --font-size-h6: clamp(1.15rem, 1.06rem + 0.4vw, 1.4rem);
-    --font-size-p: clamp(0.75rem, 0.96rem + 0.2vw, 1.125rem);
+    --font-size-h1: clamp(2.25rem, 1.95rem + 4vw, 5.5rem);
+    --font-size-h2: clamp(2rem, 1.7rem + 3vw, 4rem);
+    --font-size-h3: clamp(1.8rem, 1.45rem + 2vw, 3rem);
+    --font-size-h4: clamp(1.4rem, 1.3rem + 1.2vw, 2rem);
+    --font-size-h5: clamp(1.2rem, 1.16rem + 0.8vw, 1.6rem);
+    --font-size-h6: clamp(1rem, 1.06rem + 0.4vw, 1.4rem);
+    --font-size-p: clamp(0.75rem, 0.96rem + 0.2vw, 1rem);
     --font-size-small: clamp(0.875rem, 0.84rem + 0.18vw, 1rem);
+}
+
+@media (width < 48rem) {
+    html {
+        --font-size-xl: 0.923rem;
+        --font-size-2xl: 1.108rem;
+        --font-size-3xl: 1.33rem;
+        --font-size-4xl: 1.595rem;
+        --font-size-5xl: 1.914rem;
+        --font-size-display: clamp(2.117rem, 1.231rem + 5.002vw, 6.156rem);
+        --font-size-h1: clamp(1.732rem, 1.501rem + 3.078vw, 4.232rem);
+        --font-size-h2: clamp(1.539rem, 1.308rem + 2.309vw, 3.078rem);
+        --font-size-h3: clamp(1.385rem, 1.116rem + 1.539vw, 2.309rem);
+        --font-size-h4: clamp(1.077rem, 1rem + 0.923vw, 1.539rem);
+        --font-size-h5: clamp(0.923rem, 0.893rem + 0.616vw, 1.231rem);
+        --font-size-h6: clamp(0.77rem, 0.816rem + 0.308vw, 1.077rem);
+    }
 }
 
 @media (width > 64rem) {
@@ -155,14 +172,10 @@ h6 {
 p,
 a {
     font-size: var(--font-size-p);
-    line-height: 1.6;
+    line-height: 1.1;
 }
 
 small {
     font-size: var(--font-size-small);
-    line-height: 1.5;
-}
-
-.contact-banner-link {
-    font-size: 1.5rem !important;
+    line-height: 1.1;
 }

@@ -17,23 +17,12 @@ const imageHeight = image?.asset?.metadata?.dimensions?.height ?? 700;
     >
         {
             title && (
-                <Heading
-                    as="h2"
-                    className="font-semibold uppercase text-paper"
-                    style="font-size: var(--font-size-2xl);"
-                >
+                <Heading as="h2" size="2xl" className="font-semibold uppercase">
                     {title}
                 </Heading>
             )
         }
-        {
-            description && (
-                <Text
-                    text={description}
-                    className="leading-tight text-paper "
-                />
-            )
-        }
+        {description && <Text text={description} />}
     </div>
     {
         imageUrl && (

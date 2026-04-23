@@ -16,7 +16,7 @@ const {
 
 <Container>
     <div class="mb-8 flex items-center justify-between gap-4">
-        <SectionHeader eyebrow={eyebrow} heading={heading} />
+        <SectionHeader eyebrow={eyebrow} heading={heading} className="flex-1" />
         {
             button?.buttonText && (
                 <Button
@@ -43,7 +43,7 @@ const {
                 ))}
             </ul>
         ) : (
-            <Text className="text-paper">No projects configured.</Text>
+            <Text>No projects configured.</Text>
         )
     }
 </Container>

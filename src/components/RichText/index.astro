@@ -1,5 +1,7 @@
 ---
 import type { Props } from "./index.type";
+import Heading from "@/components/Heading/index.astro";
+import Text from "@/components/Text/index.astro";
 
 const {
     value = "",
@@ -49,50 +51,22 @@ const renderBlockInner = (block: {
         .join("");
 };
 
-const wrapBlock = (
-    style: string | undefined,
-    content: string,
-    shouldUseSmallHeadings: boolean,
-) => {
-    if (!content.trim()) {
-        return "";
-    }
-
-    const headingClass = shouldUseSmallHeadings
-        ? ' class="!text-lg md:!text-xl font-semibold leading-snug"'
-        : "";
-
-    switch (style) {
-        case "h1":
-            return `<h1${headingClass}>${content}</h1>`;
-        case "h2":
-            return `<h2${headingClass}>${content}</h2>`;
-        case "h3":
-            return `<h3${headingClass}>${content}</h3>`;
-        case "h4":
-            return `<h4${headingClass}>${content}</h4>`;
-        case "h5":
-            return `<h5${headingClass}>${content}</h5>`;
-        case "h6":
-            return `<h6${headingClass}>${content}</h6>`;
-        case "blockquote":
-            return `<blockquote>${content}</blockquote>`;
-        default:
-            return `<p>${content}</p>`;
-    }
+type PortableTextBlock = {
+    _type?: string;
+    style?: string;
+    listItem?: "bullet" | "number";
+    children?: Array<{ text?: string; marks?: string[] }>;
+    markDefs?: Array<{ _key: string; href?: string }>;
 };
 
-const renderPortableText = (
-    blocks: Array<{
-        _type?: string;
-        style?: string;
-        listItem?: "bullet" | "number";
-        children?: Array<{ text?: string; marks?: string[] }>;
-        markDefs?: Array<{ _key: string; href?: string }>;
-    }>,
-    shouldUseSmallHeadings: boolean,
-) => {
-    const output: string[] = [];
+type PortableTextNode =
+    | { type: "block"; style?: string; content: string }
+    | { type: "list"; listType: "bullet" | "number"; items: string[] };
+
+const headingStyles = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
+
+const parsePortableText = (blocks: PortableTextBlock[]) => {
+    const nodes: PortableTextNode[] = [];
     let listBuffer: string[] = [];
     let listType: "bullet" | "number" | null = null;
 
@@ -103,18 +77,11 @@ const renderPortableText = (
             return;
         }
 
-        const tag = listType === "number" ? "ol" : "ul";
-        const listClass =
-            listType === "number"
-                ? "list-decimal list-outside pl-5 space-y-1"
-                : "list-disc list-outside pl-5 space-y-1";
-        const listStyle =
-            listType === "number"
-                ? ' style="list-style-type: decimal; list-style-position: outside; padding-left: 1.25rem;"'
-                : ' style="list-style-type: disc; list-style-position: outside; padding-left: 1.25rem;"';
-        output.push(
-            `<${tag} class="${listClass}"${listStyle}>${listBuffer.join("")}</${tag}>`,
-        );
+        nodes.push({
+            type: "list",
+            listType,
+            items: [...listBuffer],
+        });
         listBuffer = [];
         listType = null;
     };
@@ -131,26 +98,91 @@ const renderPortableText = (
                 flushList();
             }
             listType = block.listItem;
-            listBuffer.push(`<li>${inner}</li>`);
+            listBuffer.push(inner);
             continue;
         }
 
         flushList();
-        output.push(wrapBlock(block.style, inner, shouldUseSmallHeadings));
+        if (inner.trim()) {
+            nodes.push({
+                type: "block",
+                style: block.style,
+                content: inner,
+            });
+        }
     }
 
     flushList();
-    return output.join("");
+    return nodes;
 };
 
-const htmlValue = Array.isArray(value)
-    ? renderPortableText(value, smallHeadings)
-    : "";
+const parsedNodes = Array.isArray(value) ? parsePortableText(value) : [];
 ---
 
 {
     Array.isArray(value) ? (
-        <div class={className} set:html={htmlValue} />
+        <div class={className}>
+            {parsedNodes.map((node) => {
+                if (node.type === "list") {
+                    return node.listType === "number" ? (
+                        <ol class="list-decimal list-outside pl-5 space-y-1">
+                            {node.items.map((item) => (
+                                <li>
+                                    <Text as="span">
+                                        <Fragment set:html={item} />
+                                    </Text>
+                                </li>
+                            ))}
+                        </ol>
+                    ) : (
+                        <ul class="list-disc list-outside pl-5 space-y-1">
+                            {node.items.map((item) => (
+                                <li>
+                                    <Text as="span">
+                                        <Fragment set:html={item} />
+                                    </Text>
+                                </li>
+                            ))}
+                        </ul>
+                    );
+                }
+
+                if (headingStyles.has(node.style ?? "")) {
+                    const headingTag = node.style as
+                        | "h1"
+                        | "h2"
+                        | "h3"
+                        | "h4"
+                        | "h5"
+                        | "h6";
+                    return (
+                        <Heading
+                            as={headingTag}
+                            size={smallHeadings ? "xl" : undefined}
+                            className={smallHeadings ? "font-semibold" : ""}
+                        >
+                            <Fragment set:html={node.content} />
+                        </Heading>
+                    );
+                }
+
+                if (node.style === "blockquote") {
+                    return (
+                        <blockquote>
+                            <Text>
+                                <Fragment set:html={node.content} />
+                            </Text>
+                        </blockquote>
+                    );
+                }
+
+                return (
+                    <Text>
+                        <Fragment set:html={node.content} />
+                    </Text>
+                );
+            })}
+        </div>
     ) : (
         <div class={className}>
             <slot>{value}</slot>

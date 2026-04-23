@@ -122,7 +122,9 @@ const currentYear = new Date().getFullYear();
         {
             resolvedMenuItems.length > 0 && (
                 <div class="space-y-3">
-                    <Text className="text-sm font-semibold">Quick links</Text>
+                    <Text size="sm" className="font-semibold">
+                        Quick links
+                    </Text>
                     <ul class="space-y-2 text-sm">
                         {resolvedMenuItems.map((item) => (
                             <li>
@@ -148,7 +150,7 @@ const currentYear = new Date().getFullYear();
         }
 
         <div class="space-y-3">
-            <Text className="text-sm font-semibold">Contact</Text>
+            <Text size="sm" className="font-semibold">Contact</Text>
             <ul class="space-y-2 text-sm">
                 {
                     phone && (

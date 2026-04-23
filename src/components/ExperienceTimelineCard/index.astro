@@ -2,7 +2,6 @@
 import Heading from "@/components/Heading/index.astro";
 import Text from "@/components/Text/index.astro";
 import { getTechnologyLabel, toPlainText } from "@/utils/pageBuilder/helpers";
-import { Image } from "astro:assets";
 import type { Props } from "./index.type";
 
 const { entry, index } = Astro.props as Props;
@@ -16,12 +15,12 @@ const { entry, index } = Astro.props as Props;
 >
     <div>
         <Text
-            className="mb-2 inline-flex rounded py-0.5 text-[10px] font-semibold uppercase"
-            style="color: var(--color-accent-orange);"
+            size="2xs"
+            className="mb-2 inline-flex rounded py-0.5 font-semibold uppercase text-accent-orange"
         >
             {entry.period}
         </Text>
-        <Heading as="h3" size="3xl" className="font-medium">
+        <Heading as="h3" size="3xl">
             {entry.company}
         </Heading>
         {
@@ -41,7 +40,7 @@ const { entry, index } = Astro.props as Props;
         {
             entry.technologies && entry.technologies.length > 0 && (
                 <div class="mt-3 flex flex-col gap-x-2 gap-y-1">
-                    <Text size="base" className="font-medium text-paper mb-2">
+                    <Text size="base" className="font-medium mb-2">
                         Technologies I used here:
                     </Text>
                     <ul class="flex flex-wrap items-center gap-4">

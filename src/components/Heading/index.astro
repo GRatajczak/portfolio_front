@@ -10,12 +10,12 @@ const {
 } = Astro.props as Props;
 const Tag = as;
 const fluidStyleByTag = {
-    h1: "font-size: var(--font-size-h1); line-height: 1.08;",
+    h1: "font-size: var(--font-size-h1); line-height: 1.1;",
     h2: "font-size: var(--font-size-h2); line-height: 1.1;",
-    h3: "font-size: var(--font-size-h3); line-height: 1.12;",
-    h4: "font-size: var(--font-size-h4); line-height: 1.15;",
-    h5: "font-size: var(--font-size-h5); line-height: 1.2;",
-    h6: "font-size: var(--font-size-h6); line-height: 1.25;",
+    h3: "font-size: var(--font-size-h3); line-height: 1.1;",
+    h4: "font-size: var(--font-size-h4); line-height: 1.1;",
+    h5: "font-size: var(--font-size-h5); line-height: 1.1;",
+    h6: "font-size: var(--font-size-h6); line-height: 1.1;",
 };
 const sizeToFontVariable = {
     "2xs": "var(--font-size-2xs)",
@@ -38,6 +38,6 @@ const mergedStyle = style
     : `${headingBaseStyle} ${sizeStyle}`;
 ---
 
-<Tag class={`leading-[0.95] ${className}`} style={mergedStyle}>
+<Tag class={`tracking-wide ${className}`} style={mergedStyle}>
     <slot>{text}</slot>
 </Tag>

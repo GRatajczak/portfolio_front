@@ -12,13 +12,13 @@ const { eyebrow = "", heading = "", entries = [] } = Astro.props as Props;
 
     {
         entries.length > 0 ? (
-            <ol class="relative py-20 space-y-8 lg:space-y-10 before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-px before:-translate-x-1/2 before:bg-paper/20 lg:before:block">
+            <ol class="relative py-20 mt-8 space-y-8 lg:space-y-10 before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-px before:-translate-x-1/2 before:bg-paper/30 lg:before:block">
                 {entries.map((entry, index) => (
                     <li class="relative">
-                        <span class="absolute left-1/2 top-10 z-10 hidden h-3 w-3 -translate-x-1/2 rounded-full border border-paper/35 bg-[#0b0b0b] lg:block" />
+                        <span class="absolute left-1/2 top-10 z-10 hidden h-3 w-3 -translate-x-1/2 rounded-full border border-paper/30 bg-ink lg:block" />
                         <span
                             class:list={[
-                                "absolute top-[2.8rem] hidden h-px w-6 bg-paper/20 lg:block",
+                                "absolute top-[2.8rem] hidden h-px w-6 bg-paper/30 lg:block",
                                 index % 2 === 0 ? "right-1/2" : "left-1/2",
                             ]}
                         />

@@ -23,7 +23,7 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
     <div class="w-[60%] pb-8 min-h-screen flex flex-col justify-end">
         {
             subheadlineText && (
-                <Text className="leading-8 text-paper opacity-70" style="font-size: var(--font-size-lg);">
+                <Text size="lg" className="opacity-70">
                     {subheadline[0].text}
                 </Text>
             )
@@ -33,8 +33,8 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
                 <Heading
                     as="h1"
                     text={headline}
-                    className="font-semibold text-paper mb-5 leading-[0.95]"
-                    style="font-size: var(--font-size-display); line-height: 1.1;"
+                    size="display"
+                    className="font-semibold mb-5 tracking-wide"
                 />
             )
         }
@@ -46,10 +46,25 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
                 alt={portraitImageAlt}
                 width={portraitImageWidth}
                 height={portraitImageHeight}
-                class="mt-6 h-auto max-h-[60vh] w-full object-cover hidden! border-paper/50 lg:mt-0 lg:block! lg:max-h-screen lg:h-full lg:w-[40%] lg:border-l absolute lg:right-0 lg:bottom-0 lg:top-0"
+                class="hero-portrait-shadow mt-6 h-auto max-h-[60vh] w-full object-cover hidden! border-paper/30 lg:mt-0 lg:block! lg:max-h-screen lg:h-full lg:w-[40%] lg:border-l absolute lg:right-0 lg:bottom-0 lg:top-0"
                 loading="eager"
                 format="webp"
             />
         )
     }
 </section>
+
+<style>
+    .hero-portrait-shadow {
+        animation: heroShadowIn 1s 1s ease-out forwards;
+    }
+
+    @keyframes heroShadowIn {
+        0% {
+            box-shadow: 0 0 0 rgba(236, 236, 231, 0);
+        }
+        100% {
+            box-shadow: 0 0 64px rgba(236, 236, 231, 0.1);
+        }
+    }
+</style>
