@@ -2,7 +2,6 @@
 import Container from "@/components/Container/index.astro";
 import ImageGrid from "@/components/ImageGrid/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
-import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 import Button from "@/components/Button/index.astro";
 const {
@@ -12,7 +11,6 @@ const {
     button,
     images = [],
 } = Astro.props as Props;
-const descriptionText = toPlainText(description);
 ---
 
 <Container>
@@ -23,7 +21,7 @@ const descriptionText = toPlainText(description);
             <SectionHeader
                 eyebrow={eyebrow}
                 heading={heading}
-                description={descriptionText}
+                description={description}
                 className="max-w-xl"
             />
             <Button

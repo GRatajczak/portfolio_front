@@ -22,7 +22,7 @@ const gridArea = (index: number) => {
 {
     visibleImages.length > 0 ? (
         <ul
-            class={`grid grid-cols-1 gap-4 md:h-[58vw] md:grid-cols-2 md:grid-rows-2 lg:h-[44vw] lg:gap-5 xl:h-[38vw] ${className}`}
+            class={`image-grid grid grid-cols-1 gap-4 md:h-[58vw] md:grid-cols-2 md:grid-rows-2 lg:h-[44vw] lg:gap-5 xl:h-[38vw] ${className}`}
         >
             {visibleImages.map((image, index) => {
                 const imageUrl = image.asset?.url;
@@ -42,13 +42,15 @@ const gridArea = (index: number) => {
                         : "h-full w-full object-cover";
 
                 return (
-                    <li class={`overflow-hidden ${visibilityClassName} ${itemClassName}`}>
+                    <li
+                        class={`image-grid-item overflow-hidden ${visibilityClassName} ${itemClassName}`}
+                    >
                         <Image
                             src={imageUrl}
                             alt={imageAlt}
                             width={imageWidth}
                             height={imageHeight}
-                            class={imageClassName}
+                            class={`image-grid-image ${imageClassName}`}
                             loading="lazy"
                             format="webp"
                         />
@@ -58,3 +60,80 @@ const gridArea = (index: number) => {
         </ul>
     ) : null
 }
+
+<script>
+    import { gsap } from "gsap";
+    import ScrollTrigger from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const initImageGridAnimations = () => {
+        document.querySelectorAll(".image-grid").forEach((grid) => {
+            const items = grid.querySelectorAll(".image-grid-item");
+
+            items.forEach((item, index) => {
+                const animatedItem = item as HTMLElement;
+
+                if (animatedItem.dataset.animationInitialized === "true") {
+                    return;
+                }
+
+                const image = animatedItem.querySelector(".image-grid-image");
+
+                if (!image) {
+                    return;
+                }
+
+                const timeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: animatedItem,
+                        start: "top bottom",
+                        once: true,
+                    },
+                });
+
+                timeline.to(animatedItem, {
+                    ease: "power2.out",
+                    duration: 1.2,
+                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                    delay: index * 0.3,
+                });
+
+                timeline.to(
+                    image,
+                    {
+                        duration: 1.2,
+                        scale: 1,
+                        ease: "power2.out",
+                    },
+                    "<",
+                );
+
+                animatedItem.dataset.animationInitialized = "true";
+            });
+        });
+    };
+
+    document.addEventListener("astro:page-load", initImageGridAnimations);
+    initImageGridAnimations();
+</script>
+
+<style>
+    .image-grid-item {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
+
+    .image-grid-image {
+        transform: scale(1.2);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .image-grid-item {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .image-grid-image {
+            transform: scale(1);
+        }
+    }
+</style>

@@ -1,6 +1,6 @@
 ---
 import Container from "@/components/Container/index.astro";
-import Text from "@/components/Text/index.astro";
+import RichText from "@/components/RichText/index.astro";
 import type { Props } from "./index.type";
 import { Image } from "astro:assets";
 import Heading from "@/components/Heading/index.astro";
@@ -22,7 +22,7 @@ const imageHeight = image?.asset?.metadata?.dimensions?.height ?? 700;
                 </Heading>
             )
         }
-        {description && <Text text={description} />}
+        {description && <RichText value={description} />}
     </div>
     {
         imageUrl && (

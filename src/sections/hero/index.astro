@@ -5,10 +5,7 @@ import Text from "@/components/Text/index.astro";
 import type { Props } from "./index.type";
 
 const { headline = "", subheadline = [], portraitImage } = Astro.props as Props;
-const subheadlineText = subheadline
-    .map((item) => item.text)
-    .filter(Boolean)
-    .join(" ");
+const subheadlineItems = subheadline.map((item) => item.text).filter(Boolean);
 const portraitImageUrl = portraitImage?.asset?.url;
 const portraitImageWidth =
     portraitImage?.asset?.metadata?.dimensions?.width ?? 900;
@@ -22,10 +19,19 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
 >
     <div class="w-[60%] pb-8 min-h-screen flex flex-col justify-end">
         {
-            subheadlineText && (
-                <Text size="lg" className="opacity-70">
-                    {subheadline[0].text}
-                </Text>
+            subheadlineItems.length > 0 && (
+                <div class="hero-subheadline">
+                    <p class="hero-subheadline-text opacity-70">
+                        {subheadlineItems.map((item, index) => (
+                            <span
+                                class={`hero-subheadline-item ${index === 0 ? "is-active" : ""}`}
+                                aria-hidden={index === 0 ? "false" : "true"}
+                            >
+                                {item}
+                            </span>
+                        ))}
+                    </p>
+                </div>
             )
         }
         {
@@ -54,7 +60,94 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
     }
 </section>
 
+<script>
+    const initHeroSubheadlineFade = () => {
+        document.querySelectorAll(".hero-subheadline").forEach((wrapper) => {
+            const container = wrapper as HTMLElement;
+            const items = Array.from(
+                container.querySelectorAll(".hero-subheadline-item"),
+            ) as HTMLElement[];
+
+            if (items.length === 0 || container.dataset.animationInitialized === "true") {
+                return;
+            }
+
+            container.dataset.animationInitialized = "true";
+
+            if (items.length === 1) {
+                items[0].classList.add("is-active");
+                items[0].setAttribute("aria-hidden", "false");
+                return;
+            }
+
+            let activeIndex = 0;
+            const setActiveItem = (index: number) => {
+                items.forEach((item, itemIndex) => {
+                    const isActive = itemIndex === index;
+                    item.classList.toggle("is-active", isActive);
+                    item.setAttribute("aria-hidden", isActive ? "false" : "true");
+                });
+            };
+
+            setActiveItem(activeIndex);
+
+            const intervalId = window.setInterval(() => {
+                activeIndex = (activeIndex + 1) % items.length;
+                setActiveItem(activeIndex);
+            }, 2400);
+
+            container.dataset.intervalId = String(intervalId);
+        });
+    };
+
+    const cleanupHeroSubheadlineFade = () => {
+        document.querySelectorAll(".hero-subheadline").forEach((wrapper) => {
+            const container = wrapper as HTMLElement;
+            const intervalId = container.dataset.intervalId;
+
+            if (intervalId) {
+                window.clearInterval(Number(intervalId));
+            }
+        });
+    };
+
+    document.addEventListener("astro:before-swap", cleanupHeroSubheadlineFade);
+    document.addEventListener("astro:page-load", initHeroSubheadlineFade);
+    initHeroSubheadlineFade();
+</script>
+
 <style>
+    .hero-subheadline {
+        min-height: 1.5rem;
+    }
+
+    .hero-subheadline-text {
+        position: relative;
+        display: block;
+        margin: 0;
+        line-height: 1.1;
+        font-size: var(--font-size-lg);
+    }
+
+    .hero-subheadline-item {
+        position: absolute;
+        inset: 0 auto auto 0;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 450ms ease-in-out;
+        white-space: nowrap;
+    }
+
+    .hero-subheadline-item.is-active {
+        opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-subheadline-item {
+            transition: none;
+        }
+    }
+
     .hero-portrait-shadow {
         animation: heroShadowIn 1s 1s ease-out forwards;
     }

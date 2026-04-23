@@ -9,7 +9,7 @@ const { entry, index } = Astro.props as Props;
 
 <div
     class:list={[
-        "grid gap-4 rounded-2xl border border-paper/20 p-4 lg:w-[calc(50%-1.5rem)]  lg:items-center",
+        "experience-timeline-card grid gap-4 rounded-2xl border border-paper/20 p-4 lg:w-[calc(50%-1.5rem)]  lg:items-center",
         index % 2 === 0 ? "lg:mr-auto" : "lg:ml-auto",
     ]}
 >
@@ -64,3 +64,60 @@ const { entry, index } = Astro.props as Props;
         }
     </div>
 </div>
+
+<script>
+    const initExperienceTimelineCardVisibility = () => {
+        const cards = document.querySelectorAll(".experience-timeline-card");
+
+        if (cards.length === 0) {
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const card = entry.target as HTMLElement;
+
+                    if (entry.isIntersecting) {
+                        card.classList.add("is-visible");
+                        return;
+                    }
+
+                    card.classList.remove("is-visible");
+                });
+            },
+            {
+                threshold: 0.2,
+            },
+        );
+
+        cards.forEach((card) => {
+            if (card instanceof HTMLElement) {
+                observer.observe(card);
+            }
+        });
+    };
+
+    document.addEventListener(
+        "astro:page-load",
+        initExperienceTimelineCardVisibility,
+    );
+    initExperienceTimelineCardVisibility();
+</script>
+
+<style>
+    .experience-timeline-card {
+        opacity: 0;
+        transition: opacity 450ms ease-out;
+    }
+
+    .experience-timeline-card.is-visible {
+        opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .experience-timeline-card {
+            transition: none;
+        }
+    }
+</style>

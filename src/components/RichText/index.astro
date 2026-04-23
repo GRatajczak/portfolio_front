@@ -177,7 +177,7 @@ const parsedNodes = Array.isArray(value) ? parsePortableText(value) : [];
                 }
 
                 return (
-                    <Text>
+                    <Text size="base" className="mb-4 last:mb-0">
                         <Fragment set:html={node.content} />
                     </Text>
                 );

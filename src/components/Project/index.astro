@@ -46,7 +46,7 @@ const richContent = project.content?.length
 ---
 
 <article
-    class={`overflow-hidden rounded-2xl border border-paper/30  ${className}`}
+    class={`project-card overflow-hidden rounded-2xl border border-paper/30 hover:shadow-[0_0_64px_rgba(236,236,231,0.05)] transition-shadow duration-300 ${className}`}
 >
     <div class="grid md:grid-cols-2">
         <div class="flex flex-col justify-between gap-8 p-6 md:p-8">
@@ -122,14 +122,16 @@ const richContent = project.content?.length
 
         {
             imageUrl && imageWidth && imageHeight ? (
-                <img
-                    src={imageUrl}
-                    alt={imageAlt}
-                    width={imageWidth}
-                    height={imageHeight}
-                    class="h-full w-full object-cover"
-                    loading="lazy"
-                />
+                <div class="project-card-image-frame overflow-hidden">
+                    <img
+                        src={imageUrl}
+                        alt={imageAlt}
+                        width={imageWidth}
+                        height={imageHeight}
+                        class="project-card-image h-full w-full object-cover"
+                        loading="lazy"
+                    />
+                </div>
             ) : (
                 <div class="flex min-h-72 items-center justify-center bg-zinc-900 text-paper/60">
                     No image
@@ -138,3 +140,77 @@ const richContent = project.content?.length
         }
     </div>
 </article>
+
+<script>
+    import { gsap } from "gsap";
+    import ScrollTrigger from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const initProjectAnimations = () => {
+        const frames = document.querySelectorAll(".project-card-image-frame");
+
+        frames.forEach((frame, index) => {
+            const animatedFrame = frame as HTMLElement;
+
+            if (animatedFrame.dataset.animationInitialized === "true") {
+                return;
+            }
+
+            const image = animatedFrame.querySelector(".project-card-image");
+
+            if (!image) {
+                return;
+            }
+
+            const timeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: animatedFrame,
+                    start: "top bottom",
+                    once: true,
+                },
+            });
+
+            timeline.to(animatedFrame, {
+                ease: "power2.out",
+                duration: 1.2,
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+            });
+
+            timeline.to(
+                image,
+                {
+                    duration: 1.2,
+                    scale: 1,
+                    ease: "power2.out",
+                },
+                "<",
+            );
+
+            animatedFrame.dataset.animationInitialized = "true";
+        });
+    };
+
+    document.addEventListener("astro:page-load", initProjectAnimations);
+    initProjectAnimations();
+</script>
+
+<style>
+    .project-card-image-frame {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
+
+    .project-card-image {
+        transform: scale(1.2);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .project-card-image-frame {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .project-card-image {
+            transform: scale(1);
+        }
+    }
+</style>

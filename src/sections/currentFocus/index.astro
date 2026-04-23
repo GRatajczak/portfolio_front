@@ -2,17 +2,15 @@
 import Container from "@/components/Container/index.astro";
 import Project from "@/components/Project/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
-import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
 const { heading = "", description = [], project } = Astro.props as Props;
-const descriptionText = toPlainText(description);
 ---
 
 <Container>
     <SectionHeader
         heading={heading}
-        description={descriptionText}
+        description={description}
         className="mb-8"
     />
 

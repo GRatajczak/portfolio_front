@@ -2,11 +2,10 @@
 import Container from "@/components/Container/index.astro";
 import SectionHeader from "@/components/SectionHeader/index.astro";
 import Text from "@/components/Text/index.astro";
-import { getTechnologyLabel, toPlainText } from "@/utils/pageBuilder/helpers";
+import { getTechnologyLabel } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
 const { heading = "", description = [], groups = [] } = Astro.props as Props;
-const descriptionText = toPlainText(description);
 const groupsWithTechnologies = groups.filter(
     (group) => (group.technologies?.length ?? 0) > 0,
 );
@@ -16,7 +15,7 @@ const groupsWithTechnologies = groups.filter(
     <div class="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
         <SectionHeader
             heading={heading}
-            description={descriptionText}
+            description={description}
             className="max-w-xl"
         />
 
