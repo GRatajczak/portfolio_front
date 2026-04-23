@@ -24,7 +24,7 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
                     <p class="hero-subheadline-text opacity-70">
                         {subheadlineItems.map((item, index) => (
                             <span
-                                class={`hero-subheadline-item ${index === 0 ? "is-active" : ""}`}
+                                class={`hero-subheadline-item  ${index === 0 ? "is-active" : ""}`}
                                 aria-hidden={index === 0 ? "false" : "true"}
                             >
                                 {item}
@@ -40,7 +40,7 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
                     as="h1"
                     text={headline}
                     size="display"
-                    className="font-semibold mb-5 tracking-wide"
+                    className="font-semibold mb-5 tracking-wide mt-8 md:mt-0"
                 />
             )
         }
@@ -68,7 +68,10 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
                 container.querySelectorAll(".hero-subheadline-item"),
             ) as HTMLElement[];
 
-            if (items.length === 0 || container.dataset.animationInitialized === "true") {
+            if (
+                items.length === 0 ||
+                container.dataset.animationInitialized === "true"
+            ) {
                 return;
             }
 
@@ -85,7 +88,10 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
                 items.forEach((item, itemIndex) => {
                     const isActive = itemIndex === index;
                     item.classList.toggle("is-active", isActive);
-                    item.setAttribute("aria-hidden", isActive ? "false" : "true");
+                    item.setAttribute(
+                        "aria-hidden",
+                        isActive ? "false" : "true",
+                    );
                 });
             };
 
@@ -135,7 +141,6 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
         opacity: 0;
         pointer-events: none;
         transition: opacity 450ms ease-in-out;
-        white-space: nowrap;
     }
 
     .hero-subheadline-item.is-active {

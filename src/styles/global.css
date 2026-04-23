@@ -75,7 +75,7 @@ html {
         --font-size-3xl: 1.33rem;
         --font-size-4xl: 1.595rem;
         --font-size-5xl: 1.914rem;
-        --font-size-display: clamp(2.117rem, 1.231rem + 5.002vw, 6.156rem);
+        /* --font-size-display: clamp(2.117rem, 1.231rem + 5.002vw, 6.156rem); */
         --font-size-h1: clamp(1.732rem, 1.501rem + 3.078vw, 4.232rem);
         --font-size-h2: clamp(1.539rem, 1.308rem + 2.309vw, 3.078rem);
         --font-size-h3: clamp(1.385rem, 1.116rem + 1.539vw, 2.309rem);
