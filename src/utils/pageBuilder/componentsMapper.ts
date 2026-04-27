@@ -5,6 +5,9 @@ import CertificatesGallery from "@/sections/certificatesGallery/index.astro";
 import CurrentFocus from "@/sections/currentFocus/index.astro";
 import ExperienceTimeline from "@/sections/experienceTimeline/index.astro";
 import Hero from "@/sections/hero/index.astro";
+import ProjectImage from "@/sections/projectImage/index.astro";
+import ProjectTextAndImage from "@/sections/projectTextAndImage/index.astro";
+import ProjectTwoImages from "@/sections/projectTwoImages/index.astro";
 import ProjectsShowcase from "@/sections/projectsShowcase/index.astro";
 import RichTextSection from "@/sections/richTextSection/index.astro";
 import Subhero from "@/sections/subhero/index.astro";
@@ -19,6 +22,9 @@ export const componentsMapper = {
     currentFocus: CurrentFocus,
     experienceTimeline: ExperienceTimeline,
     hero: Hero,
+    image: ProjectImage,
+    textAndImage: ProjectTextAndImage,
+    twoImages: ProjectTwoImages,
     projectsShowcase: ProjectsShowcase,
     richTextSection: RichTextSection,
     subhero: Subhero,

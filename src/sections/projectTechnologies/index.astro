@@ -1,0 +1,37 @@
+---
+import Container from "@/components/Container/index.astro";
+import Heading from "@/components/Heading/index.astro";
+import Text from "@/components/Text/index.astro";
+import type { Props } from "./index.type";
+
+const { technologies = [] } = Astro.props as Props;
+---
+
+{
+    technologies.length > 0 && (
+        <Container className="space-y-6">
+            <Heading as="h2" size="2xl">
+                Used technologies
+            </Heading>
+            <ul class="flex flex-wrap items-center gap-4">
+                {technologies.map((item) => (
+                    <li class="inline-flex h-12 min-w-12 items-center justify-center rounded-md border border-paper/20 px-2 py-2">
+                        {item.technology?.svg ? (
+                            <span
+                                aria-hidden="true"
+                                class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8"
+                                set:html={item.technology.svg}
+                            />
+                        ) : (
+                            <Text as="span" size="sm" className="uppercase">
+                                {item.technology?.name ??
+                                    item.technology?._ref ??
+                                    "Technology"}
+                            </Text>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </Container>
+    )
+}

@@ -1,0 +1,70 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ProjectSectionsGrid from "@/sections/projectSectionsGrid/index.astro";
+import ProjectTechnologies from "@/sections/projectTechnologies/index.astro";
+import Subhero from "@/sections/subhero/index.astro";
+import PageBuilder from "@/utils/pageBuilder/PageBuilder.astro";
+import {
+    DEFAULT_LOCALE,
+    getProjectByRouteSlug,
+    getProjectRouteSlugs,
+} from "@/lib/sanity";
+
+export async function getStaticPaths() {
+    const projectURLs = await getProjectRouteSlugs(
+        DEFAULT_LOCALE,
+        DEFAULT_LOCALE,
+    );
+
+    return projectURLs.map((projectURL) => ({
+        params: { projectURL },
+    }));
+}
+
+const projectURL = Astro.params.projectURL ?? "";
+const projectPageData = await getProjectByRouteSlug(
+    projectURL,
+    DEFAULT_LOCALE,
+    DEFAULT_LOCALE,
+);
+
+if (!projectPageData?.project) {
+    Astro.response.status = 404;
+}
+
+const project = projectPageData?.project;
+const subtitle = project?.subtitle ?? "Case study";
+const sections = project?.sections ?? [];
+const technologies = project?.technologies ?? [];
+const pageBuilderElements = project?.pageBuilder ?? [];
+---
+
+<Layout
+    headerMenuItems={projectPageData?.headerMenuItems ?? []}
+    footerMenuItems={projectPageData?.footerMenuItems ?? []}
+    phone={projectPageData?.phone ?? ""}
+    email={projectPageData?.email ?? ""}
+    instagram={projectPageData?.instagram ?? ""}
+    linkedin={projectPageData?.linkedin ?? ""}
+    github={projectPageData?.github ?? ""}
+>
+    <main>
+        <Subhero
+            eyebrow={subtitle}
+            heading={project?.title ?? "Project"}
+            highlightLine
+        />
+
+        <ProjectSectionsGrid sections={sections} />
+
+        <ProjectTechnologies technologies={technologies} />
+
+        {
+            pageBuilderElements.length > 0 && (
+                <section class="space-y-0">
+                    <PageBuilder elements={pageBuilderElements} />
+                </section>
+            )
+        }
+    </main>
+</Layout>

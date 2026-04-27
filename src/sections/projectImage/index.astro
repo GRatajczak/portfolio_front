@@ -1,0 +1,26 @@
+---
+import { Image } from "astro:assets";
+import Container from "@/components/Container/index.astro";
+import type { Props } from "./index.type";
+
+const { asset, alt } = Astro.props as Props;
+const imageDimensions = {
+    width: asset?.metadata?.dimensions?.width ?? 1600,
+    height: asset?.metadata?.dimensions?.height ?? 900,
+};
+---
+
+{
+    asset?.url ? (
+        <Container>
+            <Image
+                src={asset.url}
+                alt={alt ?? "Project image"}
+                width={imageDimensions.width}
+                height={imageDimensions.height}
+                class="h-auto w-full rounded-2xl border border-paper/20 object-cover"
+                loading="lazy"
+            />
+        </Container>
+    ) : null
+}

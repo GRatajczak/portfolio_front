@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+import Container from "@/components/Container/index.astro";
+import type { Props } from "./index.type";
+
+const { leftImage, rightImage } = Astro.props as Props;
+
+const leftImageDimensions = {
+    width: leftImage?.asset?.metadata?.dimensions?.width ?? 1200,
+    height: leftImage?.asset?.metadata?.dimensions?.height ?? 700,
+};
+
+const rightImageDimensions = {
+    width: rightImage?.asset?.metadata?.dimensions?.width ?? 1200,
+    height: rightImage?.asset?.metadata?.dimensions?.height ?? 700,
+};
+---
+
+{
+    leftImage?.asset?.url || rightImage?.asset?.url ? (
+        <Container>
+            <div class="grid gap-6 md:grid-cols-2">
+                {
+                    leftImage?.asset?.url ? (
+                        <Image
+                            src={leftImage.asset.url}
+                            alt={leftImage.alt ?? "Project image left"}
+                            width={leftImageDimensions.width}
+                            height={leftImageDimensions.height}
+                            class="h-auto w-full rounded-2xl border border-paper/20 object-cover"
+                            loading="lazy"
+                        />
+                    ) : null
+                }
+
+                {
+                    rightImage?.asset?.url ? (
+                        <Image
+                            src={rightImage.asset.url}
+                            alt={rightImage.alt ?? "Project image right"}
+                            width={rightImageDimensions.width}
+                            height={rightImageDimensions.height}
+                            class="h-auto w-full rounded-2xl border border-paper/20 object-cover"
+                            loading="lazy"
+                        />
+                    ) : null
+                }
+            </div>
+        </Container>
+    ) : null
+}

@@ -23,4 +23,5 @@ export type PortableTextBlock = {
 
 export type Props = {
     content?: PortableTextBlock[];
+    narrow?: boolean;
 };

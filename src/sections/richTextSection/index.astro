@@ -3,7 +3,8 @@ import Container from "@/components/Container/index.astro";
 import RichText from "@/components/RichText/index.astro";
 import type { Props } from "./index.type";
 
-const { content = [] } = Astro.props as Props;
+const { content = [], narrow = true } = Astro.props as Props;
+const widthClass = narrow ? "max-w-3xl mx-auto" : "";
 ---
 
 {
@@ -12,7 +13,7 @@ const { content = [] } = Astro.props as Props;
             <RichText
                 smallHeadings
                 value={content}
-                className="space-y-4 max-w-3xl mx-auto text-paper/90 [&_a]:text-accent-orange [&_a]:underline [&_a]:underline-offset-4 [&_blockquote]:border-l-2 [&_blockquote]:border-paper/35 [&_blockquote]:pl-4 [&_blockquote]:italic [&_ol]:space-y-2 [&_p]:leading-relaxed [&_ul]:space-y-2"
+                className={`space-y-4 ${widthClass} text-paper/90 [&_a]:text-accent-orange [&_a]:underline [&_a]:underline-offset-4 [&_blockquote]:border-l-2 [&_blockquote]:border-paper/35 [&_blockquote]:pl-4 [&_blockquote]:italic [&_ol]:space-y-2 [&_p]:leading-relaxed [&_ul]:space-y-2`}
             />
         </Container>
     )

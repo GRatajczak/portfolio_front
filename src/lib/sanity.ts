@@ -8,6 +8,9 @@ import type {
     PageQueryResult,
     PageSlugResult,
     PostPreview,
+    ProjectPageData,
+    ProjectQueryResult,
+    ProjectSlugResult,
 } from "./sanity.type";
 
 const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
@@ -342,7 +345,10 @@ export const PAGE_QUERY = defineQuery(`
         }
       }
     },
-    "globals": *[_type == "global" && language in [$locale, $baseLocale]]
+    "globals": *[
+      _type == "global"
+      && (!defined(language) || language in [$locale, $baseLocale])
+    ]
       | order(select(language == $locale => 0, language == $baseLocale => 1, 2) asc, _updatedAt desc)[0] {
       "header": header{
         menuItems[]{
@@ -372,6 +378,170 @@ export const HOME_PAGE_QUERY = PAGE_QUERY;
 export const PAGE_SLUGS_QUERY = defineQuery(`
   *[
     _type == "page"
+    && language in [$locale, $baseLocale]
+    && defined(slug.current)
+  ]
+    | order(
+      select(language == $locale => 0, language == $baseLocale => 1, 2) asc,
+      _updatedAt desc
+    ) {
+    "slug": slug.current,
+    language
+  }
+`);
+
+export const PROJECT_QUERY = defineQuery(`
+  {
+    "project": *[
+      _type == "project"
+      && slug.current in [$projectSlug, $fallbackProjectSlug]
+      && language in [$locale, $baseLocale]
+    ]
+      | order(
+        select(slug.current == $projectSlug => 0, slug.current == $fallbackProjectSlug => 1, 2) asc,
+        select(language == $locale => 0, language == $baseLocale => 1, 2) asc,
+        _updatedAt desc
+      )[0] {
+      _id,
+      title,
+      subtitle,
+      description,
+      projectUrl,
+      "slug": slug.current,
+      sections[]{
+        _key,
+        _type,
+        title,
+        content[]{
+          ...,
+          markDefs[]{
+            ...,
+            _type == "link" => {
+              ...,
+              href
+            }
+          }
+        }
+      },
+      technologies[]{
+        _key,
+        "technology": technology->{
+          _id,
+          name,
+          svg
+        }
+      },
+      pageBuilder[]{
+        ...,
+        _type == "textAndImage" => {
+          ...,
+          content[]{
+            ...,
+            markDefs[]{
+              ...,
+              _type == "link" => {
+                ...,
+                href
+              }
+            }
+          },
+          image{
+            alt,
+            "asset": asset->{
+              url,
+              metadata{
+                dimensions{
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        },
+        _type == "richTextSection" => {
+          ...,
+          content[]{
+            ...,
+            markDefs[]{
+              ...,
+              _type == "link" => {
+                ...,
+                href
+              }
+            }
+          }
+        },
+        _type == "image" => {
+          ...,
+          alt,
+          "asset": asset->{
+            url,
+            metadata{
+              dimensions{
+                width,
+                height
+              }
+            }
+          }
+        },
+        _type == "twoImages" => {
+          ...,
+          leftImage{
+            alt,
+            "asset": asset->{
+              url,
+              metadata{
+                dimensions{
+                  width,
+                  height
+                }
+              }
+            }
+          },
+          rightImage{
+            alt,
+            "asset": asset->{
+              url,
+              metadata{
+                dimensions{
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "globals": *[_type == "global" && language in [$locale, $baseLocale]]
+      | order(select(language == $locale => 0, language == $baseLocale => 1, 2) asc, _updatedAt desc)[0] {
+      "header": header{
+        menuItems[]{
+          _key,
+          "title": @->title,
+          "slug": @->slug.current
+        }
+      },
+      "footer": footer{
+        menuItems[]{
+          _key,
+          "title": @->title,
+          "slug": @->slug.current
+        }
+      },
+      "facebook": coalesce(facebook, ""),
+      "instagram": coalesce(instagram, ""),
+      "phone": coalesce(phone, ""),
+      "email": coalesce(email, ""),
+      "linkedin": coalesce(linkedin, ""),
+      "github": coalesce(github, "")
+    }
+  }
+`);
+
+export const PROJECT_SLUGS_QUERY = defineQuery(`
+  *[
+    _type == "project"
     && language in [$locale, $baseLocale]
     && defined(slug.current)
   ]
@@ -483,6 +653,63 @@ export async function getPageRouteSlugs(
     }
 }
 
+export async function getProjectByRouteSlug(
+    routeSlug: string,
+    locale = DEFAULT_LOCALE,
+    baseLocale = DEFAULT_LOCALE,
+): Promise<ProjectPageData | null> {
+    if (!routeSlug) {
+        return null;
+    }
+
+    const localizedSlug = getLocalizedProjectSlug(routeSlug, locale);
+    return getProjectBySlug(localizedSlug, locale, baseLocale, routeSlug);
+}
+
+export async function getProjectRouteSlugs(
+    locale = DEFAULT_LOCALE,
+    baseLocale = DEFAULT_LOCALE,
+): Promise<string[]> {
+    if (!sanityClient) {
+        return [];
+    }
+
+    try {
+        const slugs = await getCachedSanityData(
+            `project-slugs:${locale}:${baseLocale}`,
+            async () =>
+                sanityClient.fetch<ProjectSlugResult[]>(PROJECT_SLUGS_QUERY, {
+                    locale,
+                    baseLocale,
+                }),
+        );
+
+        const uniqueSlugs = new Set<string>();
+
+        for (const entry of slugs) {
+            if (!entry.slug) {
+                continue;
+            }
+
+            const routeSlug = toProjectRouteSlug(entry.slug, locale);
+
+            if (!routeSlug) {
+                continue;
+            }
+
+            uniqueSlugs.add(routeSlug);
+        }
+
+        return [...uniqueSlugs];
+    } catch (error) {
+        if (import.meta.env.DEV) {
+            console.warn("[sanity] Failed to fetch project slugs.", error);
+        }
+
+        return [];
+    }
+}
+
 async function getPageBySlug(
     pageSlug: string,
     locale = DEFAULT_LOCALE,
@@ -533,7 +760,70 @@ async function getPageBySlug(
     }
 }
 
+async function getProjectBySlug(
+    projectSlug: string,
+    locale = DEFAULT_LOCALE,
+    baseLocale = DEFAULT_LOCALE,
+    fallbackProjectSlug = projectSlug,
+): Promise<ProjectPageData | null> {
+    if (!sanityClient) {
+        return null;
+    }
+
+    try {
+        const data = await getCachedSanityData(
+            `project:${locale}:${baseLocale}:${projectSlug}:${fallbackProjectSlug}`,
+            async () =>
+                sanityClient.fetch<ProjectQueryResult>(PROJECT_QUERY, {
+                    locale,
+                    baseLocale,
+                    projectSlug,
+                    fallbackProjectSlug,
+                }),
+        );
+
+        if (!data.project) {
+            return null;
+        }
+
+        return {
+            project: data.project,
+            headerMenuItems: data.globals?.header?.menuItems ?? [],
+            footerMenuItems: data.globals?.footer?.menuItems ?? [],
+            facebook: data.globals?.facebook ?? "",
+            instagram: data.globals?.instagram ?? "",
+            phone: data.globals?.phone ?? "",
+            email: data.globals?.email ?? "",
+            linkedin: data.globals?.linkedin ?? "",
+            github: data.globals?.github ?? "",
+        };
+    } catch (error) {
+        if (import.meta.env.DEV) {
+            console.warn(
+                `[sanity] Failed to fetch project data for slug "${projectSlug}".`,
+                error,
+            );
+        }
+
+        return null;
+    }
+}
+
 function getLocalizedPageSlug(routeSlug: string, locale: string) {
+    if (locale === DEFAULT_LOCALE) {
+        return routeSlug;
+    }
+
+    const localeSuffix = `-${locale}`;
+
+    if (routeSlug.endsWith(localeSuffix)) {
+        return routeSlug;
+    }
+
+    return `${routeSlug}${localeSuffix}`;
+}
+
+function getLocalizedProjectSlug(routeSlug: string, locale: string) {
     if (locale === DEFAULT_LOCALE) {
         return routeSlug;
     }
@@ -559,6 +849,20 @@ function toRouteSlug(pageSlug: string, locale: string) {
     }
 
     return pageSlug;
+}
+
+function toProjectRouteSlug(projectSlug: string, locale: string) {
+    if (locale === DEFAULT_LOCALE) {
+        return projectSlug;
+    }
+
+    const localeSuffix = `-${locale}`;
+
+    if (projectSlug.endsWith(localeSuffix)) {
+        return projectSlug.slice(0, -localeSuffix.length);
+    }
+
+    return projectSlug;
 }
 
 export function urlFor(source: SanityImageSource) {

@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+import Container from "@/components/Container/index.astro";
+import Heading from "@/components/Heading/index.astro";
+import RichText from "@/components/RichText/index.astro";
+import type { Props } from "./index.type";
+
+const { title, content = [], image, flip = false } = Astro.props as Props;
+const imageDimensions = {
+    width: image?.asset?.metadata?.dimensions?.width ?? 1200,
+    height: image?.asset?.metadata?.dimensions?.height ?? 700,
+};
+---
+
+<Container>
+    <div
+        class={`flex flex-col gap-8 justify-between md:items-center ${flip ? "md:flex-row-reverse" : "md:flex-row"}`}
+    >
+        <div class="flex-1">
+            {
+                title ? (
+                    <Heading as="h3" size="2xl" className="mb-4">
+                        {title}
+                    </Heading>
+                ) : null
+            }
+            <RichText value={content} />
+        </div>
+
+        {
+            image?.asset?.url ? (
+                <div class="flex-1">
+                    <Image
+                        src={image.asset.url}
+                        alt={image.alt ?? "Project image"}
+                        width={imageDimensions.width}
+                        height={imageDimensions.height}
+                        class="h-auto w-full rounded-2xl border border-paper/20 object-cover"
+                        loading="lazy"
+                    />
+                </div>
+            ) : null
+        }
+    </div>
+</Container>
