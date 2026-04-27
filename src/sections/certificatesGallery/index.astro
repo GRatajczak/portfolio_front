@@ -153,6 +153,33 @@ const {
                     return;
                 }
 
+                const setNavigationState = () => {
+                    const swiperInstance = swiperEl.swiper;
+
+                    if (!swiperInstance) {
+                        return;
+                    }
+
+                    const disablePrev = swiperInstance.isBeginning;
+                    const disableNext = swiperInstance.isEnd;
+
+                    prevEl.disabled = disablePrev;
+                    prevEl.ariaDisabled = String(disablePrev);
+                    prevEl.classList.toggle("opacity-40", disablePrev);
+                    prevEl.classList.toggle("cursor-not-allowed", disablePrev);
+                    prevEl.classList.toggle("pointer-events-none", disablePrev);
+                    prevEl.classList.toggle("border-paper/20", disablePrev);
+                    prevEl.classList.toggle("text-paper/40", disablePrev);
+
+                    nextEl.disabled = disableNext;
+                    nextEl.ariaDisabled = String(disableNext);
+                    nextEl.classList.toggle("opacity-40", disableNext);
+                    nextEl.classList.toggle("cursor-not-allowed", disableNext);
+                    nextEl.classList.toggle("pointer-events-none", disableNext);
+                    nextEl.classList.toggle("border-paper/20", disableNext);
+                    nextEl.classList.toggle("text-paper/40", disableNext);
+                };
+
                 Object.assign(swiperEl, {
                     slidesPerView: 1.15,
                     spaceBetween: 16,
@@ -176,6 +203,11 @@ const {
                 });
 
                 swiperEl.initialize();
+                setNavigationState();
+                swiperEl.swiper?.on("slideChange", setNavigationState);
+                swiperEl.swiper?.on("reachBeginning", setNavigationState);
+                swiperEl.swiper?.on("reachEnd", setNavigationState);
+                swiperEl.swiper?.on("fromEdge", setNavigationState);
                 swiperEl.dataset.initialized = "true";
             });
     };
