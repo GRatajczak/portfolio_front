@@ -106,6 +106,18 @@ export const PAGE_QUERY = defineQuery(`
                 }
               }
             }
+          },
+          "mobileImage": mobileImage{
+            alt,
+            "asset": asset->{
+              url,
+              metadata{
+                dimensions{
+                  width,
+                  height
+                }
+              }
+            }
           }
         },
         _type == "aboutMe" => {

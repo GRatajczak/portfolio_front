@@ -19,6 +19,7 @@ export type Props = {
     headline?: string;
     subheadline?: SubheadlineItem[];
     portraitImage?: HeroImage;
+    mobileImage?: HeroImage;
     facebook?: string;
     instagram?: string;
     phone?: string;

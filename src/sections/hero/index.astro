@@ -1,10 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import Heading from "@/components/Heading/index.astro";
-import Text from "@/components/Text/index.astro";
 import type { Props } from "./index.type";
 
-const { headline = "", subheadline = [], portraitImage } = Astro.props as Props;
+const {
+    headline = "",
+    subheadline = [],
+    portraitImage,
+    mobileImage,
+} = Astro.props as Props;
 const subheadlineItems = subheadline.map((item) => item.text).filter(Boolean);
 const portraitImageUrl = portraitImage?.asset?.url;
 const portraitImageWidth =
@@ -12,12 +16,31 @@ const portraitImageWidth =
 const portraitImageHeight =
     portraitImage?.asset?.metadata?.dimensions?.height ?? 1200;
 const portraitImageAlt = portraitImage?.alt || "Portrait photo";
+const mobileImageUrl = mobileImage?.asset?.url ?? portraitImageUrl;
+const mobileImageWidth =
+    mobileImage?.asset?.metadata?.dimensions?.width ?? portraitImageWidth;
+const mobileImageHeight =
+    mobileImage?.asset?.metadata?.dimensions?.height ?? portraitImageHeight;
+const mobileImageAlt = mobileImage?.alt || portraitImageAlt;
 ---
 
 <section
     class="flex items-end justify-between h-full max-h-screen mx-auto px-6 relative"
 >
-    <div class="w-[60%] pb-8 min-h-screen flex flex-col justify-end">
+    <div class="w-full md:w-[60%] pb-8 min-h-svh flex flex-col justify-end">
+        {
+            mobileImageUrl && (
+                <Image
+                    src={mobileImageUrl}
+                    alt={mobileImageAlt}
+                    width={mobileImageWidth}
+                    height={mobileImageHeight}
+                    class="mb-4 h-60 w-40 md:w-full object-cover rounded-xl md:hidden! border-paper/30 aspect-square"
+                    loading="eager"
+                    format="webp"
+                />
+            )
+        }
         {
             subheadlineItems.length > 0 && (
                 <div class="hero-subheadline">
@@ -40,7 +63,7 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
                     as="h1"
                     text={headline}
                     size="display"
-                    className="font-semibold mb-5 tracking-wide mt-8 md:mt-0"
+                    className="font-semibold mb-5 tracking-wide mt-2 md:mt-0"
                 />
             )
         }
@@ -125,6 +148,7 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
 <style>
     .hero-subheadline {
         min-height: 1.5rem;
+        width: 100%;
     }
 
     .hero-subheadline-text {
@@ -132,7 +156,7 @@ const portraitImageAlt = portraitImage?.alt || "Portrait photo";
         display: block;
         margin: 0;
         line-height: 1.1;
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-base);
     }
 
     .hero-subheadline-item {
