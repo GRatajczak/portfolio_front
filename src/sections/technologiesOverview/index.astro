@@ -25,7 +25,7 @@ const groupsWithTechnologies = groups.filter(
                     <div
                         role="tablist"
                         aria-label="Technology groups"
-                        class="flex flex-wrap items-center gap-2 border-b border-paper/40 pb-2"
+                        class="flex flex-wrap items-center gap-2 border-b border-fg/40 pb-2"
                     >
                         {groupsWithTechnologies.map((group, index) => {
                             const tabId = `technologies-overview-tab-${index}`;
@@ -42,8 +42,8 @@ const groupsWithTechnologies = groups.filter(
                                     class:list={[
                                         "cursor-pointer border-none bg-transparent px-1 py-1 text-left text-sm font-semibold transition-colors md:text-base",
                                         index === 0
-                                            ? "text-paper"
-                                            : "text-paper/55 hover:text-paper/80",
+                                            ? "text-fg"
+                                            : "text-fg/55 hover:text-fg/80",
                                     ]}
                                 >
                                     {group.label || `Group ${index + 1}`}
@@ -81,7 +81,7 @@ const groupsWithTechnologies = groups.filter(
                                                         set:html={technologySvg}
                                                     />
                                                 ) : (
-                                                    <span class="rounded-full border border-paper/35 px-3 py-1 text-xs text-paper sm:text-sm">
+                                                    <span class="rounded-full border border-fg/35 px-3 py-1 text-xs text-fg sm:text-sm">
                                                         {getTechnologyLabel(technology)}
                                                     </span>
                                                 )}
@@ -123,9 +123,9 @@ const groupsWithTechnologies = groups.filter(
                 const isActive = index === targetIndex;
                 tab.setAttribute("aria-selected", isActive ? "true" : "false");
                 tab.tabIndex = isActive ? 0 : -1;
-                tab.classList.toggle("text-paper", isActive);
-                tab.classList.toggle("text-paper/55", !isActive);
-                tab.classList.toggle("hover:text-paper/80", !isActive);
+                tab.classList.toggle("text-fg", isActive);
+                tab.classList.toggle("text-fg/55", !isActive);
+                tab.classList.toggle("hover:text-fg/80", !isActive);
 
                 if (isActive && shouldFocus) {
                     tab.focus();

@@ -18,6 +18,12 @@ No test runner is configured.
 
 **Stack:** Astro SSR + Sanity CMS + Tailwind CSS v4 + Cloudflare Workers adapter.
 
+### Design system ("terminal / dev")
+
+Tokens live in `@theme` in `src/styles/global.css` (`bg`, `bg-alt`, `surface`, `line`, `line-strong`, `tag-border`, `fg`, `fg-soft`, `muted`, `dim`, `acc` = accent, `going` = in-progress status). Fonts: Geist (sans) and JetBrains Mono (mono), self-hosted in `public/fonts/` — no Google Fonts. Utilities: `bg-grid`, `clip-corner(-sm)`, `animate-blink`. Element-level rules in `global.css` are wrapped in `@layer base`, so Tailwind utilities override them (e.g. put `text-[13px]` on the `<a>` itself, not its parent).
+
+Shared building blocks: `Button` (`primary` / `outline`), `Eyebrow`, `Tag` (optional technology `svg`), `StatusDot`, `FileFrame`, `TabDivider`, `Lightbox` (one native `<dialog>` per page, opened by any `[data-lightbox-src]`).
+
 ### Data flow
 
 All content comes from Sanity. `src/lib/sanity.ts` centralizes all GROQ queries and fetch functions. Each page fetch also retrieves global data (header/footer nav, social links) in a single combined query — global data is **not** fetched separately.
@@ -32,12 +38,26 @@ Pages in Sanity are built from an array of block types (`pageBuilder` field). `s
 2. Add it to `componentsMapper.ts`
 3. Add the corresponding GROQ projection in `src/lib/sanity.ts` inside `PAGE_QUERY`
 
+`getSectionLayout()` (`src/utils/pageBuilder/helpers.ts`) alternates section backgrounds (`bg` / `bg-alt`) and places a `TabDivider` between sections. The tab label comes from the block's optional `tabLabel` field, then from the `TAB_LABELS` map by `_type`. The first section and the one after a `subhero` get no divider. Sections receive a `surface` prop.
+
+The case study page (`src/pages/work/[projectURL].astro`) does **not** use `PageBuilder`: it renders the hero, brief grid and one shared "features" section itself, numbering and alternating `textAndImage` blocks by order.
+
+### Client scripts
+
+Plain TypeScript in `src/scripts/` (`typing.ts` for the hero, `matrix.ts` for the hover effect, registered once from `Layout`). The site uses `ClientRouter` (View Transitions), so scripts start on `astro:page-load`, clean up on `astro:before-swap` and use delegated `document` listeners. `t()` calls in component frontmatter must come after the `useTranslations` line — a render error there yields a `200` with an empty `<body>`, which `npm run build` does not catch.
+
 ### Routing and i18n
 
 - English (default): `/`, `/[slug]`, `/work/[projectURL]`, `/contact`
 - Polish: `/pl/`, `/pl/[slug]`, `/pl/contact` (no `/pl/work/` routes yet)
 
+UI strings that are not Sanity content live in `src/i18n/ui.ts` (`en` / `pl` dictionaries, `useTranslations(Astro.url)`, `formatYears`). The locale is derived from the route (`/pl…`). Add a key to `en` first — `pl` is typed against it.
+
 Localization works by appending `-pl` to Sanity slugs. `getLocalizedPageSlug` / `toRouteSlug` handle the translation between route slugs and Sanity slugs. The `DEFAULT_LOCALE` is `"en"`.
+
+### Contact form
+
+`src/sections/contactForm/` posts JSON to `POST /api/contact` (`src/pages/api/contact.ts`), which sends mail through Resend with `fetch`. It also accepts a plain form post (redirects back with `?sent=1` / `?error=<code>`). Without `RESEND_API_KEY`, `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` it answers `503`.
 
 ### Conventions
 

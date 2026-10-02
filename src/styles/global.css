@@ -49,11 +49,6 @@
     --color-dim: #71717a;
     --color-acc: #3ddc84;
     --color-going: #f5b544;
-    /* Legacy aliases — remove once old sections are redesigned. */
-    --color-ink: var(--color-bg);
-    --color-paper: var(--color-fg);
-    --color-accent-orange: var(--color-going);
-    --color-accent-green: var(--color-acc);
     --breakpoint-sm: 40rem;
     --breakpoint-md: 48rem;
     --breakpoint-lg: 64rem;
@@ -66,7 +61,6 @@
     --font-mono:
         "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
         monospace;
-    --font-display: var(--font-sans);
 }
 
 @utility bg-grid {
