@@ -46,7 +46,7 @@
     --color-fg: #ededea;
     --color-fg-soft: #d4d4d8;
     --color-muted: #a1a1aa;
-    --color-dim: #71717a;
+    --color-dim: #7c7c86;
     --color-acc: #3ddc84;
     --color-going: #f5b544;
     --breakpoint-sm: 40rem;
@@ -191,6 +191,11 @@ html {
 
     a {
         color: inherit;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-acc);
+        outline-offset: 3px;
     }
 
     body {
