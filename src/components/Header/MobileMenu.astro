@@ -1,7 +1,10 @@
 ---
+import { useTranslations } from "@/i18n/ui";
 import type { Props } from "./MobileMenu.type";
 import Button from "@/components/Button/index.astro";
 const { menuItems, contactHref, socials = [] } = Astro.props as Props;
+
+const { t } = useTranslations(Astro.url);
 ---
 
 <div
@@ -34,7 +37,7 @@ const { menuItems, contactHref, socials = [] } = Astro.props as Props;
             href={contactHref}
             className="w-full py-[17px]! text-center"
         >
-            Get in touch
+            {t("nav.getInTouch")}
         </Button>
         {
             socials.length > 0 && (

@@ -1,4 +1,5 @@
 ---
+import { useTranslations } from "@/i18n/ui";
 import Container from "@/components/Container/index.astro";
 import FileFrame from "@/components/FileFrame/index.astro";
 import { getTechnologyLabel } from "@/utils/pageBuilder/helpers";
@@ -11,6 +12,8 @@ const items = technologies
         svg: item.technology?.svg,
     }))
     .filter((item) => item.name);
+
+const { t } = useTranslations(Astro.url);
 ---
 
 {
@@ -18,7 +21,7 @@ const items = technologies
         <Container>
             <FileFrame
                 leftLabel="src/stack.ts"
-                rightLabel={`${items.length} items`}
+                rightLabel={`${items.length} ${t("stack.items")}`}
                 bodyClassName="flex flex-col gap-[18px] p-[clamp(20px,3vw,36px)] font-mono text-[clamp(13px,1.3vw,15px)] text-fg"
             >
                 <div>

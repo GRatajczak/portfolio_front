@@ -1,4 +1,5 @@
 ---
+import { useTranslations } from "@/i18n/ui";
 import type { HeaderMenuItem, Props } from "./index.type";
 import Link from "@/components/Link/index.astro";
 import Button from "@/components/Button/index.astro";
@@ -9,6 +10,8 @@ const {
     github = "",
     instagram = "",
 } = Astro.props as Props;
+
+const { t } = useTranslations(Astro.url);
 
 type ResolvedHeaderMenuItem = HeaderMenuItem & {
     title: string;
@@ -75,7 +78,7 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
 }));
 const contactHref = `${localePrefix}/contact`;
 const mobileMenuItems = [
-    { title: "Home", href: homeHref, active: currentPath === "/" },
+    { title: t("nav.home"), href: homeHref, active: currentPath === "/" },
     ...navigationItems.map((item) => ({ ...item, active: isActive(item.href) })),
 ];
 const socials = [
@@ -95,7 +98,7 @@ const socials = [
     >
         <a
             href={homeHref}
-            aria-label="Go to homepage"
+            aria-label={t("nav.homeAria")}
             data-matrix="link"
             class="flex items-center gap-0.5 font-mono text-[15px] font-medium"
         >
@@ -110,7 +113,7 @@ const socials = [
                     <button
                         type="button"
                         class="-mr-2.5 flex size-11 flex-col items-center justify-center gap-1.5 min-[760px]:hidden"
-                        aria-label="Menu"
+                        aria-label={t("nav.menuAria")}
                         aria-expanded="false"
                         aria-controls="mobile-menu-panel"
                         data-mobile-menu-toggle
@@ -141,7 +144,7 @@ const socials = [
                             ))}
                         </ul>
                         <Button href={contactHref} size="sm">
-                            Get in touch
+                            {t("nav.getInTouch")}
                         </Button>
                     </div>
                 </>

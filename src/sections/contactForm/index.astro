@@ -2,17 +2,21 @@
 import Button from "@/components/Button/index.astro";
 import FileFrame from "@/components/FileFrame/index.astro";
 import Link from "@/components/Link/index.astro";
+import { t as translate } from "@/i18n/ui";
 import type { Props } from "./index.type";
 
 const {
     email = "",
     phone = "",
-    location = "Poland",
+    location = "",
     linkedin = "",
     github = "",
     instagram = "",
     locale = "en",
 } = Astro.props as Props;
+
+const t = (key: Parameters<typeof translate>[1], vars?: Record<string, string>) =>
+    translate(locale, key, vars);
 
 const socials = [
     { label: "LinkedIn", href: linkedin },
@@ -20,6 +24,7 @@ const socials = [
     { label: "Instagram", href: instagram },
 ].filter((social) => social.href);
 
+const place = location || t("footer.country");
 const privacyPolicyHref =
     locale === "pl" ? "/pl/privacy-policy" : "/privacy-policy";
 
@@ -27,13 +32,14 @@ const privacyPolicyHref =
 const sent = Astro.url.searchParams.get("sent") === "1";
 const initialError = Astro.url.searchParams.get("error") ?? "";
 
-const mailHint = (lead: string) => (email ? `${lead} ${email}.` : "");
+const mailHint = (key: "contact.hint.writeTo" | "contact.hint.tryAgain") =>
+    email ? t(key, { email }) : "";
 const errorMessages: Record<string, string> = {
-    validation: "✗ 400 — check the fields and try again.",
-    invalid_body: "✗ 400 — something went wrong, try again.",
-    not_configured: `✗ 503 — the form isn't set up yet. ${mailHint("Write to me at")}`.trim(),
-    send_failed: `✗ 502 — couldn't send the message. ${mailHint("Try again or write to")}`.trim(),
-    network: "✗ network error — check your connection and try again.",
+    validation: t("contact.error.validation"),
+    invalid_body: t("contact.error.invalidBody"),
+    not_configured: `${t("contact.error.notConfigured")} ${mailHint("contact.hint.writeTo")}`.trim(),
+    send_failed: `${t("contact.error.sendFailed")} ${mailHint("contact.hint.tryAgain")}`.trim(),
+    network: t("contact.error.network"),
 };
 const initialErrorText = initialError
     ? (errorMessages[initialError] ?? errorMessages.send_failed)
@@ -84,7 +90,7 @@ const labelClass =
                     }
                     <div class="flex flex-wrap gap-2">
                         <span class={key}>"location":</span>
-                        <span>"{location}"</span>
+                        <span>"{place}"</span>
                     </div>
                 </div>
                 <span>{"}"}</span>
@@ -129,7 +135,7 @@ const labelClass =
                     aria-hidden="true"
                 >
                     <label>
-                        Website
+                        {t("contact.honeypot")}
                         <input
                             type="text"
                             name="website"
@@ -140,7 +146,7 @@ const labelClass =
                 </div>
 
                 <label class={labelClass}>
-                    <span><span class="text-acc">$</span> name</span>
+                    <span><span class="text-acc">$</span> {t("contact.name")}</span>
                     <input
                         required
                         maxlength="100"
@@ -150,7 +156,7 @@ const labelClass =
                     />
                 </label>
                 <label class={labelClass}>
-                    <span><span class="text-acc">$</span> email</span>
+                    <span><span class="text-acc">$</span> {t("contact.email")}</span>
                     <input
                         required
                         type="email"
@@ -161,7 +167,7 @@ const labelClass =
                     />
                 </label>
                 <label class={labelClass}>
-                    <span><span class="text-acc">$</span> message</span>
+                    <span><span class="text-acc">$</span> {t("contact.message")}</span>
                     <textarea
                         required
                         rows="6"
@@ -182,16 +188,16 @@ const labelClass =
 
                 <div class="flex flex-wrap items-center justify-between gap-4">
                     <span class="font-mono text-[11px] text-dim">
-                        By sending you accept the{" "}
+                        {t("contact.privacyLead")}{" "}
                         <Link
                             href={privacyPolicyHref}
                             font="mono"
                             className="text-muted underline"
                         >
-                            Privacy Policy
+                            {t("footer.privacy")}
                         </Link>
                     </span>
-                    <Button type="submit" label="Send message" />
+                    <Button type="submit" label={t("contact.send")} />
                 </div>
             </form>
 
@@ -201,9 +207,9 @@ const labelClass =
                 class="flex flex-col gap-3 p-[clamp(20px,3vw,32px)] font-mono text-sm leading-[1.7]"
             >
                 <span class="text-dim">$ ./new-message.sh</span>
-                <span><span class="text-acc">✓</span> 200 OK — message sent.</span>
-                <span class="text-muted" data-contact-thanks>
-                    Thanks. I'll reply as soon as I can.
+                <span><span class="text-acc">✓</span> {t("contact.sent")}</span>
+                <span class="text-muted" data-contact-thanks data-template={t("contact.thanksNamed")}>
+                    {t("contact.thanks")}
                 </span>
                 <div class="flex pt-3">
                     <button
@@ -212,7 +218,7 @@ const labelClass =
                         data-matrix="link"
                         class="cursor-pointer border-0 bg-transparent p-0 font-mono text-sm text-acc"
                     >
-                        ← send another
+                        {t("contact.sendAnother")}
                     </button>
                 </div>
             </div>
@@ -264,7 +270,9 @@ const labelClass =
                     return;
                 }
 
-                thanks.textContent = `Thanks, ${data.name}. I'll reply to ${data.email} soon.`;
+                thanks.textContent = (thanks.dataset.template ?? "")
+                    .replace("{name}", String(data.name))
+                    .replace("{email}", String(data.email));
                 form.hidden = true;
                 success.hidden = false;
             } catch {

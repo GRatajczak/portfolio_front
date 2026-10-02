@@ -1,4 +1,5 @@
 ---
+import { useTranslations } from "@/i18n/ui";
 import Button from "@/components/Button/index.astro";
 import Container from "@/components/Container/index.astro";
 import Eyebrow from "@/components/Eyebrow/index.astro";
@@ -33,6 +34,8 @@ const cards = certificates
 
 const arrowClass =
     "flex size-12 cursor-pointer items-center justify-center border border-line-strong bg-bg font-mono text-base text-fg transition-colors duration-200 hover:border-acc hover:text-acc";
+
+const { t } = useTranslations(Astro.url);
 ---
 
 <Container
@@ -56,7 +59,7 @@ const arrowClass =
                         <button
                             type="button"
                             class={arrowClass}
-                            aria-label="Previous certificate"
+                            aria-label={t("certificates.previous")}
                             data-carousel-prev
                         >
                             ←
@@ -64,7 +67,7 @@ const arrowClass =
                         <button
                             type="button"
                             class={arrowClass}
-                            aria-label="Next certificate"
+                            aria-label={t("certificates.next")}
                             data-carousel-next
                         >
                             →
@@ -99,7 +102,7 @@ const arrowClass =
                             class="relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden border border-line bg-surface p-0 transition-colors duration-200 hover:border-acc focus-visible:border-acc"
                             data-lightbox-src={card.full}
                             data-lightbox-title={card.title}
-                            aria-label={`Open ${card.title || "certificate"}`}
+                            aria-label={`${t("certificates.open")} ${card.title || t("certificates.fallback")}`}
                         >
                             <img
                                 src={card.src}

@@ -1,11 +1,14 @@
 ---
+import { useTranslations } from "@/i18n/ui";
 // One lightbox per page. Any element with `data-lightbox-src` (and optional
 // `data-lightbox-title`) opens it on click.
+
+const { t } = useTranslations(Astro.url);
 ---
 
 <dialog
     id="lightbox"
-    aria-label="Image preview"
+    aria-label={t("lightbox.aria")}
     class="m-0 size-full max-h-none max-w-none cursor-zoom-out bg-[rgba(5,5,7,.92)] p-8 backdrop:bg-transparent open:flex open:flex-col open:items-center open:justify-center open:gap-4"
 >
     <img

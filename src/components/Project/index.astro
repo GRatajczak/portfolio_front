@@ -1,4 +1,5 @@
 ---
+import { useTranslations } from "@/i18n/ui";
 import Button from "@/components/Button/index.astro";
 import Link from "@/components/Link/index.astro";
 import RichText from "@/components/RichText/index.astro";
@@ -37,6 +38,8 @@ const lead = content
     : (project.description ?? "");
 const paragraphClass =
     "flex flex-col gap-4 text-muted [&_p]:m-0 [&_p]:text-base! [&_p]:leading-[1.65]! [&_p]:text-pretty";
+
+const { t } = useTranslations(Astro.url);
 ---
 
 {
@@ -83,7 +86,7 @@ const paragraphClass =
                             font="mono"
                             className="text-sm text-acc"
                         >
-                            See live ↗
+                            {t("project.seeLive")} ↗
                         </Link>
                     )}
                     {caseStudyUrl && (
@@ -92,7 +95,7 @@ const paragraphClass =
                             font="mono"
                             className="text-sm text-acc"
                         >
-                            See case study →
+                            {t("project.seeCaseStudy")} →
                         </Link>
                     )}
                 </div>
@@ -134,7 +137,7 @@ const paragraphClass =
                 {technologies.length > 0 && (
                     <div class="flex flex-col gap-2.5">
                         <span class="font-mono text-xs text-dim">
-                            Technologies:
+                            {t("project.technologies")}
                         </span>
                         <div class="flex flex-wrap gap-2">
                             {technologies.map(({ name, svg }) => (
@@ -148,11 +151,11 @@ const paragraphClass =
                         <Button
                             href={projectUrl}
                             isExternal
-                            label="See live ↗"
+                            label={`${t("project.seeLive")} ↗`}
                         />
                     )}
                     {caseStudyUrl && (
-                        <Button href={caseStudyUrl} label="See case study →" />
+                        <Button href={caseStudyUrl} label={`${t("project.seeCaseStudy")} →`} />
                     )}
                 </div>
             </div>

@@ -1,4 +1,5 @@
 ---
+import { useTranslations } from "@/i18n/ui";
 import TabDivider from "@/components/TabDivider/index.astro";
 import type { FooterMenuItem, Props } from "./index.type";
 import Link from "@/components/Link/index.astro";
@@ -66,6 +67,8 @@ const socials = [
 ].filter((social) => social.href);
 
 const currentYear = new Date().getFullYear();
+
+const { t } = useTranslations(Astro.url);
 ---
 
 <TabDivider label="footer.tsx" from="bg" to="bg-alt" className="footer-tab" />
@@ -76,7 +79,7 @@ const currentYear = new Date().getFullYear();
         <div class="flex flex-col gap-[22px]">
             <a
                 href={homeHref}
-                aria-label="Go to homepage"
+                aria-label={t("nav.homeAria")}
                 data-matrix="link"
                 class="font-mono text-lg font-medium"
             >
@@ -99,7 +102,7 @@ const currentYear = new Date().getFullYear();
         </div>
 
         <div class="flex flex-col gap-4">
-            <span class="font-mono text-xs text-acc">// Quick links</span>
+            <span class="font-mono text-xs text-acc">// {t("footer.quickLinks")}</span>
             <ul class="flex flex-col gap-2.5 font-mono text-[13px]">
                 {
                     resolvedMenuItems.map((item) => (
@@ -120,7 +123,7 @@ const currentYear = new Date().getFullYear();
                         font="mono"
                         className="w-fit text-[13px] text-muted"
                     >
-                        Contact
+                        {t("footer.contact")}
                     </Link>
                 </li>
             </ul>
@@ -129,7 +132,7 @@ const currentYear = new Date().getFullYear();
         {
             (phone || email) && (
                 <div class="flex flex-col gap-4">
-                    <span class="font-mono text-xs text-acc">// Contact</span>
+                    <span class="font-mono text-xs text-acc">// {t("footer.contact")}</span>
                     <ul class="flex flex-col gap-2.5 font-mono text-[13px]">
                         {phone && (
                             <li>
@@ -166,9 +169,9 @@ const currentYear = new Date().getFullYear();
         >
             <span>© {currentYear} | Grzegorz Ratajczak</span>
             <div class="flex gap-6">
-                <span>Poland</span>
+                <span>{t("footer.country")}</span>
                 <Link href={privacyPolicyHref} font="mono" className="text-xs text-dim">
-                    Privacy Policy
+                    {t("footer.privacy")}
                 </Link>
             </div>
         </div>

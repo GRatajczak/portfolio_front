@@ -1,9 +1,11 @@
 ---
 import Eyebrow from "@/components/Eyebrow/index.astro";
 import ExperienceTimelineCard from "@/components/ExperienceTimelineCard/index.astro";
+import { formatYears, useTranslations } from "@/i18n/ui";
 import type { Entry, Props } from "./index.type";
 
 const { eyebrow = "", heading = "", entries = [] } = Astro.props as Props;
+const { t, locale } = useTranslations(Astro.url);
 
 type Row = {
     entry: Entry;
@@ -40,9 +42,9 @@ const rows: Row[] = entries.flatMap((entry, index) => {
             kind,
             isHead,
             periodLabel: isHead
-                ? `${from} — now`
+                ? `${from} — ${t("timeline.now")}`
                 : parts.filter(Number.isFinite).join(" — "),
-            duration: `${years} ${years === 1 ? "yr" : "yrs"}`,
+            duration: formatYears(locale, years),
         },
     ];
 });
@@ -122,11 +124,11 @@ const years = Array.from(
                         <div class="mt-2 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-muted">
                             <span class="flex items-center gap-2">
                                 <span class="h-2.5 w-2.5 bg-acc" />
-                                development
+                                {t("timeline.development")}
                             </span>
                             <span class="flex items-center gap-2">
                                 <span class="h-2.5 w-2.5 bg-line-strong" />
-                                it support
+                                {t("timeline.support")}
                             </span>
                         </div>
                     </div>
