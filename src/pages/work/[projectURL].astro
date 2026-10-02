@@ -37,9 +37,11 @@ if (!projectPageData?.project) {
 
 const project = projectPageData?.project;
 const sections = project?.sections ?? [];
-const technologyNames = (project?.technologies ?? [])
-    .map((item) => item.technology?.name)
-    .filter(Boolean) as string[];
+const technologies = (project?.technologies ?? []).flatMap((item) =>
+    item.technology?.name
+        ? [{ name: item.technology.name, svg: item.technology.svg }]
+        : [],
+);
 const pageBuilderElements = project?.pageBuilder ?? [];
 const imageUrl = project?.image?.asset?.url;
 const imageDimensions = project?.image?.asset?.metadata?.dimensions;
@@ -100,11 +102,11 @@ const hasBrief = sections.length > 0;
                     {project?.title ?? "Project"}
                 </h1>
                 {
-                    technologyNames.length > 0 && (
+                    technologies.length > 0 && (
                         <ul class="flex flex-wrap gap-2">
-                            {technologyNames.map((name) => (
+                            {technologies.map(({ name, svg }) => (
                                 <li>
-                                    <Tag text={name} />
+                                    <Tag text={name} svg={svg} />
                                 </li>
                             ))}
                         </ul>

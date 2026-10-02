@@ -59,7 +59,7 @@ const description = toPlainText(entry.description);
                 <ul class="flex flex-wrap gap-2">
                     {technologies.map((item) => (
                         <li>
-                            <Tag text={getTechnologyLabel(item)} />
+                            <Tag text={getTechnologyLabel(item)} svg={item.technology?.svg} />
                         </li>
                     ))}
                 </ul>

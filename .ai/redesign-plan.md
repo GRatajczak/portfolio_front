@@ -281,6 +281,7 @@ Po każdym kroku: zmień status, dopisz datę i krótką notatkę (co zrobiono, 
 
 ### Notatki / blokery
 
+- **Ikony technologii (na życzenie użytkownika):** `Tag` ma prop `svg` (ikona 14px przed nazwą); używają go `Project` (rows/grid), `ExperienceTimelineCard` i hero case study. `technologiesStack` zachowuje własne ikony pokazywane na hover.
 - **Weryfikacja wizualna nie wykonana** dla kroków 1.1–1.4: rozszerzenie Chrome nie odpowiadało (2.10.2026). Sprawdzono build + HTML z dev servera; przegląd w przeglądarce (390px i ~1440px) zostaje do 6.5, a bieżące kroki ogląda użytkownik na `npm run dev`.
 - **Do posprzątania w 6.4:** aliasy starych tokenów w `global.css` (`--color-ink`, `--color-paper`, `--color-accent-orange`, `--color-accent-green`, `--font-display`) oraz stary panel/etykiety zaszyte w komponentach (i18n w 6.3).
 - **Zmiana globalna (1.3):** reguły elementów w `global.css` są w `@layer base` — utility Tailwinda je teraz nadpisują; stare sekcje mogą mieć drobne różnice do czasu przebudowy.

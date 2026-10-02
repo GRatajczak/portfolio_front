@@ -18,9 +18,11 @@ const {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 const status = statusFromCategory(project.category);
-const technologies = (project.technologies ?? [])
-    .map((item) => item.technology?.name)
-    .filter(Boolean) as string[];
+const technologies = (project.technologies ?? []).flatMap((item) =>
+    item.technology?.name
+        ? [{ name: item.technology.name, svg: item.technology.svg }]
+        : [],
+);
 const imageUrl = project.image?.asset?.url;
 const imageAlt = project.image?.alt || project.title || "Project image";
 const fileLabel = `${project.slug ?? "project"}.preview.png`;
@@ -68,8 +70,8 @@ const paragraphClass =
                 )}
                 {technologies.length > 0 && (
                     <div class="mt-auto flex flex-wrap gap-2">
-                        {technologies.map((name) => (
-                            <Tag text={name} />
+                        {technologies.map(({ name, svg }) => (
+                            <Tag text={name} svg={svg} />
                         ))}
                     </div>
                 )}
@@ -135,8 +137,8 @@ const paragraphClass =
                             Technologies:
                         </span>
                         <div class="flex flex-wrap gap-2">
-                            {technologies.map((name) => (
-                                <Tag text={name} />
+                            {technologies.map(({ name, svg }) => (
+                                <Tag text={name} svg={svg} />
                             ))}
                         </div>
                     </div>
