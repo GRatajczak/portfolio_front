@@ -260,7 +260,12 @@ html {
     }
 }
 
-/* Footer tab continues the background of the last page-builder section. */
+/* Footer alternates with the last page-builder section like any other one:
+   after a bg-alt section the tab and the footer switch to bg. */
 main:has(> [data-surface="bg-alt"]:last-child) ~ .footer-tab {
     --tab-from: var(--color-bg-alt) !important;
+    --tab-fill: var(--color-bg) !important;
+}
+main:has(> [data-surface="bg-alt"]:last-child) ~ .site-footer {
+    background-color: var(--color-bg);
 }
