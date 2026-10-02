@@ -1,31 +1,169 @@
 ---
-import Container from "@/components/Container/index.astro";
+import Eyebrow from "@/components/Eyebrow/index.astro";
 import ExperienceTimelineCard from "@/components/ExperienceTimelineCard/index.astro";
-import SectionHeader from "@/components/SectionHeader/index.astro";
-import type { Props } from "./index.type";
+import type { Entry, Props } from "./index.type";
 
 const { eyebrow = "", heading = "", entries = [] } = Astro.props as Props;
+
+type Row = {
+    entry: Entry;
+    from: number;
+    to: number;
+    kind: "development" | "support";
+    isHead: boolean;
+    periodLabel: string;
+    duration: string;
+};
+
+const now = new Date();
+const NOW = now.getFullYear() + now.getMonth() / 12;
+
+const rows: Row[] = entries.flatMap((entry, index) => {
+    const parts = (entry.period ?? "").split(/\s*[-–—]\s*/).map(Number);
+    const from = parts[0];
+
+    if (!Number.isFinite(from)) {
+        return [];
+    }
+
+    const isHead = index === 0;
+    const to = isHead ? NOW : Number.isFinite(parts[1]) ? parts[1] : from + 1;
+    const kind: Row["kind"] =
+        entry.kind ?? (/support/i.test(entry.role ?? "") ? "support" : "development");
+    const years = Math.max(1, Math.round(to - from));
+
+    return [
+        {
+            entry,
+            from,
+            to,
+            kind,
+            isHead,
+            periodLabel: isHead
+                ? `${from} — now`
+                : parts.filter(Number.isFinite).join(" — "),
+            duration: `${years} ${years === 1 ? "yr" : "yrs"}`,
+        },
+    ];
+});
+
+const start = rows.length ? Math.min(...rows.map((row) => row.from)) : 0;
+const span = Math.max(NOW - start, 1);
+const pct = (value: number) => `${(((value - start) / span) * 100).toFixed(2)}%`;
+
+const bar = [...rows].reverse();
+const years = Array.from(
+    { length: Math.floor(NOW) - start + 1 },
+    (_, k) => start + k,
+);
 ---
 
-<Container>
-    <SectionHeader eyebrow={eyebrow} heading={heading} />
+<section class="py-[clamp(56px,8vw,112px)]">
+    <div
+        class="mx-auto flex w-full max-w-[1240px] flex-col gap-14 px-[clamp(20px,4vw,48px)]"
+    >
+        <div class="flex flex-col gap-3.5">
+            {eyebrow && <Eyebrow text={eyebrow} />}
+            {
+                heading && (
+                    <h2 style="font-size: var(--font-size-h2);">{heading}</h2>
+                )
+            }
+        </div>
 
-    {
-        entries.length > 0 ? (
-            <ol class="relative py-20 mt-8 space-y-8 lg:space-y-10 before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-px before:-translate-x-1/2 before:bg-paper/30 lg:before:block">
-                {entries.map((entry, index) => (
-                    <li class="relative">
-                        <span class="absolute left-1/2 top-10 z-10 hidden h-3 w-3 -translate-x-1/2 rounded-full border border-paper/30 bg-ink lg:block" />
-                        <span
-                            class:list={[
-                                "absolute top-[2.8rem] hidden h-px w-6 bg-paper/30 lg:block",
-                                index % 2 === 0 ? "right-1/2" : "left-1/2",
-                            ]}
-                        />
-                        <ExperienceTimelineCard entry={entry} index={index} />
-                    </li>
-                ))}
-            </ol>
-        ) : null
-    }
-</Container>
+        {
+            rows.length > 0 && (
+                <>
+                    <div class="flex flex-col gap-2.5" data-timeline-bar>
+                        <div class="relative h-11 border border-line bg-bg">
+                            {bar.map((row) => (
+                                <div
+                                    tabindex="0"
+                                    data-timeline-segment
+                                    class:list={[
+                                        "group absolute top-0 bottom-0 box-border flex cursor-default items-center border-r-2 border-bg-alt px-2.5 font-mono text-[11px]",
+                                        row.kind === "support"
+                                            ? "bg-line-strong text-fg-soft"
+                                            : "text-bg",
+                                    ]}
+                                    style={`left:${pct(row.from)};width:${(((row.to - row.from) / span) * 100).toFixed(2)}%;${
+                                        row.kind === "development"
+                                            ? `background:${row.isHead ? "var(--color-acc)" : "color-mix(in oklch, var(--color-acc) 55%, var(--color-bg-alt))"}`
+                                            : ""
+                                    }`}
+                                >
+                                    <span class="block min-w-0 truncate">
+                                        {row.entry.company}
+                                    </span>
+                                    <span
+                                        role="tooltip"
+                                        class="pointer-events-none absolute bottom-[calc(100%+8px)] left-1/2 z-[5] flex -translate-x-1/2 translate-y-1 flex-col gap-0.5 bg-fg px-2.5 py-1.5 text-xs whitespace-nowrap text-bg opacity-0 transition-[opacity,transform] duration-150 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100 group-data-[active]:translate-y-0 group-data-[active]:opacity-100"
+                                    >
+                                        <span class="font-semibold">
+                                            {row.entry.company}
+                                        </span>
+                                        <span class="text-[#52525B]">
+                                            {row.periodLabel}
+                                        </span>
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                        <div class="relative h-4 font-mono text-[11px] text-dim">
+                            {years.map((year, k) => (
+                                <span
+                                    class="absolute -translate-x-1/2"
+                                    style={`left:${pct(year)}`}
+                                >
+                                    {k === 0 ? year : `'${String(year).slice(2)}`}
+                                </span>
+                            ))}
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-muted">
+                            <span class="flex items-center gap-2">
+                                <span class="h-2.5 w-2.5 bg-acc" />
+                                development
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <span class="h-2.5 w-2.5 bg-line-strong" />
+                                it support
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col border-b border-line">
+                        {rows.map((row) => (
+                            <ExperienceTimelineCard
+                                entry={row.entry}
+                                isHead={row.isHead}
+                                periodLabel={row.periodLabel}
+                                kind={row.kind}
+                                duration={row.duration}
+                            />
+                        ))}
+                    </div>
+                </>
+            )
+        }
+    </div>
+</section>
+
+<script>
+    // Tap toggles a segment's tooltip (hover/focus is handled in CSS).
+    const clearActiveSegments = () =>
+        document
+            .querySelectorAll("[data-timeline-segment][data-active]")
+            .forEach((segment) => segment.removeAttribute("data-active"));
+
+    document.addEventListener("click", (event) => {
+        const segment = (event.target as Element).closest<HTMLElement>(
+            "[data-timeline-segment]",
+        );
+        const wasActive = segment?.hasAttribute("data-active");
+
+        clearActiveSegments();
+        if (segment && !wasActive) segment.setAttribute("data-active", "");
+    });
+
+    document.addEventListener("astro:before-swap", clearActiveSegments);
+</script>
