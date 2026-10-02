@@ -76,7 +76,7 @@ const contactHref = `${localePrefix}/contact`;
     data-desktop-header
 >
     <nav
-        class="header-nav mx-auto flex h-[72px] w-full max-w-[1240px] items-center justify-between gap-6 px-[clamp(20px,4vw,48px)] transition-[max-width] duration-300 ease-out"
+        class="header-nav mx-auto flex h-[72px] w-full max-w-full items-center justify-between gap-6 px-[clamp(20px,4vw,48px)] transition-[max-width] duration-300 ease-out"
         data-desktop-header-nav
     >
         <a
@@ -255,7 +255,7 @@ const contactHref = `${localePrefix}/contact`;
 <style>
     @media (min-width: 760px) {
         [data-desktop-header][data-scrolled] .header-nav {
-            max-width: 860px;
+            max-width: 1240px;
         }
     }
     @media (prefers-reduced-motion: reduce) {
