@@ -424,6 +424,28 @@ export const PROJECT_QUERY = defineQuery(`
       description,
       projectUrl,
       "slug": slug.current,
+      content[]{
+        ...,
+        markDefs[]{
+          ...,
+          _type == "link" => {
+            ...,
+            href
+          }
+        }
+      },
+      "image": images[0]{
+        alt,
+        "asset": asset->{
+          url,
+          metadata{
+            dimensions{
+              width,
+              height
+            }
+          }
+        }
+      },
       sections[]{
         _key,
         _type,

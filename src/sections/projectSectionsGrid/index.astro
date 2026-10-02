@@ -1,6 +1,4 @@
 ---
-import Container from "@/components/Container/index.astro";
-import Heading from "@/components/Heading/index.astro";
 import RichText from "@/components/RichText/index.astro";
 import type { Props } from "./index.type";
 
@@ -9,23 +7,25 @@ const { sections = [] } = Astro.props as Props;
 
 {
     sections.length > 0 && (
-        <Container>
-            <div class="grid md:gap-y-20 md:gap-x-10 md:grid-cols-2 gap-y-10 gap-x-6">
-                {sections.map((section) => (
-                    <div class="flex gap-2 flex-col md:flex-row">
-                        {section.title ? (
-                            <Heading
-                                as="h2"
-                                size="2xl"
-                                className="mb-4 min-w-40"
-                            >
+        <div class="mx-auto w-full max-w-[1240px] px-[clamp(20px,4vw,48px)] py-[clamp(56px,8vw,96px)]">
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-px bg-line">
+                {sections.map((section, index) => (
+                    <div class="flex flex-col gap-4 bg-bg-alt p-[clamp(24px,3vw,36px)]">
+                        <span class="font-mono text-[13px] text-acc">
+                            {String(index + 1).padStart(2, "0")} /
+                        </span>
+                        {section.title && (
+                            <h3 class="m-0 text-[28px] tracking-[-.03em]">
                                 {section.title}
-                            </Heading>
-                        ) : null}
-                        <RichText value={section.content ?? []} />
+                            </h3>
+                        )}
+                        <RichText
+                            value={section.content ?? []}
+                            className="flex flex-col gap-4 text-muted [&_p]:m-0 [&_p]:text-[15px]! [&_p]:leading-[1.65]! [&_p]:text-pretty"
+                        />
                     </div>
                 ))}
             </div>
-        </Container>
+        </div>
     )
 }

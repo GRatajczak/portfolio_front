@@ -268,7 +268,7 @@ Po każdym kroku: zmień status, dopisz datę i krótką notatkę (co zrobiono, 
 | 3.4 | currentFocus | ✅ done | 2026-10-02 | Grid `auto-fit minmax(min(100%,400px),1fr)`, lewo H2 `clamp(36px,5vw,60px)` + opis (`RichText` 17px `muted`), prawo karta `line`/`bg-alt`: zdjęcie 16/10, `StatusDot`, H3 26px, opis projektu (pierwszy akapit `content`, fallback `description`). Bez `SectionHeader`/`Project`/`Container`. Build OK. **Brak weryfikacji wizualnej.** |
 | 4.1 | Strona Work | ⬜ todo | | |
 | 4.2 | certificatesGrid (mozaika) | ✅ done | 2026-10-02 | Mozaika `auto-fill minmax(min(100%,280px),1fr)`, gap 8px, karty jak w karuzeli (16/10, `01 Tytuł` / `.ext`, hover `acc`), klik → `Lightbox` (`?w=2000`). Padding sekcji z designu (góra `clamp(24px,4vw,48px)`, dół `clamp(64px,9vw,120px)`), opcjonalny eyebrow/H2. Usunięte: masonry, `astro:assets` `Image`, link do `certificateUrl`. Sprawdzone: 8 kart na `/certificates`. **Brak weryfikacji wizualnej.** |
-| 4.3 | Case study | ⬜ todo | | |
+| 4.3 | Case study | ✅ done | 2026-10-02 | `/work/[projectURL]` przepisany: hero `bg-grid` (`← cd ../work`, eyebrow z `subtitle`, H1, `Tag`i technologii), zdjęcie 16/9 + lead 19px (`project.content`, fallback `description`), `brief.md` (siatka 1px linii, `0N /`), `features.tsx` — wszystkie bloki pageBuildera w **jednej** sekcji (gap `clamp(56px,8vw,104px)`) zamiast naprzemiennych teł z PageBuildera. Do `PROJECT_QUERY` dodane `content` i `image` (`images[0]`) + typy. `textAndImage`: numer `// 0N` i strona (row/row-reverse) liczone z kolejności bloków tego typu — **pole `flip` ze Studio jest ignorowane**. `projectImage`, `projectTwoImages`, `richTextSection` bez własnych `Container`/paddingu, ramki `line`, zwykłe `<img>` (`?w=…&auto=format`) zamiast `astro:assets`. `projectTechnologies` nieużywany (tagi w hero) — do usunięcia w 6.4. Sprawdzone na HTML „Move with Nat”: 3 komórki briefu, 4 bloki `// 01–04` (2 odwrócone), zakładki `brief.md`/`features.tsx`. **Brak weryfikacji wizualnej.** |
 | 5.1 | Endpoint `/api/contact` (Resend, bez klucza) | ⬜ todo | | |
 | 5.2 | Strona kontaktu + formularz | ⬜ todo | | |
 | 6.1 | Schematy Sanity + typegen | ⬜ todo | | |
@@ -277,7 +277,7 @@ Po każdym kroku: zmień status, dopisz datę i krótką notatkę (co zrobiono, 
 | 6.4 | Sprzątanie + CLAUDE.md | ⬜ todo | | |
 | 6.5 | Weryfikacja końcowa | ⬜ todo | | |
 
-**Postęp:** 17 / 27 kroków
+**Postęp:** 18 / 27 kroków
 
 ### Notatki / blokery
 

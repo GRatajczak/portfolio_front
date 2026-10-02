@@ -1,9 +1,12 @@
 ---
+import Eyebrow from "@/components/Eyebrow/index.astro";
+import Link from "@/components/Link/index.astro";
+import RichText from "@/components/RichText/index.astro";
+import Tag from "@/components/Tag/index.astro";
+import TabDivider from "@/components/TabDivider/index.astro";
 import Layout from "@/layouts/Layout.astro";
 import ProjectSectionsGrid from "@/sections/projectSectionsGrid/index.astro";
-import ProjectTechnologies from "@/sections/projectTechnologies/index.astro";
-import Subhero from "@/sections/subhero/index.astro";
-import PageBuilder from "@/utils/pageBuilder/PageBuilder.astro";
+import { componentsMapper } from "@/utils/pageBuilder/componentsMapper";
 import {
     DEFAULT_LOCALE,
     getProjectByRouteSlug,
@@ -33,10 +36,40 @@ if (!projectPageData?.project) {
 }
 
 const project = projectPageData?.project;
-const subtitle = project?.subtitle ?? "Case study";
 const sections = project?.sections ?? [];
-const technologies = project?.technologies ?? [];
+const technologyNames = (project?.technologies ?? [])
+    .map((item) => item.technology?.name)
+    .filter(Boolean) as string[];
 const pageBuilderElements = project?.pageBuilder ?? [];
+const imageUrl = project?.image?.asset?.url;
+const imageDimensions = project?.image?.asset?.metadata?.dimensions;
+const lead = project?.content?.length ? project.content : null;
+
+// The "features" blocks share one section; text+image blocks are numbered and
+// alternate sides in the order they appear.
+let textAndImageCount = 0;
+const featureBlocks = pageBuilderElements.flatMap((element) => {
+    const Component =
+        componentsMapper[element._type as keyof typeof componentsMapper];
+    if (!Component) return [];
+
+    if (element._type !== "textAndImage") {
+        return [{ Component, props: element }];
+    }
+
+    const n = textAndImageCount++;
+    return [
+        {
+            Component,
+            props: {
+                ...element,
+                number: `// ${String(n + 1).padStart(2, "0")}`,
+                reverse: n % 2 === 1,
+            },
+        },
+    ];
+});
+const hasBrief = sections.length > 0;
 ---
 
 <Layout
@@ -49,21 +82,97 @@ const pageBuilderElements = project?.pageBuilder ?? [];
     github={projectPageData?.github ?? ""}
 >
     <main>
-        <Subhero
-            eyebrow={subtitle}
-            heading={project?.title ?? "Project"}
-            highlightLine
-        />
-
-        <ProjectSectionsGrid sections={sections} />
-
-        <ProjectTechnologies technologies={technologies} />
+        <section data-surface="bg" class="bg-grid">
+            <div
+                class="mx-auto flex max-w-[1240px] flex-col gap-[22px] px-[clamp(20px,4vw,48px)] pt-[clamp(40px,7vw,88px)] pb-[clamp(40px,6vw,64px)]"
+            >
+                <Link
+                    href="/work"
+                    font="mono"
+                    className="self-start text-[13px] text-muted"
+                >
+                    ← cd ../work
+                </Link>
+                {project?.subtitle && <Eyebrow text={project.subtitle} />}
+                <h1
+                    class="m-0 text-[clamp(52px,9vw,124px)] leading-[.92] tracking-[-.05em]"
+                >
+                    {project?.title ?? "Project"}
+                </h1>
+                {
+                    technologyNames.length > 0 && (
+                        <ul class="flex flex-wrap gap-2">
+                            {technologyNames.map((name) => (
+                                <li>
+                                    <Tag text={name} />
+                                </li>
+                            ))}
+                        </ul>
+                    )
+                }
+            </div>
+        </section>
 
         {
-            pageBuilderElements.length > 0 && (
-                <section class="space-y-0">
-                    <PageBuilder elements={pageBuilderElements} />
+            (imageUrl || lead || project?.description) && (
+                <section data-surface="bg">
+                    <div class="mx-auto flex max-w-[1240px] flex-col gap-[clamp(40px,6vw,64px)] px-[clamp(20px,4vw,48px)] pb-[clamp(56px,8vw,96px)]">
+                        {imageUrl && (
+                            <img
+                                src={`${imageUrl}?w=1800&auto=format`}
+                                alt={project?.image?.alt ?? project?.title ?? ""}
+                                width={imageDimensions?.width}
+                                height={imageDimensions?.height}
+                                class="block aspect-video w-full border border-line object-cover"
+                            />
+                        )}
+                        {lead ? (
+                            <RichText
+                                value={lead}
+                                className="flex max-w-[820px] flex-col gap-5 text-fg-soft [&_p]:m-0 [&_p]:text-[19px]! [&_p]:leading-[1.65]! [&_p]:text-pretty [&_strong]:text-fg"
+                            />
+                        ) : (
+                            project?.description && (
+                                <p class="m-0 max-w-[820px] text-[19px] leading-[1.65] text-fg-soft">
+                                    {project.description}
+                                </p>
+                            )
+                        )}
+                    </div>
                 </section>
+            )
+        }
+
+        {
+            hasBrief && (
+                <>
+                    <TabDivider label="brief.md" from="bg" to="bg-alt" />
+                    <section data-surface="bg-alt" class="bg-bg-alt">
+                        <ProjectSectionsGrid sections={sections} />
+                    </section>
+                </>
+            )
+        }
+
+        {
+            featureBlocks.length > 0 && (
+                <>
+                    <TabDivider
+                        label="features.tsx"
+                        from={hasBrief ? "bg-alt" : "bg"}
+                        to={hasBrief ? "bg" : "bg-alt"}
+                    />
+                    <section
+                        data-surface={hasBrief ? "bg" : "bg-alt"}
+                        class={hasBrief ? "bg-bg" : "bg-bg-alt"}
+                    >
+                        <div class="mx-auto flex max-w-[1240px] flex-col gap-[clamp(56px,8vw,104px)] px-[clamp(20px,4vw,48px)] py-[clamp(56px,8vw,112px)]">
+                            {featureBlocks.map(({ Component, props }) => (
+                                <Component {...props} />
+                            ))}
+                        </div>
+                    </section>
+                </>
             )
         }
     </main>

@@ -170,6 +170,8 @@ export type ProjectDocumentData = {
     slug?: string;
     description?: string;
     projectUrl?: string;
+    content?: PortableTextBlockValue[];
+    image?: ResolvedImage;
     sections?: ProjectSectionValue[];
     technologies?: ProjectTechnologyValue[];
     pageBuilder?: ProjectPageBuilderElement[];
