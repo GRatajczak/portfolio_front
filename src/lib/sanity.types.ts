@@ -178,6 +178,7 @@ export type Button = {
 
 export type TechnologiesOverview = {
     _type: "technologiesOverview";
+  tabLabel?: string;
     heading: string;
     description?: Array<{
         children?: Array<{
@@ -219,6 +220,7 @@ export type TechnologiesOverview = {
 
 export type TechnologiesStack = {
     _type: "technologiesStack";
+  tabLabel?: string;
     technologies?: Array<
         {
             _key: string;
@@ -235,6 +237,7 @@ export type Subhero = {
 
 export type RichTextSection = {
     _type: "richTextSection";
+  tabLabel?: string;
     narrow?: boolean;
     content: Array<{
         children?: Array<{
@@ -266,8 +269,10 @@ export type RichTextSection = {
 
 export type ProjectsShowcase = {
     _type: "projectsShowcase";
+  tabLabel?: string;
     eyebrow?: string;
     heading?: string;
+  layout?: "rows" | "grid";
     button?: ProjectsShowcaseButton;
     projects?: Array<
         {
@@ -278,6 +283,7 @@ export type ProjectsShowcase = {
 
 export type Highlights = {
     _type: "highlights";
+  tabLabel?: string;
     eyebrow?: string;
     heading: string;
     items?: Array<{
@@ -317,12 +323,14 @@ export type Hero = {
 
 export type ExperienceTimeline = {
     _type: "experienceTimeline";
+  tabLabel?: string;
     eyebrow?: string;
     heading: string;
     entries?: Array<{
         period?: string;
         company: string;
         role?: string;
+    kind?: "development" | "support";
         description?: Array<{
             children?: Array<{
                 marks?: Array<string>;
@@ -362,6 +370,7 @@ export type ExperienceTimeline = {
 
 export type CurrentFocus = {
     _type: "currentFocus";
+  tabLabel?: string;
     heading: string;
     description?: Array<{
         children?: Array<{
@@ -394,6 +403,7 @@ export type CurrentFocus = {
 
 export type ContactCta = {
     _type: "contactCta";
+  tabLabel?: string;
     eyebrow?: string;
     heading: string;
     description?: Array<{
@@ -436,6 +446,7 @@ export type ContactCta = {
 
 export type CertificatesGrid = {
     _type: "certificatesGrid";
+  tabLabel?: string;
     eyebrow?: string;
     heading?: string;
     certificates?: Array<
@@ -447,6 +458,7 @@ export type CertificatesGrid = {
 
 export type CertificatesGallery = {
     _type: "certificatesGallery";
+  tabLabel?: string;
     eyebrow?: string;
     heading: string;
     button?: CertificatesGalleryButton;
@@ -459,6 +471,7 @@ export type CertificatesGallery = {
 
 export type AboutProfile = {
   _type: "aboutProfile";
+  tabLabel?: string;
   image: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -501,6 +514,7 @@ export type AboutProfile = {
 
 export type AboutMe = {
     _type: "aboutMe";
+  tabLabel?: string;
     eyebrow?: string;
     heading: string;
     description?: Array<{
@@ -543,6 +557,7 @@ export type AboutMe = {
 
 export type AboutBanner = {
     _type: "aboutBanner";
+  tabLabel?: string;
     title?: string;
     description: Array<{
         children?: Array<{
