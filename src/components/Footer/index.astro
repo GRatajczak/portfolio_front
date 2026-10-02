@@ -1,11 +1,5 @@
 ---
-import LogoFooter from "@/assets/Logo_footer.svg";
-import PolandFlag from "@/assets/polandflag.svg";
-import LinkedinIcon from "@/assets/linkedin.svg";
-import InstagramIcon from "@/assets/instagram.svg";
-import GithubIcon from "@/assets/github.svg";
-import { Mail, Phone, Shield } from "@lucide/astro";
-import Text from "@/components/Text/index.astro";
+import TabDivider from "@/components/TabDivider/index.astro";
 import type { FooterMenuItem, Props } from "./index.type";
 import Link from "@/components/Link/index.astro";
 
@@ -65,138 +59,118 @@ const privacyPolicyHref = localePrefix
     ? `${localePrefix}/privacy-policy`
     : "/privacy-policy";
 
+const socials = [
+    { label: "LinkedIn", href: linkedin },
+    { label: "Instagram", href: instagram },
+    { label: "GitHub", href: github },
+].filter((social) => social.href);
+
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t border-paper/20 bg-paper text-ink mt-auto">
+<TabDivider label="footer.tsx" from="bg" to="bg-alt" />
+<footer class="mt-auto bg-bg-alt">
     <div
-        class="mx-auto grid w-full max-w-600 gap-10 px-6 py-8 md:grid-cols-[1fr_auto_auto]"
+        class="mx-auto grid w-full max-w-[1240px] grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] gap-12 px-[clamp(20px,4vw,48px)] pt-[clamp(56px,8vw,96px)]"
     >
-        <div class="space-y-4">
-            <a href={homeHref} aria-label="Go to homepage" class="inline-flex">
-                <LogoFooter />
+        <div class="flex flex-col gap-[22px]">
+            <a
+                href={homeHref}
+                aria-label="Go to homepage"
+                data-matrix="link"
+                class="font-mono text-lg font-medium"
+            >
+                <span class="text-acc">~/</span>ratajczak
             </a>
-            <div class="flex items-center gap-4 text-sm">
+            <div class="flex flex-col gap-2.5 font-mono text-[13px]">
                 {
-                    linkedin && (
-                        <a
-                            href={linkedin}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            class="hover:opacity-70"
-                            aria-label="LinkedIn"
+                    socials.map((social) => (
+                        <Link
+                            href={social.href}
+                            isExternal
+                            font="mono"
+                            className="w-fit text-muted"
                         >
-                            <LinkedinIcon class="h-5 w-5" />
-                        </a>
-                    )
-                }
-                {
-                    instagram && (
-                        <a
-                            href={instagram}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            class="hover:opacity-70"
-                            aria-label="Instagram"
-                        >
-                            <InstagramIcon class="h-5 w-5" />
-                        </a>
-                    )
-                }
-                {
-                    github && (
-                        <a
-                            href={github}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            class="hover:opacity-70"
-                            aria-label="GitHub"
-                        >
-                            <GithubIcon class="h-5 w-5" />
-                        </a>
-                    )
+                            {social.label} ↗
+                        </Link>
+                    ))
                 }
             </div>
         </div>
 
-        {
-            resolvedMenuItems.length > 0 && (
-                <div class="space-y-3">
-                    <Text size="sm" className="font-semibold">
-                        Quick links
-                    </Text>
-                    <ul class="space-y-2 text-sm">
-                        {resolvedMenuItems.map((item) => (
-                            <li>
-                                <a
-                                    href={getHref(item.slug)}
-                                    class="hover:opacity-70"
-                                >
-                                    {item.title}
-                                </a>
-                            </li>
-                        ))}
+        <div class="flex flex-col gap-4">
+            <span class="font-mono text-xs text-acc">// Quick links</span>
+            <ul class="flex flex-col gap-2.5 font-mono text-[13px]">
+                {
+                    resolvedMenuItems.map((item) => (
                         <li>
-                            <a
-                                href={`${localePrefix}/contact`}
-                                class="hover:opacity-70"
+                            <Link
+                                href={getHref(item.slug)}
+                                font="mono"
+                                className="w-fit text-muted"
                             >
-                                Contact
-                            </a>
+                                {item.title}
+                            </Link>
                         </li>
+                    ))
+                }
+                <li>
+                    <Link
+                        href={`${localePrefix}/contact`}
+                        font="mono"
+                        className="w-fit text-muted"
+                    >
+                        Contact
+                    </Link>
+                </li>
+            </ul>
+        </div>
+
+        {
+            (phone || email) && (
+                <div class="flex flex-col gap-4">
+                    <span class="font-mono text-xs text-acc">// Contact</span>
+                    <ul class="flex flex-col gap-2.5 font-mono text-[13px]">
+                        {phone && (
+                            <li>
+                                <Link
+                                    href={`tel:${phone}`}
+                                    font="mono"
+                                    className="w-fit text-muted"
+                                >
+                                    {phone}
+                                </Link>
+                            </li>
+                        )}
+                        {email && (
+                            <li>
+                                <Link
+                                    href={`mailto:${email}`}
+                                    font="mono"
+                                    className="w-fit text-muted"
+                                >
+                                    {email}
+                                </Link>
+                            </li>
+                        )}
                     </ul>
                 </div>
             )
         }
-
-        <div class="space-y-3">
-            <Text size="sm" className="font-semibold">Contact</Text>
-            <ul class="space-y-2 text-sm">
-                {
-                    phone && (
-                        <li>
-                            <a
-                                href={`tel:${phone}`}
-                                class="inline-flex items-center gap-2 hover:opacity-70"
-                            >
-                                <Phone class="h-4 w-4" aria-hidden="true" />
-                                {phone}
-                            </a>
-                        </li>
-                    )
-                }
-                {
-                    email && (
-                        <li>
-                            <a
-                                href={`mailto:${email}`}
-                                class="inline-flex items-center gap-2 hover:opacity-70"
-                            >
-                                <Mail class="h-4 w-4" aria-hidden="true" />
-                                {email}
-                            </a>
-                        </li>
-                    )
-                }
-            </ul>
-        </div>
     </div>
-    <div class="border-t border-ink/20">
+    <div
+        class="mx-auto w-full max-w-[1240px] px-[clamp(20px,4vw,48px)] pt-14 pb-7"
+    >
         <div
-            class="mx-auto flex w-full max-w-600 flex-col gap-3 px-6 py-4 text-xs md:flex-row md:items-center md:justify-between"
+            class="flex flex-wrap justify-between gap-4 border-t border-line pt-5 font-mono text-xs text-dim"
         >
-            <Text>© {currentYear} | Grzegorz Ratajczak</Text>
-            <Text className="flex items-center gap-2">
-                <PolandFlag class="h-3 w-4 border border-ink/20" />
-                Poland
-            </Text>
-            <Link
-                href={privacyPolicyHref}
-                className="inline-flex items-center gap-2 hover:opacity-70"
-            >
-                <Shield class="h-4 w-4" aria-hidden="true" />
-                Privacy Policy
-            </Link>
+            <span>© {currentYear} | Grzegorz Ratajczak</span>
+            <div class="flex gap-6">
+                <span>Poland</span>
+                <Link href={privacyPolicyHref} font="mono" className="text-dim">
+                    Privacy Policy
+                </Link>
+            </div>
         </div>
     </div>
 </footer>

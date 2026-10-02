@@ -167,93 +167,95 @@ html {
     }
 }
 
-html,
-body {
-    min-height: 100%;
-}
+@layer base {
+    html,
+    body {
+        min-height: 100%;
+    }
 
-img,
-picture,
-video,
-canvas,
-svg {
-    display: block;
-    max-width: 100%;
-}
+    img,
+    picture,
+    video,
+    canvas,
+    svg {
+        display: block;
+        max-width: 100%;
+    }
 
-input,
-button,
-textarea,
-select {
-    font: inherit;
-    color: inherit;
-}
+    input,
+    button,
+    textarea,
+    select {
+        font: inherit;
+        color: inherit;
+    }
 
-ul,
-ol {
-    list-style: none;
-}
+    ul,
+    ol {
+        list-style: none;
+    }
 
-a {
-    color: inherit;
-}
+    a {
+        color: inherit;
+    }
 
-body {
-    background-color: var(--color-bg);
-    color: var(--color-fg);
-    font-family: var(--font-sans);
-    line-height: 1.5;
-}
+    body {
+        background-color: var(--color-bg);
+        color: var(--color-fg);
+        font-family: var(--font-sans);
+        line-height: 1.5;
+    }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: var(--font-sans);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    text-wrap: balance;
-}
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-sans);
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        text-wrap: balance;
+    }
 
-h1 {
-    font-size: var(--font-size-h1);
-    line-height: 0.95;
-}
+    h1 {
+        font-size: var(--font-size-h1);
+        line-height: 0.95;
+    }
 
-h2 {
-    font-size: var(--font-size-h2);
-    line-height: 1;
-}
+    h2 {
+        font-size: var(--font-size-h2);
+        line-height: 1;
+    }
 
-h3 {
-    font-size: var(--font-size-h3);
-    line-height: 1.12;
-}
+    h3 {
+        font-size: var(--font-size-h3);
+        line-height: 1.12;
+    }
 
-h4 {
-    font-size: var(--font-size-h4);
-    line-height: 1.15;
-}
+    h4 {
+        font-size: var(--font-size-h4);
+        line-height: 1.15;
+    }
 
-h5 {
-    font-size: var(--font-size-h5);
-    line-height: 1.2;
-}
+    h5 {
+        font-size: var(--font-size-h5);
+        line-height: 1.2;
+    }
 
-h6 {
-    font-size: var(--font-size-h6);
-    line-height: 1.25;
-}
+    h6 {
+        font-size: var(--font-size-h6);
+        line-height: 1.25;
+    }
 
-p,
-a {
-    font-size: var(--font-size-p);
-    line-height: 1.1;
-}
+    p,
+    a {
+        font-size: var(--font-size-p);
+        line-height: 1.1;
+    }
 
-small {
-    font-size: var(--font-size-small);
-    line-height: 1.1;
+    small {
+        font-size: var(--font-size-small);
+        line-height: 1.1;
+    }
 }
