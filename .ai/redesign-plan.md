@@ -267,7 +267,7 @@ Po każdym kroku: zmień status, dopisz datę i krótką notatkę (co zrobiono, 
 | 3.3 | experienceTimeline (pasek + git log) | ✅ done | 2026-10-02 | Sekcja przepisana: eyebrow + H2, pasek lat 44px (segmenty absolutnie wg `period`, start = najwcześniejszy rok, koniec = bieżąca data; pierwszy wpis do „teraz”), kolory: HEAD `acc`, przeszłe dev `color-mix 55%`, support `line-strong`; oś lat (`2017`, `'18`…) liczona dynamicznie, legenda. Tooltip: CSS hover/focus + tap (`data-active`, jeden listener na `document`, sprzątanie na `astro:before-swap`). `kind` z pola Studio (`entry.kind`, dojdzie w 6.1) z fallbackiem „Support” w roli. `ExperienceTimelineCard` → wiersz `git log` (okres + `{kind} · N yrs` / rola + `@ firma` + `HEAD` + opis + `Tag`i). Usunięty IntersectionObserver i stary układ dwukolumnowy; logo wpisu nieużywane (poza designem). Sprawdzone: 6 segmentów sumuje się do 100% na `/about`. Etykiety „development/it support/yrs/HEAD” zaszyte — i18n 6.3. **Brak weryfikacji wizualnej.** |
 | 3.4 | currentFocus | ✅ done | 2026-10-02 | Grid `auto-fit minmax(min(100%,400px),1fr)`, lewo H2 `clamp(36px,5vw,60px)` + opis (`RichText` 17px `muted`), prawo karta `line`/`bg-alt`: zdjęcie 16/10, `StatusDot`, H3 26px, opis projektu (pierwszy akapit `content`, fallback `description`). Bez `SectionHeader`/`Project`/`Container`. Build OK. **Brak weryfikacji wizualnej.** |
 | 4.1 | Strona Work | ⬜ todo | | |
-| 4.2 | certificatesGrid (mozaika) | ⬜ todo | | |
+| 4.2 | certificatesGrid (mozaika) | ✅ done | 2026-10-02 | Mozaika `auto-fill minmax(min(100%,280px),1fr)`, gap 8px, karty jak w karuzeli (16/10, `01 Tytuł` / `.ext`, hover `acc`), klik → `Lightbox` (`?w=2000`). Padding sekcji z designu (góra `clamp(24px,4vw,48px)`, dół `clamp(64px,9vw,120px)`), opcjonalny eyebrow/H2. Usunięte: masonry, `astro:assets` `Image`, link do `certificateUrl`. Sprawdzone: 8 kart na `/certificates`. **Brak weryfikacji wizualnej.** |
 | 4.3 | Case study | ⬜ todo | | |
 | 5.1 | Endpoint `/api/contact` (Resend, bez klucza) | ⬜ todo | | |
 | 5.2 | Strona kontaktu + formularz | ⬜ todo | | |
@@ -277,7 +277,7 @@ Po każdym kroku: zmień status, dopisz datę i krótką notatkę (co zrobiono, 
 | 6.4 | Sprzątanie + CLAUDE.md | ⬜ todo | | |
 | 6.5 | Weryfikacja końcowa | ⬜ todo | | |
 
-**Postęp:** 16 / 27 kroków
+**Postęp:** 17 / 27 kroków
 
 ### Notatki / blokery
 
