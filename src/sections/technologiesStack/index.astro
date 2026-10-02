@@ -5,15 +5,20 @@ import { getTechnologyLabel } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
 const { technologies = [] } = Astro.props as Props;
-const names = technologies.map((item) => getTechnologyLabel(item)).filter(Boolean);
+const items = technologies
+    .map((item) => ({
+        name: getTechnologyLabel(item),
+        svg: item.technology?.svg,
+    }))
+    .filter((item) => item.name);
 ---
 
 {
-    names.length > 0 && (
+    items.length > 0 && (
         <Container>
             <FileFrame
                 leftLabel="src/stack.ts"
-                rightLabel={`${names.length} items`}
+                rightLabel={`${items.length} items`}
                 bodyClassName="flex flex-col gap-[18px] p-[clamp(20px,3vw,36px)] font-mono text-[clamp(13px,1.3vw,15px)] text-fg"
             >
                 <div>
@@ -21,8 +26,15 @@ const names = technologies.map((item) => getTechnologyLabel(item)).filter(Boolea
                     <span class="text-dim">=</span> [
                 </div>
                 <ul class="m-0 flex list-none flex-wrap gap-2.5 p-0 pl-[clamp(12px,3vw,32px)]">
-                    {names.map((name) => (
-                        <li class="border border-line px-3.5 py-2 text-fg-soft transition-colors duration-200 hover:border-acc hover:text-fg">
+                    {items.map(({ name, svg }) => (
+                        <li class="flex items-center border border-line px-3.5 py-2 text-fg-soft transition-colors duration-200 hover:border-acc hover:text-fg">
+                            {svg && (
+                                <span
+                                    aria-hidden="true"
+                                    class="tech-icon flex w-0 mr-0 items-center justify-center overflow-hidden opacity-0 transition-all duration-200 [&_svg]:size-[18px] [&_svg]:shrink-0"
+                                    set:html={svg}
+                                />
+                            )}
                             '{name}'
                         </li>
                     ))}
@@ -34,3 +46,18 @@ const names = technologies.map((item) => getTechnologyLabel(item)).filter(Boolea
         </Container>
     )
 }
+
+<style>
+    li:hover > .tech-icon,
+    li:focus-within > .tech-icon {
+        width: 18px;
+        margin-right: 8px;
+        opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .tech-icon {
+            transition: none;
+        }
+    }
+</style>
