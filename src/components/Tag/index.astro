@@ -1,0 +1,13 @@
+---
+import type { Props } from "./index.type";
+
+const { text = "", accent = false, className = "" } = Astro.props as Props;
+---
+
+<span
+    class={`inline-block border px-2.5 py-[5px] font-mono text-xs leading-none text-fg-soft ${
+        accent ? "border-acc" : "border-tag-border"
+    } ${className}`}
+>
+    <slot>{text}</slot>
+</span>

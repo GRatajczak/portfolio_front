@@ -1,6 +1,5 @@
 ---
 import type { Props } from "./index.type";
-import { ArrowUpRight } from "@lucide/astro";
 
 const {
     href = "",
@@ -8,43 +7,55 @@ const {
     type = "button",
     isExternal = false,
     className = "",
+    variant = "primary",
+    surface = "bg",
+    size = "md",
     showArrowUp = false,
     mobileIconOnly = false,
 } = Astro.props as Props;
+
+const isOutline = variant === "outline";
+const Tag = href ? "a" : "button";
+const linkProps = href
+    ? {
+          href,
+          target: isExternal ? "_blank" : undefined,
+          rel: isExternal ? "noreferrer noopener" : undefined,
+      }
+    : { type };
+
+const base = "font-mono font-semibold cursor-pointer";
+const primaryClass = `${base} inline-block bg-acc text-bg ${
+    size === "sm"
+        ? "clip-corner-sm px-5 py-[11px] text-[13px]"
+        : "clip-corner px-[26px] py-[14px] text-sm"
+}`;
+const outlineClass = `${base} block bg-line-strong p-px transition-colors duration-200 hover:bg-acc clip-corner`;
+const innerClass = `block ${
+    surface === "bg-alt" ? "bg-bg-alt" : "bg-bg"
+} px-[26px] py-[14px] text-sm font-medium text-fg [clip-path:polygon(0_0,calc(100%_-_13.5px)_0,100%_13.5px,100%_100%,13.5px_100%,0_calc(100%_-_13.5px))]`;
 ---
 
-{
-    href ? (
-        <a
-            class={`inline-flex items-center rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-paper hover:border-zinc-500 ${className}`}
-            href={href}
-            target={isExternal ? "_blank" : undefined}
-            rel={isExternal ? "noreferrer noopener" : undefined}
-        >
-            <span class={mobileIconOnly ? "sr-only md:not-sr-only" : ""}>
-                <slot>{label}</slot>
+<Tag
+    class={`${isOutline ? outlineClass : primaryClass} ${className}`}
+    data-matrix="btn"
+    {...linkProps}
+>
+    {
+        isOutline ? (
+            <span class={innerClass}>
+                <span class={mobileIconOnly ? "sr-only md:not-sr-only" : ""}>
+                    <slot>{label}</slot>
+                </span>
+                {showArrowUp && <span aria-hidden="true"> ↗</span>}
             </span>
-            {showArrowUp && (
-                <ArrowUpRight
-                    aria-hidden="true"
-                    class={mobileIconOnly ? "size-6 md:ml-2" : "ml-2 size-6"}
-                />
-            )}
-        </a>
-    ) : (
-        <button
-            class={`inline-flex items-center rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-paper hover:border-zinc-500 ${className}`}
-            type={type}
-        >
-            <span class={mobileIconOnly ? "sr-only md:not-sr-only" : ""}>
-                <slot>{label}</slot>
-            </span>
-            {showArrowUp && (
-                <ArrowUpRight
-                    aria-hidden="true"
-                    class={mobileIconOnly ? "size-6 md:ml-2" : "ml-2 size-6"}
-                />
-            )}
-        </button>
-    )
-}
+        ) : (
+            <>
+                <span class={mobileIconOnly ? "sr-only md:not-sr-only" : ""}>
+                    <slot>{label}</slot>
+                </span>
+                {showArrowUp && <span aria-hidden="true"> ↗</span>}
+            </>
+        )
+    }
+</Tag>

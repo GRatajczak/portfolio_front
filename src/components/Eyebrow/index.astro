@@ -1,0 +1,9 @@
+---
+import type { Props } from "./index.type";
+
+const { text = "", className = "" } = Astro.props as Props;
+---
+
+<p class={`font-mono text-[13px] leading-none text-acc ${className}`}>
+    // <slot>{text}</slot>
+</p>

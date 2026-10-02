@@ -1,0 +1,47 @@
+---
+import type { Props } from "./index.type";
+
+const { label = "", from = "bg", to = "bg-alt" } = Astro.props as Props;
+---
+
+<div
+    class="tab-divider relative h-7"
+    style={`background:var(--color-${from});--tab-fill:var(--color-${to})`}
+    aria-hidden="true"
+>
+    <div class="tab-shape absolute inset-0"></div>
+    <div class="tab-label absolute top-0 flex h-7 items-center justify-center gap-2 font-mono text-[11px] text-dim">
+        <span class="text-acc">●</span>{label}
+    </div>
+</div>
+
+<style>
+    .tab-shape {
+        background: var(--tab-fill);
+        clip-path: polygon(0 100%, 4% 100%, 10% 0, 56% 0, 62% 100%, 100% 100%);
+    }
+    .tab-label {
+        left: 10%;
+        width: 46%;
+    }
+    @media (min-width: 760px) {
+        .tab-shape {
+            clip-path: polygon(
+                0 100%,
+                8.8% 100%,
+                12.8% 0,
+                36.8% 0,
+                40.8% 100%,
+                58.8% 100%,
+                62.8% 0,
+                86.8% 0,
+                90.8% 100%,
+                100% 100%
+            );
+        }
+        .tab-label {
+            left: 12.8%;
+            width: 24%;
+        }
+    }
+</style>

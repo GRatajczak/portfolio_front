@@ -27,6 +27,7 @@ const sizeToFontVariable = {
 const fontToFamilyVariable = {
     sans: "var(--font-sans)",
     display: "var(--font-display)",
+    mono: "var(--font-mono)",
 };
 
 const sizeStyle = size ? `font-size: ${sizeToFontVariable[size]};` : "";
@@ -40,6 +41,7 @@ const mergedStyle = style
     href && (
         <a
             class={className}
+            data-matrix="link"
             href={href}
             style={mergedStyle}
             target={isExternal ? "_blank" : undefined}

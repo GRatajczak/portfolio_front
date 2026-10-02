@@ -1,0 +1,14 @@
+---
+import type { Props } from "./index.type";
+
+const { status = "done", className = "" } = Astro.props as Props;
+---
+
+<span
+    class={`flex items-center gap-2 font-mono text-xs text-muted ${className}`}
+>
+    <span
+        class={`size-2 rounded-full ${status === "done" ? "bg-acc" : "bg-going"}`}
+        aria-hidden="true"></span>
+    status: {status}
+</span>

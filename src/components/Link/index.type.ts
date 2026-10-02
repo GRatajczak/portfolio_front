@@ -11,7 +11,7 @@ export type LinkSize =
     | "4xl"
     | "5xl";
 
-export type LinkFont = "sans" | "display";
+export type LinkFont = "sans" | "display" | "mono";
 
 export type Props = {
     href?: string;
