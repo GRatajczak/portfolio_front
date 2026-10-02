@@ -24,6 +24,7 @@ const renderSpan = (
 ) => {
     return marks.reduce((result, mark) => {
         if (mark === "strong") return `<strong>${result}</strong>`;
+        if (mark === "highlight") return `<span class="text-acc">${result}</span>`;
         if (mark === "em") return `<em>${result}</em>`;
         if (mark === "code") return `<code>${result}</code>`;
         if (mark === "underline") return `<u>${result}</u>`;

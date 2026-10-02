@@ -457,6 +457,48 @@ export type CertificatesGallery = {
     >;
 };
 
+export type AboutProfile = {
+  _type: "aboutProfile";
+  image: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  fileLabel?: string;
+  fileMeta?: string;
+  captionTitle?: string;
+  captionSubtitle?: string;
+  lead?: Array<{
+    children?: Array<{ marks?: Array<string>; text?: string; _type: "span"; _key: string }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  pathLabel?: string;
+  path?: Array<{ label: string; isCurrent?: boolean; _type: "pathStep"; _key: string }>;
+  facts?: Array<{
+    label: string;
+    body?: Array<{
+      children?: Array<{ marks?: Array<string>; text?: string; _type: "span"; _key: string }>;
+      style?: "normal";
+      listItem?: never;
+      markDefs?: null;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    tags?: Array<{ text: string; accent?: boolean; _type: "factTag"; _key: string }>;
+    _type: "fact";
+    _key: string;
+  }>;
+};
+
 export type AboutMe = {
     _type: "aboutMe";
     eyebrow?: string;
@@ -1137,6 +1179,7 @@ export type AllSanitySchemaTypes =
     | ContactCta
     | CertificatesGrid
     | CertificatesGallery
+    | AboutProfile
     | AboutMe
     | AboutBanner
     | TranslationMetadata

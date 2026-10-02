@@ -1,4 +1,5 @@
 import AboutMe from "@/sections/aboutMe/index.astro";
+import AboutProfile from "@/sections/aboutProfile/index.astro";
 import AboutBanner from "@/sections/aboutBanner/index.astro";
 import CertificatesGrid from "@/sections/certificatesGrid/index.astro";
 import CertificatesGallery from "@/sections/certificatesGallery/index.astro";
@@ -16,6 +17,7 @@ import TechnologiesStack from "@/sections/technologiesStack/index.astro";
 
 export const componentsMapper = {
     aboutMe: AboutMe,
+    aboutProfile: AboutProfile,
     aboutBanner: AboutBanner,
     certificatesGrid: CertificatesGrid,
     certificatesGallery: CertificatesGallery,

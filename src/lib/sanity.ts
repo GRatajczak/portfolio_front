@@ -139,6 +139,21 @@ export const PAGE_QUERY = defineQuery(`
             }
           }
         },
+        _type == "aboutProfile" => {
+          ...,
+          image{
+            alt,
+            "asset": asset->{
+              url,
+              metadata{
+                dimensions{
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        },
         _type == "aboutBanner" => {
           ...,
           image{

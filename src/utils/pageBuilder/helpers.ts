@@ -29,6 +29,7 @@ const TAB_LABELS: Record<string, string> = {
     technologiesStack: "stack.ts",
     technologiesOverview: "stack.ts",
     aboutMe: "about.tsx",
+    aboutProfile: "profile.json",
     aboutBanner: "about.tsx",
     projectsShowcase: "work.tsx",
     certificatesGallery: "certificates.tsx",
