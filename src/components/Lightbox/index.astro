@@ -11,9 +11,12 @@
     <img
         data-lightbox-image
         alt=""
-        class="block max-h-[80vh] max-w-[min(1100px,100%)] border border-line object-contain"
+        class="block max-h-[80vh] max-w-[min(1100px,100%)] border border-line object-contain opacity-0 transition-opacity duration-200 data-[loaded]:opacity-100"
     />
-    <span data-lightbox-caption class="font-mono text-[13px] text-muted"></span>
+    <span
+        data-lightbox-caption
+        class="font-mono text-[13px] text-muted opacity-0 transition-opacity duration-200 [dialog:has([data-loaded])_&]:opacity-100"
+    ></span>
 </dialog>
 
 <script>
@@ -32,6 +35,8 @@
         if (!dialog || !image || !caption || !src) return;
 
         const title = trigger.dataset.lightboxTitle ?? "";
+        image.removeAttribute("data-loaded");
+        image.onload = () => image.setAttribute("data-loaded", "");
         image.src = src;
         image.alt = title;
         caption.textContent = title ? `${title} · esc` : "esc";
@@ -51,6 +56,24 @@
         const dialog = getDialog();
         if (dialog?.open && target?.closest("#lightbox")) dialog.close();
     });
+
+    // `close` doesn't bubble, so capture it: covers Esc, backdrop click and
+    // before-swap. Drops the old image so it can't flash on the next open.
+    document.addEventListener(
+        "close",
+        (event) => {
+            const target = event.target as HTMLElement | null;
+            if (target?.id !== "lightbox") return;
+            const image = target.querySelector<HTMLImageElement>(
+                "[data-lightbox-image]",
+            );
+            if (!image) return;
+            image.onload = null;
+            image.removeAttribute("data-loaded");
+            image.removeAttribute("src");
+        },
+        true,
+    );
 
     document.addEventListener("astro:before-swap", () => {
         const dialog = getDialog();
