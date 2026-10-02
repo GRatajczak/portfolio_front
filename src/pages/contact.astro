@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ContactBanner from "@/sections/contactBanner/index.astro";
+import ContactForm from "@/sections/contactForm/index.astro";
+import Subhero from "@/sections/subhero/index.astro";
 import { DEFAULT_LOCALE, getHomePage } from "../lib/sanity";
 
 const pageData = await getHomePage(DEFAULT_LOCALE, DEFAULT_LOCALE);
@@ -18,11 +19,14 @@ const phone = pageData?.phone || "795 451 486";
     github={pageData?.github ?? ""}
 >
     <main>
-        <ContactBanner
-            eyebrow="Get in touch!"
-            heading="Let's talk!"
+        <Subhero eyebrow="Get in touch" heading="Contact" highlightLine />
+        <ContactForm
             email={email}
             phone={phone}
+            linkedin={pageData?.linkedin ?? ""}
+            github={pageData?.github ?? ""}
+            instagram={pageData?.instagram ?? ""}
+            locale="en"
         />
     </main>
 </Layout>

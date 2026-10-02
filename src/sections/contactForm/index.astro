@@ -1,0 +1,285 @@
+---
+import Button from "@/components/Button/index.astro";
+import FileFrame from "@/components/FileFrame/index.astro";
+import Link from "@/components/Link/index.astro";
+import type { Props } from "./index.type";
+
+const {
+    email = "",
+    phone = "",
+    location = "Poland",
+    linkedin = "",
+    github = "",
+    instagram = "",
+    locale = "en",
+} = Astro.props as Props;
+
+const socials = [
+    { label: "LinkedIn", href: linkedin },
+    { label: "GitHub", href: github },
+    { label: "Instagram", href: instagram },
+].filter((social) => social.href);
+
+const privacyPolicyHref =
+    locale === "pl" ? "/pl/privacy-policy" : "/privacy-policy";
+
+// Without JS the endpoint redirects back here with `?sent=1` / `?error=<code>`.
+const sent = Astro.url.searchParams.get("sent") === "1";
+const initialError = Astro.url.searchParams.get("error") ?? "";
+
+const mailHint = (lead: string) => (email ? `${lead} ${email}.` : "");
+const errorMessages: Record<string, string> = {
+    validation: "✗ 400 — check the fields and try again.",
+    invalid_body: "✗ 400 — something went wrong, try again.",
+    not_configured: `✗ 503 — the form isn't set up yet. ${mailHint("Write to me at")}`.trim(),
+    send_failed: `✗ 502 — couldn't send the message. ${mailHint("Try again or write to")}`.trim(),
+    network: "✗ network error — check your connection and try again.",
+};
+const initialErrorText = initialError
+    ? (errorMessages[initialError] ?? errorMessages.send_failed)
+    : "";
+
+const key = "text-acc";
+const inputClass =
+    "w-full border border-tag-border bg-bg px-4 py-3.5 font-mono text-sm text-fg outline-none transition-colors duration-200 focus:border-acc";
+const labelClass =
+    "flex flex-col gap-2 font-mono text-xs text-muted";
+---
+
+<section data-surface="bg" class="pt-[clamp(24px,4vw,48px)] pb-[clamp(64px,9vw,120px)]">
+    <div
+        class="mx-auto grid w-full max-w-[1240px] grid-cols-[repeat(auto-fit,minmax(min(100%,380px),1fr))] items-start gap-[clamp(32px,5vw,72px)] px-[clamp(20px,4vw,48px)]"
+    >
+        <div class="flex flex-col gap-8">
+            <FileFrame
+                leftLabel="contact.json"
+                bodyClassName="flex flex-col gap-3.5 p-[clamp(20px,3vw,28px)] font-mono text-[clamp(13px,1.3vw,15px)] text-fg"
+            >
+                <span>{"{"}</span>
+                <div class="flex flex-col gap-3 pl-6">
+                    {
+                        email && (
+                            <div class="flex flex-wrap gap-2">
+                                <span class={key}>"email":</span>
+                                <Link href={`mailto:${email}`} font="mono">
+                                    "{email}"
+                                </Link>
+                                ,
+                            </div>
+                        )
+                    }
+                    {
+                        phone && (
+                            <div class="flex flex-wrap gap-2">
+                                <span class={key}>"phone":</span>
+                                <Link
+                                    href={`tel:${phone.replace(/\s+/g, "")}`}
+                                    font="mono"
+                                >
+                                    "{phone}"
+                                </Link>
+                                ,
+                            </div>
+                        )
+                    }
+                    <div class="flex flex-wrap gap-2">
+                        <span class={key}>"location":</span>
+                        <span>"{location}"</span>
+                    </div>
+                </div>
+                <span>{"}"}</span>
+            </FileFrame>
+
+            {
+                socials.length > 0 && (
+                    <div class="flex flex-wrap gap-2.5">
+                        {socials.map((social) => (
+                            <Button
+                                href={social.href}
+                                isExternal
+                                variant="outline"
+                                showArrowUp
+                                label={social.label}
+                            />
+                        ))}
+                    </div>
+                )
+            }
+        </div>
+
+        <div class="border border-line bg-bg-alt" data-contact-card>
+            <div
+                class="flex justify-between border-b border-line px-5 py-3 font-mono text-xs text-dim"
+            >
+                <span>new-message.sh</span>
+                <span>POST /contact</span>
+            </div>
+
+            <form
+                method="post"
+                action="/api/contact"
+                data-contact-form
+                data-messages={JSON.stringify(errorMessages)}
+                hidden={sent}
+                class="flex flex-col gap-[22px] p-[clamp(20px,3vw,32px)]"
+            >
+                <input type="hidden" name="locale" value={locale} />
+                <div
+                    class="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+                    aria-hidden="true"
+                >
+                    <label>
+                        Website
+                        <input
+                            type="text"
+                            name="website"
+                            tabindex="-1"
+                            autocomplete="off"
+                        />
+                    </label>
+                </div>
+
+                <label class={labelClass}>
+                    <span><span class="text-acc">$</span> name</span>
+                    <input
+                        required
+                        maxlength="100"
+                        name="name"
+                        autocomplete="name"
+                        class={inputClass}
+                    />
+                </label>
+                <label class={labelClass}>
+                    <span><span class="text-acc">$</span> email</span>
+                    <input
+                        required
+                        type="email"
+                        maxlength="254"
+                        name="email"
+                        autocomplete="email"
+                        class={inputClass}
+                    />
+                </label>
+                <label class={labelClass}>
+                    <span><span class="text-acc">$</span> message</span>
+                    <textarea
+                        required
+                        rows="6"
+                        maxlength="5000"
+                        name="message"
+                        class={`${inputClass} resize-y leading-[1.6]`}
+                    ></textarea>
+                </label>
+
+                <p
+                    role="alert"
+                    data-contact-error
+                    hidden={!initialError}
+                    class="m-0 font-mono text-[13px] leading-[1.6] text-going"
+                >
+                    {initialErrorText}
+                </p>
+
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <span class="font-mono text-[11px] text-dim">
+                        By sending you accept the{" "}
+                        <Link
+                            href={privacyPolicyHref}
+                            font="mono"
+                            className="text-muted underline"
+                        >
+                            Privacy Policy
+                        </Link>
+                    </span>
+                    <Button type="submit" label="Send message" />
+                </div>
+            </form>
+
+            <div
+                data-contact-success
+                hidden={!sent}
+                class="flex flex-col gap-3 p-[clamp(20px,3vw,32px)] font-mono text-sm leading-[1.7]"
+            >
+                <span class="text-dim">$ ./new-message.sh</span>
+                <span><span class="text-acc">✓</span> 200 OK — message sent.</span>
+                <span class="text-muted" data-contact-thanks>
+                    Thanks. I'll reply as soon as I can.
+                </span>
+                <div class="flex pt-3">
+                    <button
+                        type="button"
+                        data-contact-reset
+                        data-matrix="link"
+                        class="cursor-pointer border-0 bg-transparent p-0 font-mono text-sm text-acc"
+                    >
+                        ← send another
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const initContactForm = () => {
+        const form = document.querySelector<HTMLFormElement>(
+            "[data-contact-form]",
+        );
+        if (!form || form.dataset.bound) return;
+        form.dataset.bound = "true";
+
+        const card = form.closest<HTMLElement>("[data-contact-card]")!;
+        const success = card.querySelector<HTMLElement>("[data-contact-success]")!;
+        const errorEl = form.querySelector<HTMLElement>("[data-contact-error]")!;
+        const thanks = success.querySelector<HTMLElement>("[data-contact-thanks]")!;
+        const reset = success.querySelector<HTMLButtonElement>("[data-contact-reset]")!;
+        const submit = form.querySelector<HTMLButtonElement>("[type=submit]")!;
+        const messages: Record<string, string> = JSON.parse(
+            form.dataset.messages ?? "{}",
+        );
+
+        const showError = (code: string) => {
+            errorEl.textContent = messages[code] ?? messages.send_failed ?? "";
+            errorEl.hidden = false;
+        };
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            if (!form.reportValidity()) return;
+
+            const data = Object.fromEntries(new FormData(form));
+            errorEl.hidden = true;
+            submit.disabled = true;
+
+            try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+                const result = await response.json().catch(() => ({}));
+
+                if (!response.ok || !result.ok) {
+                    showError(result.error ?? "send_failed");
+                    return;
+                }
+
+                thanks.textContent = `Thanks, ${data.name}. I'll reply to ${data.email} soon.`;
+                form.hidden = true;
+                success.hidden = false;
+            } catch {
+                showError("network");
+            } finally {
+                submit.disabled = false;
+            }
+        });
+
+        reset.addEventListener("click", () => {
+            form.reset();
+            success.hidden = true;
+            form.hidden = false;
+        });
+    };
+
+    document.addEventListener("astro:page-load", initContactForm);
+</script>
