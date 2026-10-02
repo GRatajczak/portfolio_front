@@ -88,12 +88,12 @@ const arrowClass =
 
     {
         cards.length > 0 && (
-            <ul
-                data-carousel
-                class="m-0 -mx-[clamp(20px,4vw,48px)] flex list-none snap-x snap-mandatory gap-3 overflow-x-auto px-[clamp(20px,4vw,48px)] [-webkit-overflow-scrolling:touch] [scroll-padding-inline:clamp(20px,4vw,48px)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            <swiper-container
+                class="certificates-swiper -mx-[clamp(20px,4vw,48px)] block px-[clamp(20px,4vw,48px)]"
+                init="false"
             >
                 {cards.map((card, index) => (
-                    <li class="flex-[0_0_min(82%,380px)] snap-start">
+                    <swiper-slide class="w-[min(82%,380px)]!">
                         <button
                             type="button"
                             class="relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden border border-line bg-surface p-0 transition-colors duration-200 hover:border-acc focus-visible:border-acc"
@@ -107,7 +107,7 @@ const arrowClass =
                                 class="absolute inset-0 block size-full object-cover object-top"
                                 loading="lazy"
                             />
-                            <span class="absolute inset-x-0 bottom-0 flex justify-between gap-3 bg-bg/90 px-3.5 py-2.5 font-mono text-xs text-fg">
+                            <span class="absolute inset-x-0 bottom-0 flex justify-between gap-3 bg-bg/90 px-3.5 py-2.5 text-left font-mono text-xs text-fg">
                                 <span>
                                     <span class="text-acc">{pad(index + 1)}</span>{" "}
                                     {card.title}
@@ -115,32 +115,49 @@ const arrowClass =
                                 <span class="text-dim">{card.extension}</span>
                             </span>
                         </button>
-                    </li>
+                    </swiper-slide>
                 ))}
-            </ul>
+            </swiper-container>
         )
     }
 </Container>
 
 <script>
-    const GAP = 12;
+    import { register } from "swiper/element/bundle";
 
-    // Document-level delegation: registered once, survives View Transitions.
-    document.addEventListener("click", (event) => {
-        const target = event.target as HTMLElement | null;
-        const arrow = target?.closest<HTMLElement>(
-            "[data-carousel-prev], [data-carousel-next]",
-        );
-        if (!arrow) return;
+    register();
 
-        const carousel = arrow
-            .closest("section")
-            ?.querySelector<HTMLElement>("[data-carousel]");
-        if (!carousel) return;
+    const initCertificatesSwipers = () => {
+        document
+            .querySelectorAll<HTMLElement>("swiper-container.certificates-swiper")
+            .forEach((swiperEl) => {
+                if (swiperEl.dataset.initialized === "true") return;
 
-        const card = carousel.firstElementChild as HTMLElement | null;
-        const step = (card?.offsetWidth ?? 360) + GAP;
-        const direction = "carouselPrev" in arrow.dataset ? -1 : 1;
-        carousel.scrollBy({ left: direction * step, behavior: "smooth" });
-    });
+                const section = swiperEl.closest("section");
+                const prevEl = section?.querySelector("[data-carousel-prev]");
+                const nextEl = section?.querySelector("[data-carousel-next]");
+
+                Object.assign(swiperEl, {
+                    slidesPerView: "auto",
+                    spaceBetween: 12,
+                    grabCursor: true,
+                    keyboard: { enabled: true },
+                    navigation:
+                        prevEl && nextEl ? { prevEl, nextEl } : false,
+                });
+                (swiperEl as HTMLElement & { initialize: () => void }).initialize();
+                swiperEl.dataset.initialized = "true";
+            });
+    };
+
+    document.addEventListener("astro:page-load", initCertificatesSwipers);
+    initCertificatesSwipers();
 </script>
+
+<style>
+    [data-carousel-prev].swiper-button-disabled,
+    [data-carousel-next].swiper-button-disabled {
+        opacity: 0.4;
+        pointer-events: none;
+    }
+</style>
