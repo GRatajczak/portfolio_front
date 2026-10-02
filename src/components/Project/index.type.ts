@@ -42,6 +42,7 @@ export type ProjectCardData = {
     category?: string;
     description?: string;
     projectUrl?: string;
+    hasCaseStudy?: boolean;
     content?: PortableTextBlock[];
     button?: ProjectButton;
     image?: ProjectImage;
@@ -50,5 +51,10 @@ export type ProjectCardData = {
 
 export type Props = {
     project: ProjectCardData;
+    /** `rows` – home list entry, `grid` – card on the Work page. */
+    variant?: "rows" | "grid";
+    /** Zero-based position, used for the `01 / 04` file label. */
+    index?: number;
+    total?: number;
     className?: string;
 };

@@ -1,9 +1,8 @@
 ---
 import Button from "@/components/Button/index.astro";
 import Container from "@/components/Container/index.astro";
+import Eyebrow from "@/components/Eyebrow/index.astro";
 import Project from "@/components/Project/index.astro";
-import SectionHeader from "@/components/SectionHeader/index.astro";
-import Text from "@/components/Text/index.astro";
 import type { Props } from "./index.type";
 
 const {
@@ -11,48 +10,71 @@ const {
     heading = "",
     projects = [],
     button,
+    layout = "rows",
+    surface = "bg",
 } = Astro.props as Props;
+
+const items = projects.filter((item) => item.project);
+const isGrid = layout === "grid";
 ---
 
-<Container>
-    <div class="mb-8 flex items-center justify-between gap-4">
-        {
-            eyebrow ||
-                (heading && (
-                    <SectionHeader
-                        eyebrow={eyebrow}
-                        heading={heading}
-                        className="flex-1"
+<Container
+    className={`flex flex-col ${isGrid ? "gap-12" : "gap-14"} py-[clamp(56px,8vw,112px)]`}
+>
+    {
+        (eyebrow || heading || button?.buttonText) && (
+            <div class="flex flex-wrap items-end justify-between gap-6">
+                <div class="flex flex-col gap-3.5">
+                    {eyebrow && <Eyebrow text={eyebrow} />}
+                    {heading && (
+                        <h2 class="m-0 text-[clamp(40px,6vw,72px)] leading-none">
+                            {heading}
+                        </h2>
+                    )}
+                </div>
+                {button?.buttonText && (
+                    <Button
+                        variant="outline"
+                        surface={surface}
+                        href={button.buttonLink}
+                        label={button.buttonText}
+                        isExternal={button.isExternalLink}
                     />
-                ))
-        }
-        {
-            button?.buttonText && (
-                <Button
-                    className="shrink-0"
-                    href={button?.buttonLink}
-                    label={button?.buttonText}
-                    isExternal={button?.isExternalLink}
-                    showArrowUp
-                    mobileIconOnly
-                />
-            )
-        }
-    </div>
+                )}
+            </div>
+        )
+    }
 
     {
-        projects.length > 0 ? (
-            <ul class="space-y-4">
-                {projects.map((item) => (
-                    <li>
-                        {item.project ? (
-                            <Project project={item.project} />
-                        ) : null}
-                    </li>
-                ))}
-            </ul>
-        ) : (
-            <Text>No projects configured.</Text>
-        )
+        items.length > 0 ? (
+            isGrid ? (
+                <ul class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(100%,460px),1fr))] gap-[clamp(24px,3vw,32px)] p-0">
+                    {items.map((item, index) => (
+                        <li class="flex">
+                            <Project
+                                project={item.project!}
+                                variant="grid"
+                                index={index}
+                                total={items.length}
+                                className="w-full"
+                            />
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <ul class="m-0 flex list-none flex-col gap-[clamp(48px,7vw,88px)] p-0">
+                    {items.map((item, index) => (
+                        <li>
+                            <Project
+                                project={item.project!}
+                                variant="rows"
+                                index={index}
+                                total={items.length}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            )
+        ) : null
     }
 </Container>

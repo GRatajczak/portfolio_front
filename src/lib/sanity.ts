@@ -229,6 +229,7 @@ export const PAGE_QUERY = defineQuery(`
               projectUrl,
               content,
               "slug": slug.current,
+              "hasCaseStudy": count(pageBuilder) > 0,
               button{
                 buttonText,
                 buttonLink,

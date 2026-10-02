@@ -17,4 +17,6 @@ export type Props = {
     heading?: string;
     projects?: ProjectItem[];
     button?: SectionButton;
+    layout?: "rows" | "grid";
+    surface?: "bg" | "bg-alt";
 };

@@ -1,223 +1,159 @@
 ---
 import Button from "@/components/Button/index.astro";
+import Link from "@/components/Link/index.astro";
 import RichText from "@/components/RichText/index.astro";
-import Heading from "@/components/Heading/index.astro";
-import Text from "@/components/Text/index.astro";
+import StatusDot from "@/components/StatusDot/index.astro";
+import { statusFromCategory } from "@/components/StatusDot/index.type";
+import Tag from "@/components/Tag/index.astro";
+import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
-const { project, className = "" } = Astro.props as Props;
+const {
+    project,
+    variant = "rows",
+    index = 0,
+    total = 1,
+    className = "",
+} = Astro.props as Props;
 
-const getCategoryBadgeData = (category?: string) => {
-    if (category === "done") {
-        return {
-            label: "Done",
-            colorClass: "border-accent-green text-accent-green",
-            dotClass: "bg-accent-green",
-        };
-    }
-
-    if (category === "ongoing" || category === "going") {
-        return {
-            label: "Ongoing",
-            colorClass: "border-accent-orange text-accent-orange",
-            dotClass: "bg-accent-orange",
-        };
-    }
-
-    return category
-        ? {
-              label: category,
-              colorClass: "border-accent-orange text-accent-orange",
-              dotClass: "bg-accent-orange",
-          }
-        : null;
-};
-const categoryBadgeData = getCategoryBadgeData(project.category);
-const technologies = project.technologies ?? [];
+const pad = (n: number) => String(n).padStart(2, "0");
+const status = statusFromCategory(project.category);
+const technologies = (project.technologies ?? [])
+    .map((item) => item.technology?.name)
+    .filter(Boolean) as string[];
 const imageUrl = project.image?.asset?.url;
-const imageWidth = project.image?.asset?.metadata?.dimensions?.width;
-const imageHeight = project.image?.asset?.metadata?.dimensions?.height;
 const imageAlt = project.image?.alt || project.title || "Project image";
+const fileLabel = `${project.slug ?? "project"}.preview.png`;
+const indexLabel =
+    variant === "rows" ? `${pad(index + 1)} / ${pad(total)}` : pad(index + 1);
 const projectUrl = project.projectUrl;
-const caseStudyUrl = project.slug ? `/work/${project.slug}` : null;
-const richContent = project.content?.length
-    ? project.content
+const caseStudyUrl =
+    project.hasCaseStudy && project.slug ? `/work/${project.slug}` : null;
+const content = project.content?.length ? project.content : null;
+const lead = content
+    ? toPlainText(content.slice(0, 1))
     : (project.description ?? "");
+const paragraphClass =
+    "flex flex-col gap-4 text-muted [&_p]:m-0 [&_p]:text-base! [&_p]:leading-[1.65]! [&_p]:text-pretty";
 ---
 
-<article
-    class={`project-card overflow-hidden rounded-2xl border border-paper/30 hover:shadow-[0_0_64px_rgba(236,236,231,0.05)] transition-shadow duration-300 ${className}`}
->
-    <div class="grid md:grid-cols-2">
-        <div class="flex flex-col justify-between gap-8 p-6 md:p-8">
-            <div class="space-y-4">
-                {
-                    categoryBadgeData && (
-                        <div
-                            class={`w-fit rounded-full border px-3 py-1 text-xs uppercase flex items-center gap-2 ${categoryBadgeData.colorClass}`}
-                        >
-                            {categoryBadgeData.label}{" "}
-                            <div
-                                class={`w-1 h-1 rounded-full ${categoryBadgeData.dotClass}`}
-                            />
-                        </div>
-                    )
-                }
-                {
-                    project.title && (
-                        <Heading as="h3" size="4xl">
-                            {project.title}
-                        </Heading>
-                    )
-                }
-                <RichText
-                    value={richContent}
-                    className="max-w-xl text-lg text-paper/85"
-                />
-                {
-                    projectUrl && (
-                        <Button href={projectUrl} isExternal showArrowUp>
-                            See live
-                        </Button>
-                    )
-                }
-                {
-                    caseStudyUrl && (
-                        <Button href={caseStudyUrl} showArrowUp>
-                            See case study
-                        </Button>
-                    )
-                }
-
-                {
-                    project.button?.buttonText && (
-                        <Button
-                            href={project.button.buttonLink}
-                            label={project.button.buttonText}
-                            isExternal={project.button.isExternalLink}
-                        />
-                    )
-                }
+{
+    variant === "grid" ? (
+        <article
+            class={`flex flex-col border border-line bg-bg-alt ${className}`}
+        >
+            <div class="flex justify-between border-b border-line px-4 py-3 font-mono text-[11px] text-dim">
+                <span>{fileLabel}</span>
+                <span>{indexLabel}</span>
             </div>
-
-            {
-                technologies.length > 0 && (
-                    <div class="space-y-3">
-                        <Text className="text-paper">Technologies:</Text>
-                        <ul class="flex flex-wrap items-center gap-3">
-                            {technologies.map((item) => (
-                                <li class="flex items-center px-1 py-1 text-sm text-paper">
-                                    {item.technology?.svg ? (
-                                        <span
-                                            aria-hidden="true"
-                                            class="inline-flex h-8 w-8 items-center justify-center [&_svg]:h-8 [&_svg]:w-8 grayscale transition-all duration-300 hover:grayscale-0"
-                                            set:html={item.technology.svg}
-                                        />
-                                    ) : (
-                                        <span>
-                                            {item.technology?.name ??
-                                                item.technology?._ref}
-                                        </span>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
+            {imageUrl && (
+                <img
+                    src={imageUrl}
+                    alt={imageAlt}
+                    class="block aspect-[3/2] w-full object-cover"
+                    loading="lazy"
+                />
+            )}
+            <div class="flex flex-1 flex-col gap-4 p-[clamp(20px,2.5vw,28px)]">
+                <StatusDot status={status} />
+                {project.title && (
+                    <h3 class="m-0 text-[clamp(26px,3vw,34px)] tracking-[-.03em]">
+                        {project.title}
+                    </h3>
+                )}
+                {lead && (
+                    <p class="m-0 text-[15px]! leading-[1.6]! text-pretty text-muted">
+                        {lead}
+                    </p>
+                )}
+                {technologies.length > 0 && (
+                    <div class="mt-auto flex flex-wrap gap-2">
+                        {technologies.map((name) => (
+                            <Tag text={name} />
+                        ))}
                     </div>
-                )
-            }
-        </div>
-
-        {
-            imageUrl && imageWidth && imageHeight ? (
-                <div class="project-card-image-frame overflow-hidden">
+                )}
+                <div class="flex flex-wrap gap-x-6 gap-y-2">
+                    {projectUrl && (
+                        <Link
+                            href={projectUrl}
+                            isExternal
+                            font="mono"
+                            className="text-sm text-acc"
+                        >
+                            See live ↗
+                        </Link>
+                    )}
+                    {caseStudyUrl && (
+                        <Link
+                            href={caseStudyUrl}
+                            font="mono"
+                            className="text-sm text-acc"
+                        >
+                            See case study →
+                        </Link>
+                    )}
+                </div>
+            </div>
+        </article>
+    ) : (
+        <article
+            class={`grid grid-cols-[repeat(auto-fit,minmax(min(100%,400px),1fr))] items-center gap-[clamp(28px,5vw,64px)] ${className}`}
+        >
+            <div class="relative border border-line bg-surface p-2.5">
+                <div class="flex justify-between px-1 pt-0.5 pb-2.5 font-mono text-[11px] text-dim">
+                    <span>{fileLabel}</span>
+                    <span>{indexLabel}</span>
+                </div>
+                {imageUrl ? (
                     <img
                         src={imageUrl}
                         alt={imageAlt}
-                        width={imageWidth}
-                        height={imageHeight}
-                        class="project-card-image h-full w-full object-cover"
+                        class="block aspect-[3/2] w-full object-cover"
                         loading="lazy"
                     />
+                ) : (
+                    <div class="flex aspect-[3/2] items-center justify-center font-mono text-xs text-dim">
+                        no preview
+                    </div>
+                )}
+            </div>
+            <div class="flex flex-col gap-[22px]">
+                <StatusDot status={status} />
+                {project.title && (
+                    <h3 class="m-0 text-[clamp(30px,4vw,44px)] leading-[1.05] tracking-[-.035em]">
+                        {project.title}
+                    </h3>
+                )}
+                <RichText
+                    value={content ?? project.description ?? ""}
+                    className={paragraphClass}
+                />
+                {technologies.length > 0 && (
+                    <div class="flex flex-col gap-2.5">
+                        <span class="font-mono text-xs text-dim">
+                            Technologies:
+                        </span>
+                        <div class="flex flex-wrap gap-2">
+                            {technologies.map((name) => (
+                                <Tag text={name} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+                <div class="flex flex-wrap gap-3">
+                    {projectUrl && (
+                        <Button
+                            href={projectUrl}
+                            isExternal
+                            label="See live ↗"
+                        />
+                    )}
+                    {caseStudyUrl && (
+                        <Button href={caseStudyUrl} label="See case study →" />
+                    )}
                 </div>
-            ) : (
-                <div class="flex min-h-72 items-center justify-center bg-zinc-900 text-paper/60">
-                    No image
-                </div>
-            )
-        }
-    </div>
-</article>
-
-<script>
-    import { gsap } from "gsap";
-    import ScrollTrigger from "gsap/ScrollTrigger";
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const initProjectAnimations = () => {
-        const frames = document.querySelectorAll(".project-card-image-frame");
-
-        frames.forEach((frame, index) => {
-            const animatedFrame = frame as HTMLElement;
-
-            if (animatedFrame.dataset.animationInitialized === "true") {
-                return;
-            }
-
-            const image = animatedFrame.querySelector(".project-card-image");
-
-            if (!image) {
-                return;
-            }
-
-            const timeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: animatedFrame,
-                    start: "top bottom",
-                    once: true,
-                },
-            });
-
-            timeline.to(animatedFrame, {
-                ease: "power2.out",
-                duration: 1.2,
-                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-            });
-
-            timeline.to(
-                image,
-                {
-                    duration: 1.2,
-                    scale: 1,
-                    ease: "power2.out",
-                },
-                "<",
-            );
-
-            animatedFrame.dataset.animationInitialized = "true";
-        });
-    };
-
-    document.addEventListener("astro:page-load", initProjectAnimations);
-    initProjectAnimations();
-</script>
-
-<style>
-    .project-card-image-frame {
-        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-    }
-
-    .project-card-image {
-        transform: scale(1.2);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .project-card-image-frame {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-        }
-
-        .project-card-image {
-            transform: scale(1);
-        }
-    }
-</style>
+            </div>
+        </article>
+    )
+}
