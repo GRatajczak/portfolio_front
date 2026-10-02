@@ -42,6 +42,21 @@ export default defineConfig({
                 access: "secret",
                 optional: true,
             }),
+            RESEND_API_KEY: envField.string({
+                context: "server",
+                access: "secret",
+                optional: true,
+            }),
+            CONTACT_TO_EMAIL: envField.string({
+                context: "server",
+                access: "secret",
+                optional: true,
+            }),
+            CONTACT_FROM_EMAIL: envField.string({
+                context: "server",
+                access: "secret",
+                optional: true,
+            }),
         },
     },
     vite: {
