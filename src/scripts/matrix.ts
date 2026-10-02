@@ -2,8 +2,7 @@
 // (`data-matrix="btn"`) also get falling characters on a canvas clipped to the
 // button shape. Disabled for touch (`hover: none`) and reduced motion.
 
-const RAIN =
-    "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワ0123456789";
+const RAIN = "01";
 const SCRAMBLE = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789<>/{}=#$%&*";
 const SCRAMBLE_MS = 480;
 const FONT_SIZE = 11;
