@@ -1,53 +1,56 @@
 ---
-import Logo from "@/assets/Logo.svg";
 import type { Props } from "./MobileMenu.type";
-import Link from "@/components/Link/index.astro";
-const { homeHref, menuItems, contactHref } = Astro.props as Props;
+import Button from "@/components/Button/index.astro";
+const { menuItems, contactHref, socials = [] } = Astro.props as Props;
 ---
 
 <div
     id="mobile-menu-panel"
-    class="fixed inset-0 z-30 flex h-dvh w-full translate-x-full flex-col bg-ink/80 px-6 pt-3 pb-10 backdrop-blur-xl transition-transform duration-300 ease-out min-[760px]:hidden"
-    aria-hidden="true"
+    class="bg-grid fixed top-[72px] right-0 bottom-0 left-0 z-[19] flex flex-col gap-8 overflow-hidden overscroll-contain bg-bg px-5 pt-7 pb-8 touch-none min-[760px]:hidden"
+    hidden
     data-mobile-menu-panel
 >
-    <div class="mb-16 flex items-center justify-between">
-        <a href={homeHref} aria-label="Go to homepage" class="inline-flex">
-            <Logo />
-        </a>
-        <button
-            type="button"
-            class="text-sm uppercase transition-colors font-semibold hover:text-paper"
-            data-mobile-menu-close
-        >
-            Close
-        </button>
-    </div>
-
-    <ul class="flex flex-1 flex-col justify-start gap-8">
+    <span class="font-mono text-[13px] text-muted">
+        <span class="text-acc">$</span> ls ~/ratajczak
+    </span>
+    <nav class="flex flex-col border-t border-line">
         {
-            menuItems.map((item) => (
-                <li>
-                    <Link
-                        href={item.href}
-                        data-mobile-menu-link
-                        size="4xl"
-                        font="display"
-                    >
-                        {item.title}
-                    </Link>
-                </li>
+            menuItems.map((item, index) => (
+                <a
+                    href={item.href}
+                    data-mobile-menu-link
+                    class={`flex items-baseline gap-3.5 border-b border-line py-[18px] text-[40px] leading-none font-semibold tracking-[-0.04em] ${item.active ? "text-fg" : "text-dim"}`}
+                >
+                    <span class="font-mono text-[13px] font-normal tracking-normal text-acc">
+                        {String(index).padStart(2, "0")}.
+                    </span>
+                    <span>{item.title}</span>
+                </a>
             ))
         }
-        <li>
-            <Link
-                href={contactHref}
-                data-mobile-menu-link
-                size="4xl"
-                font="display"
-            >
-                Contact
-            </Link>
-        </li>
-    </ul>
+    </nav>
+    <div class="mt-auto flex flex-col gap-5">
+        <Button
+            href={contactHref}
+            className="w-full py-[17px]! text-center"
+        >
+            Get in touch
+        </Button>
+        {
+            socials.length > 0 && (
+                <div class="flex justify-between gap-3 font-mono text-[13px]">
+                    {socials.map((social) => (
+                        <a
+                            href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="py-3 text-muted"
+                        >
+                            {social.label} ↗
+                        </a>
+                    ))}
+                </div>
+            )
+        }
+    </div>
 </div>

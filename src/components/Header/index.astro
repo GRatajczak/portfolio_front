@@ -3,7 +3,12 @@ import type { HeaderMenuItem, Props } from "./index.type";
 import Link from "@/components/Link/index.astro";
 import Button from "@/components/Button/index.astro";
 import MobileMenu from "./MobileMenu.astro";
-const { menuItems = [] } = Astro.props as Props;
+const {
+    menuItems = [],
+    linkedin = "",
+    github = "",
+    instagram = "",
+} = Astro.props as Props;
 
 type ResolvedHeaderMenuItem = HeaderMenuItem & {
     title: string;
@@ -69,6 +74,15 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
     href: getHref(item.slug),
 }));
 const contactHref = `${localePrefix}/contact`;
+const mobileMenuItems = [
+    { title: "Home", href: homeHref, active: currentPath === "/" },
+    ...navigationItems.map((item) => ({ ...item, active: isActive(item.href) })),
+];
+const socials = [
+    { label: "LinkedIn", href: linkedin },
+    { label: "GitHub", href: github },
+    { label: "Instagram", href: instagram },
+].filter((social) => social.href);
 ---
 
 <header
@@ -95,12 +109,18 @@ const contactHref = `${localePrefix}/contact`;
                 <>
                     <button
                         type="button"
-                        class="text-sm font-semibold uppercase transition-colors hover:text-fg min-[760px]:hidden"
+                        class="-mr-2.5 flex size-11 flex-col items-center justify-center gap-1.5 min-[760px]:hidden"
+                        aria-label="Menu"
                         aria-expanded="false"
                         aria-controls="mobile-menu-panel"
                         data-mobile-menu-toggle
                     >
-                        Menu
+                        <span
+                            class="block h-0.5 w-[22px] bg-fg transition-transform duration-200"
+                            data-menu-bar="1"></span>
+                        <span
+                            class="block h-0.5 w-[22px] bg-acc transition-transform duration-200"
+                            data-menu-bar="2"></span>
                     </button>
 
                     <div class="hidden items-center gap-[clamp(14px,3vw,36px)] min-[760px]:flex">
@@ -128,87 +148,86 @@ const contactHref = `${localePrefix}/contact`;
             )
         }
     </nav>
-
-    {
-        sanitizedMenuItems.length > 0 && (
-            <MobileMenu
-                homeHref={homeHref}
-                menuItems={navigationItems}
-                contactHref={contactHref}
-            />
-        )
-    }
 </header>
+
+{
+    sanitizedMenuItems.length > 0 && (
+        <MobileMenu
+            menuItems={mobileMenuItems}
+            contactHref={contactHref}
+            socials={socials}
+        />
+    )
+}
 
 <script>
     const setupMobileMenu = () => {
-        const toggleButton = document.querySelector(
+        const toggleButton = document.querySelector<HTMLButtonElement>(
             "[data-mobile-menu-toggle]",
         );
-        const menuPanel = document.querySelector("[data-mobile-menu-panel]");
-        const menuLinks = document.querySelectorAll("[data-mobile-menu-link]");
-        const closeButton = document.querySelector("[data-mobile-menu-close]");
+        const menuPanel = document.querySelector<HTMLElement>(
+            "[data-mobile-menu-panel]",
+        );
+        const header = document.querySelector("[data-desktop-header]");
 
         if (!toggleButton || !menuPanel) {
             return () => {};
         }
 
-        const closeMenu = () => {
-            toggleButton.textContent = "Menu";
-            toggleButton.setAttribute("aria-expanded", "false");
-            menuPanel.classList.add("translate-x-full");
-            menuPanel.setAttribute("aria-hidden", "true");
-            document.body.style.overflow = "";
-        };
+        const bars = toggleButton.querySelectorAll<HTMLElement>(
+            "[data-menu-bar]",
+        );
+        const menuLinks = menuPanel.querySelectorAll("a[href]:not([target])");
 
-        const openMenu = () => {
-            toggleButton.textContent = "Close";
-            toggleButton.setAttribute("aria-expanded", "true");
-            menuPanel.classList.remove("translate-x-full");
-            menuPanel.setAttribute("aria-hidden", "false");
-            document.body.style.overflow = "hidden";
-        };
-
-        const onToggleClick = () => {
-            const isOpen =
-                toggleButton.getAttribute("aria-expanded") === "true";
-            if (isOpen) {
-                closeMenu();
-                return;
+        const setOpen = (open: boolean) => {
+            toggleButton.setAttribute("aria-expanded", String(open));
+            menuPanel.hidden = !open;
+            document.documentElement.style.overflow = open ? "hidden" : "";
+            if (bars[0] && bars[1]) {
+                bars[0].style.transform = open
+                    ? "translateY(4px) rotate(45deg)"
+                    : "";
+                bars[1].style.transform = open
+                    ? "translateY(-4px) rotate(-45deg)"
+                    : "";
             }
-
-            openMenu();
         };
+        const closeMenu = () => setOpen(false);
+
+        const onToggleClick = () =>
+            setOpen(toggleButton.getAttribute("aria-expanded") !== "true");
 
         const onResize = () => {
-            if (window.innerWidth >= 760) {
-                closeMenu();
-            }
+            if (window.innerWidth >= 760) closeMenu();
         };
 
         const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape") {
-                closeMenu();
-            }
+            if (event.key === "Escape") closeMenu();
+        };
+
+        const onTouchMove = (event: TouchEvent) => {
+            if (menuPanel.hidden) return;
+            if (header?.contains(event.target as Node)) return;
+            event.preventDefault();
         };
 
         toggleButton.addEventListener("click", onToggleClick);
-        menuLinks.forEach((link) => {
-            link.addEventListener("click", closeMenu);
-        });
-        closeButton?.addEventListener("click", closeMenu);
+        menuLinks.forEach((link) => link.addEventListener("click", closeMenu));
         window.addEventListener("resize", onResize);
         window.addEventListener("keydown", onKeyDown);
+        document.addEventListener("touchmove", onTouchMove, { passive: false });
+        document.addEventListener("astro:before-swap", closeMenu);
 
         return () => {
             toggleButton.removeEventListener("click", onToggleClick);
-            menuLinks.forEach((link) => {
-                link.removeEventListener("click", closeMenu);
-            });
-            closeButton?.removeEventListener("click", closeMenu);
+            menuLinks.forEach((link) =>
+                link.removeEventListener("click", closeMenu),
+            );
             window.removeEventListener("resize", onResize);
             window.removeEventListener("keydown", onKeyDown);
-            document.body.style.overflow = "";
+            document.removeEventListener("touchmove", onTouchMove);
+            document.removeEventListener("astro:before-swap", closeMenu);
+            document.documentElement.style.overflow = "";
         };
     };
 

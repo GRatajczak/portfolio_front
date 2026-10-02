@@ -6,4 +6,7 @@ export type HeaderMenuItem = {
 
 export type Props = {
     menuItems?: HeaderMenuItem[];
+    linkedin?: string;
+    github?: string;
+    instagram?: string;
 };

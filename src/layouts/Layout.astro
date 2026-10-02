@@ -26,7 +26,12 @@ const {
         <title>Grzegorz Ratajczak</title>
     </head>
     <body class="flex min-h-screen flex-col pt-[72px] antialiased">
-        <Header menuItems={headerMenuItems} />
+        <Header
+            menuItems={headerMenuItems}
+            linkedin={linkedin}
+            github={github}
+            instagram={instagram}
+        />
         <slot />
         <Footer
             menuItems={footerMenuItems}
