@@ -89,7 +89,7 @@ const currentYear = new Date().getFullYear();
                             href={social.href}
                             isExternal
                             font="mono"
-                            className="w-fit text-muted"
+                            className="w-fit text-[13px] text-muted"
                         >
                             {social.label} ↗
                         </Link>
@@ -107,7 +107,7 @@ const currentYear = new Date().getFullYear();
                             <Link
                                 href={getHref(item.slug)}
                                 font="mono"
-                                className="w-fit text-muted"
+                                className="w-fit text-[13px] text-muted"
                             >
                                 {item.title}
                             </Link>
@@ -118,7 +118,7 @@ const currentYear = new Date().getFullYear();
                     <Link
                         href={`${localePrefix}/contact`}
                         font="mono"
-                        className="w-fit text-muted"
+                        className="w-fit text-[13px] text-muted"
                     >
                         Contact
                     </Link>
@@ -136,7 +136,7 @@ const currentYear = new Date().getFullYear();
                                 <Link
                                     href={`tel:${phone}`}
                                     font="mono"
-                                    className="w-fit text-muted"
+                                    className="w-fit text-[13px] text-muted"
                                 >
                                     {phone}
                                 </Link>
@@ -147,7 +147,7 @@ const currentYear = new Date().getFullYear();
                                 <Link
                                     href={`mailto:${email}`}
                                     font="mono"
-                                    className="w-fit text-muted"
+                                    className="w-fit text-[13px] text-muted"
                                 >
                                     {email}
                                 </Link>
@@ -167,7 +167,7 @@ const currentYear = new Date().getFullYear();
             <span>© {currentYear} | Grzegorz Ratajczak</span>
             <div class="flex gap-6">
                 <span>Poland</span>
-                <Link href={privacyPolicyHref} font="mono" className="text-dim">
+                <Link href={privacyPolicyHref} font="mono" className="text-xs text-dim">
                     Privacy Policy
                 </Link>
             </div>
