@@ -36,7 +36,7 @@ const arrowClass =
 ---
 
 <Container
-    className="flex flex-col gap-10 py-[clamp(56px,8vw,112px)]"
+    className="flex flex-col gap-10 overflow-x-clip py-[clamp(56px,8vw,112px)]"
 >
     <div class="flex flex-wrap items-end justify-between gap-6">
         <div class="flex flex-col gap-3.5">
@@ -89,7 +89,7 @@ const arrowClass =
     {
         cards.length > 0 && (
             <swiper-container
-                class="certificates-swiper -mx-[clamp(20px,4vw,48px)] block px-[clamp(20px,4vw,48px)]"
+                class="certificates-swiper relative left-1/2 block w-screen -translate-x-1/2 px-[max(clamp(20px,4vw,48px),calc((100vw-1240px)/2+clamp(20px,4vw,48px)))]"
                 init="false"
             >
                 {cards.map((card, index) => (
