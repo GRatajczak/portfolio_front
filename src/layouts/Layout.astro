@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Header from "@/components/Header/index.astro";
 import Footer from "@/components/Footer/index.astro";
+import Lightbox from "@/components/Lightbox/index.astro";
 import type { Props } from "./Layout.type";
 import { ClientRouter } from "astro:transitions";
 const {
@@ -41,6 +42,7 @@ const {
             linkedin={linkedin}
             github={github}
         />
+        <Lightbox />
         <ClientRouter />
     </body>
 </html>
