@@ -76,7 +76,7 @@ const contactHref = `${localePrefix}/contact`;
     data-desktop-header
 >
     <nav
-        class="mx-auto flex h-[72px] w-full max-w-[1240px] items-center justify-between gap-6 px-[clamp(20px,4vw,48px)]"
+        class="header-nav mx-auto flex h-[72px] w-full max-w-[1240px] items-center justify-between gap-6 px-[clamp(20px,4vw,48px)] transition-[max-width] duration-300 ease-out"
         data-desktop-header-nav
     >
         <a
@@ -212,12 +212,33 @@ const contactHref = `${localePrefix}/contact`;
         };
     };
 
+    const setupHeaderScroll = () => {
+        const header = document.querySelector("[data-desktop-header]");
+        if (!header) {
+            return () => {};
+        }
+
+        const update = () => {
+            header.toggleAttribute("data-scrolled", window.scrollY > 24);
+        };
+
+        update();
+        window.addEventListener("scroll", update, { passive: true });
+
+        return () => {
+            window.removeEventListener("scroll", update);
+        };
+    };
+
+    let cleanupHeaderScroll = () => {};
     let cleanupMobileMenu = () => {};
 
     const initializeHeaderScripts = () => {
         cleanupMobileMenu();
+        cleanupHeaderScroll();
 
         cleanupMobileMenu = setupMobileMenu();
+        cleanupHeaderScroll = setupHeaderScroll();
     };
 
     if (document.readyState === "loading") {
@@ -230,3 +251,16 @@ const contactHref = `${localePrefix}/contact`;
 
     document.addEventListener("astro:page-load", initializeHeaderScripts);
 </script>
+
+<style>
+    @media (min-width: 760px) {
+        [data-desktop-header][data-scrolled] .header-nav {
+            max-width: 860px;
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .header-nav {
+            transition: none;
+        }
+    }
+</style>
