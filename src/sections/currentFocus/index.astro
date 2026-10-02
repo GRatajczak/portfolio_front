@@ -1,18 +1,65 @@
 ---
-import Container from "@/components/Container/index.astro";
-import Project from "@/components/Project/index.astro";
-import SectionHeader from "@/components/SectionHeader/index.astro";
+import RichText from "@/components/RichText/index.astro";
+import StatusDot from "@/components/StatusDot/index.astro";
+import { statusFromCategory } from "@/components/StatusDot/index.type";
+import { toPlainText } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
 const { heading = "", description = [], project } = Astro.props as Props;
+
+const imageUrl = project?.image?.asset?.url;
+const imageAlt = project?.image?.alt || project?.title || "Project image";
+const projectText = project?.content?.length
+    ? toPlainText(project.content.slice(0, 1))
+    : (project?.description ?? "");
 ---
 
-<Container>
-    <SectionHeader
-        heading={heading}
-        description={description}
-        className="mb-8"
-    />
+<section class="py-[clamp(56px,8vw,112px)]">
+    <div
+        class="mx-auto grid w-full max-w-[1240px] grid-cols-[repeat(auto-fit,minmax(min(100%,400px),1fr))] items-center gap-[clamp(32px,5vw,72px)] px-[clamp(20px,4vw,48px)]"
+    >
+        <div class="flex flex-col gap-[22px]">
+            {
+                heading && (
+                    <h2 class="m-0 text-[clamp(36px,5vw,60px)] leading-[1.02]">
+                        {heading}
+                    </h2>
+                )
+            }
+            {
+                description.length > 0 && (
+                    <RichText
+                        value={description}
+                        className="flex flex-col gap-7 text-muted [&_p]:m-0 [&_p]:text-[17px]! [&_p]:leading-[1.65]! [&_p]:text-pretty"
+                    />
+                )
+            }
+        </div>
 
-    {project?.title && <Project project={project} />}
-</Container>
+        {
+            project?.title && (
+                <div class="flex flex-col border border-line bg-bg-alt">
+                    {imageUrl && (
+                        <img
+                            src={imageUrl}
+                            alt={imageAlt}
+                            class="block aspect-[16/10] w-full object-cover"
+                            loading="lazy"
+                        />
+                    )}
+                    <div class="flex flex-col gap-3 border-t border-line p-[22px]">
+                        <StatusDot status={statusFromCategory(project.category)} />
+                        <h3 class="m-0 text-[26px] tracking-[-.03em]">
+                            {project.title}
+                        </h3>
+                        {projectText && (
+                            <p class="m-0 text-[15px] leading-[1.6] text-muted [text-wrap:pretty]">
+                                {projectText}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            )
+        }
+    </div>
+</section>

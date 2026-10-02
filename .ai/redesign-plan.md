@@ -265,7 +265,7 @@ Po każdym kroku: zmień status, dopisz datę i krótką notatkę (co zrobiono, 
 | 3.1 | subhero | ✅ done | 2026-10-02 | `bg-grid`, `Eyebrow`, H1 `clamp(56px,10vw,136px)`/.92/-.05em, linia `~/{slug}` (mono 12px `dim`) + kreska 2px `acc` gdy `highlightLine`. Slug z `Astro.url.pathname` (bez prefiksu `/pl` i sufiksu `-pl`). Nie używa już `SectionHeader`/`Container`. Padding dolny subhero + sekcja po nim (ten sam `bg`, bez dividera) już obsługuje `getSectionLayout`. Build OK. **Brak weryfikacji wizualnej.** |
 | 3.2 | aboutProfile (Sanity + frontend) | 🟨 in progress | 2026-10-02 | Gotowy kod, **brak treści w Studio**. Sanity (`../portfolio_sanity`, branch `main`, **niescommitowane**): `sections/aboutProfile.ts` (pola z planu; `lead` i `facts[].body` z dekoratorem `highlight`), rejestracja w `sections/index.ts` i `pages/page.ts`, `npm run typegen` (zaktualizowane `schema.json`, `sanity.types.ts`). Front: typ `AboutProfile` dopisany ręcznie do `src/lib/sanity.types.ts` (plik ma własne dodatki, nie kopiowany w całości), projekcja `image` w `PAGE_QUERY`, wpis w `componentsMapper`, etykieta zakładki `profile.json`, `RichText` obsługuje `highlight`, sekcja `src/sections/aboutProfile/` (sticky figure `top-24` od 760px, lead, kafelki path, `<dl>` facts). Build OK. **Zostaje:** zgoda użytkownika na deploy Studio i wypełnienie treści EN+PL. |
 | 3.3 | experienceTimeline (pasek + git log) | ✅ done | 2026-10-02 | Sekcja przepisana: eyebrow + H2, pasek lat 44px (segmenty absolutnie wg `period`, start = najwcześniejszy rok, koniec = bieżąca data; pierwszy wpis do „teraz”), kolory: HEAD `acc`, przeszłe dev `color-mix 55%`, support `line-strong`; oś lat (`2017`, `'18`…) liczona dynamicznie, legenda. Tooltip: CSS hover/focus + tap (`data-active`, jeden listener na `document`, sprzątanie na `astro:before-swap`). `kind` z pola Studio (`entry.kind`, dojdzie w 6.1) z fallbackiem „Support” w roli. `ExperienceTimelineCard` → wiersz `git log` (okres + `{kind} · N yrs` / rola + `@ firma` + `HEAD` + opis + `Tag`i). Usunięty IntersectionObserver i stary układ dwukolumnowy; logo wpisu nieużywane (poza designem). Sprawdzone: 6 segmentów sumuje się do 100% na `/about`. Etykiety „development/it support/yrs/HEAD” zaszyte — i18n 6.3. **Brak weryfikacji wizualnej.** |
-| 3.4 | currentFocus | ⬜ todo | | |
+| 3.4 | currentFocus | ✅ done | 2026-10-02 | Grid `auto-fit minmax(min(100%,400px),1fr)`, lewo H2 `clamp(36px,5vw,60px)` + opis (`RichText` 17px `muted`), prawo karta `line`/`bg-alt`: zdjęcie 16/10, `StatusDot`, H3 26px, opis projektu (pierwszy akapit `content`, fallback `description`). Bez `SectionHeader`/`Project`/`Container`. Build OK. **Brak weryfikacji wizualnej.** |
 | 4.1 | Strona Work | ⬜ todo | | |
 | 4.2 | certificatesGrid (mozaika) | ⬜ todo | | |
 | 4.3 | Case study | ⬜ todo | | |
@@ -277,7 +277,7 @@ Po każdym kroku: zmień status, dopisz datę i krótką notatkę (co zrobiono, 
 | 6.4 | Sprzątanie + CLAUDE.md | ⬜ todo | | |
 | 6.5 | Weryfikacja końcowa | ⬜ todo | | |
 
-**Postęp:** 15 / 27 kroków
+**Postęp:** 16 / 27 kroków
 
 ### Notatki / blokery
 
