@@ -1,217 +1,146 @@
 ---
-import Container from "@/components/Container/index.astro";
-import SectionHeader from "@/components/SectionHeader/index.astro";
-import Text from "@/components/Text/index.astro";
-import { ArrowUpRight } from "@lucide/astro";
-import { Image } from "astro:assets";
-import type { Props } from "./index.type";
 import Button from "@/components/Button/index.astro";
+import Container from "@/components/Container/index.astro";
+import Eyebrow from "@/components/Eyebrow/index.astro";
+import type { Props } from "./index.type";
 
 const {
     eyebrow = "",
     heading = "",
     certificates = [],
-    button = {},
+    button,
+    surface = "bg",
 } = Astro.props as Props;
+
+const pad = (n: number) => String(n).padStart(2, "0");
+const cards = certificates
+    .map((item) => {
+        const certificate = item.certificate ?? item;
+        const url = certificate.image?.asset?.url;
+        if (!url) return null;
+        const extension =
+            url.split("?")[0].split(".").pop()?.toLowerCase() ?? "img";
+        const title = certificate.title ?? certificate.image?.alt ?? "";
+        return {
+            title,
+            alt: certificate.image?.alt || title || "Certificate preview",
+            src: `${url}?w=800&auto=format`,
+            full: `${url}?w=2000&auto=format`,
+            extension: `.${extension}`,
+        };
+    })
+    .filter((card) => card !== null);
+
+const arrowClass =
+    "flex size-12 cursor-pointer items-center justify-center border border-line-strong bg-bg font-mono text-base text-fg transition-colors duration-200 hover:border-acc hover:text-acc";
 ---
 
-<div>
-    <Container className="mb-0! flex items-center justify-between">
-        <SectionHeader eyebrow={eyebrow} heading={heading} className="flex-1" />
-        {
-            button && (
-                <Button
-                    href={button.buttonLink}
-                    isExternal={button.isExternalLink}
-                    label={button.buttonText}
-                    showArrowUp
-                    mobileIconOnly
-                />
-            )
-        }
-    </Container>
+<Container
+    className="flex flex-col gap-10 py-[clamp(56px,8vw,112px)]"
+>
+    <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="flex flex-col gap-3.5">
+            {eyebrow && <Eyebrow text={eyebrow} />}
+            {
+                heading && (
+                    <h2 class="m-0 text-[clamp(40px,6vw,72px)] leading-none">
+                        {heading}
+                    </h2>
+                )
+            }
+        </div>
+        <div class="flex items-center gap-2.5" data-carousel-controls>
+            {
+                cards.length > 1 && (
+                    <>
+                        <button
+                            type="button"
+                            class={arrowClass}
+                            aria-label="Previous certificate"
+                            data-carousel-prev
+                        >
+                            ←
+                        </button>
+                        <button
+                            type="button"
+                            class={arrowClass}
+                            aria-label="Next certificate"
+                            data-carousel-next
+                        >
+                            →
+                        </button>
+                    </>
+                )
+            }
+            {
+                button?.buttonText && (
+                    <Button
+                        variant="outline"
+                        surface={surface}
+                        href={button.buttonLink}
+                        label={button.buttonText}
+                        isExternal={button.isExternalLink}
+                    />
+                )
+            }
+        </div>
+    </div>
 
     {
-        certificates.length > 0 ? (
-            <div class="certificates-gallery px-0 py-4 md:p-6">
-                <swiper-container class="certificates-swiper" init="false">
-                    {certificates.map((item) => {
-                        const certificate = item.certificate ?? item;
-                        const imageUrl = certificate.image?.asset?.url;
-                        const imageWidth =
-                            certificate.image?.asset?.metadata?.dimensions
-                                ?.width;
-                        const imageHeight =
-                            certificate.image?.asset?.metadata?.dimensions
-                                ?.height;
-                        const certificateUrl = certificate.certificateUrl;
-                        const certificateHref = certificateUrl || imageUrl;
-                        const imageAlt =
-                            certificate.image?.alt ||
-                            certificate.title ||
-                            "Certificate preview";
-
-                        return (
-                            <swiper-slide>
-                                <article class="group overflow-hidden rounded-xl border border-paper/20">
-                                    {imageUrl &&
-                                    imageWidth &&
-                                    imageHeight &&
-                                    certificateHref ? (
-                                        <a
-                                            href={certificateHref}
-                                            target="_blank"
-                                            rel="noreferrer noopener"
-                                            aria-label={`Open ${imageAlt}`}
-                                            class="relative block"
-                                        >
-                                            <Image
-                                                src={imageUrl}
-                                                alt={imageAlt}
-                                                width={imageWidth}
-                                                height={imageHeight}
-                                                class="h-56 w-full object-contain md:h-96"
-                                                loading="lazy"
-                                                format="webp"
-                                            />
-                                            <span
-                                                class="absolute top-3 right-3 inline-flex h-10 w-10 items-center justify-center rounded-full border border-paper/60 bg-ink/80 text-paper opacity-100 transition-opacity duration-200 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
-                                                aria-hidden="true"
-                                            >
-                                                <ArrowUpRight class="size-5" />
-                                            </span>
-                                        </a>
-                                    ) : imageUrl &&
-                                      imageWidth &&
-                                      imageHeight ? (
-                                        <Image
-                                            src={imageUrl}
-                                            alt={imageAlt}
-                                            width={imageWidth}
-                                            height={imageHeight}
-                                            class="h-56 w-full object-contain md:h-96"
-                                            loading="lazy"
-                                            format="webp"
-                                        />
-                                    ) : (
-                                        <div class="flex h-56 items-center justify-center text-paper/60 md:h-72">
-                                            No certificate image
-                                        </div>
-                                    )}
-                                </article>
-                            </swiper-slide>
-                        );
-                    })}
-                </swiper-container>
-
-                <div class="mt-4 flex items-center justify-center gap-3">
-                    <button
-                        type="button"
-                        class="certificates-swiper-prev inline-flex h-9 w-9 items-center justify-center rounded-full border border-paper/40 text-paper transition-colors hover:border-paper"
-                        aria-label="Previous certificate"
-                    >
-                        <span aria-hidden="true">&larr;</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="certificates-swiper-next inline-flex h-9 w-9 items-center justify-center rounded-full border border-paper/40 text-paper transition-colors hover:border-paper"
-                        aria-label="Next certificate"
-                    >
-                        <span aria-hidden="true">&rarr;</span>
-                    </button>
-                </div>
-            </div>
-        ) : (
-            <Text>No certificates configured.</Text>
+        cards.length > 0 && (
+            <ul
+                data-carousel
+                class="m-0 -mx-[clamp(20px,4vw,48px)] flex list-none snap-x snap-mandatory gap-3 overflow-x-auto px-[clamp(20px,4vw,48px)] [-webkit-overflow-scrolling:touch] [scroll-padding-inline:clamp(20px,4vw,48px)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+                {cards.map((card, index) => (
+                    <li class="flex-[0_0_min(82%,380px)] snap-start">
+                        <button
+                            type="button"
+                            class="relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden border border-line bg-surface p-0 transition-colors duration-200 hover:border-acc focus-visible:border-acc"
+                            data-lightbox-src={card.full}
+                            data-lightbox-title={card.title}
+                            aria-label={`Open ${card.title || "certificate"}`}
+                        >
+                            <img
+                                src={card.src}
+                                alt={card.alt}
+                                class="absolute inset-0 block size-full object-cover object-top"
+                                loading="lazy"
+                            />
+                            <span class="absolute inset-x-0 bottom-0 flex justify-between gap-3 bg-bg/90 px-3.5 py-2.5 font-mono text-xs text-fg">
+                                <span>
+                                    <span class="text-acc">{pad(index + 1)}</span>{" "}
+                                    {card.title}
+                                </span>
+                                <span class="text-dim">{card.extension}</span>
+                            </span>
+                        </button>
+                    </li>
+                ))}
+            </ul>
         )
     }
-</div>
+</Container>
 
 <script>
-    import { register } from "swiper/element/bundle";
+    const GAP = 12;
 
-    register();
+    // Document-level delegation: registered once, survives View Transitions.
+    document.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement | null;
+        const arrow = target?.closest<HTMLElement>(
+            "[data-carousel-prev], [data-carousel-next]",
+        );
+        if (!arrow) return;
 
-    const initCertificatesSwipers = () => {
-        document
-            .querySelectorAll(".certificates-gallery")
-            .forEach((gallery) => {
-                const swiperEl = gallery.querySelector("swiper-container");
-                const nextEl = gallery.querySelector(
-                    ".certificates-swiper-next",
-                );
-                const prevEl = gallery.querySelector(
-                    ".certificates-swiper-prev",
-                );
+        const carousel = arrow
+            .closest("section")
+            ?.querySelector<HTMLElement>("[data-carousel]");
+        if (!carousel) return;
 
-                if (
-                    !swiperEl ||
-                    !nextEl ||
-                    !prevEl ||
-                    swiperEl.dataset.initialized === "true"
-                ) {
-                    return;
-                }
-
-                const setNavigationState = () => {
-                    const swiperInstance = swiperEl.swiper;
-
-                    if (!swiperInstance) {
-                        return;
-                    }
-
-                    const disablePrev = swiperInstance.isBeginning;
-                    const disableNext = swiperInstance.isEnd;
-
-                    prevEl.disabled = disablePrev;
-                    prevEl.ariaDisabled = String(disablePrev);
-                    prevEl.classList.toggle("opacity-40", disablePrev);
-                    prevEl.classList.toggle("cursor-not-allowed", disablePrev);
-                    prevEl.classList.toggle("pointer-events-none", disablePrev);
-                    prevEl.classList.toggle("border-paper/20", disablePrev);
-                    prevEl.classList.toggle("text-paper/40", disablePrev);
-
-                    nextEl.disabled = disableNext;
-                    nextEl.ariaDisabled = String(disableNext);
-                    nextEl.classList.toggle("opacity-40", disableNext);
-                    nextEl.classList.toggle("cursor-not-allowed", disableNext);
-                    nextEl.classList.toggle("pointer-events-none", disableNext);
-                    nextEl.classList.toggle("border-paper/20", disableNext);
-                    nextEl.classList.toggle("text-paper/40", disableNext);
-                };
-
-                Object.assign(swiperEl, {
-                    slidesPerView: 1.15,
-                    spaceBetween: 16,
-                    breakpoints: {
-                        768: {
-                            slidesPerView: 2.1,
-                            spaceBetween: 20,
-                        },
-                        1024: {
-                            slidesPerView: 2.5,
-                            spaceBetween: 24,
-                        },
-                    },
-                    navigation: {
-                        nextEl,
-                        prevEl,
-                    },
-                    keyboard: {
-                        enabled: true,
-                    },
-                });
-
-                swiperEl.initialize();
-                setNavigationState();
-                swiperEl.swiper?.on("slideChange", setNavigationState);
-                swiperEl.swiper?.on("reachBeginning", setNavigationState);
-                swiperEl.swiper?.on("reachEnd", setNavigationState);
-                swiperEl.swiper?.on("fromEdge", setNavigationState);
-                swiperEl.dataset.initialized = "true";
-            });
-    };
-
-    document.addEventListener("astro:page-load", initCertificatesSwipers);
-    initCertificatesSwipers();
+        const card = carousel.firstElementChild as HTMLElement | null;
+        const step = (card?.offsetWidth ?? 360) + GAP;
+        const direction = "carouselPrev" in arrow.dataset ? -1 : 1;
+        carousel.scrollBy({ left: direction * step, behavior: "smooth" });
+    });
 </script>

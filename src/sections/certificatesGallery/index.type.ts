@@ -33,4 +33,5 @@ export type Props = {
     heading?: string;
     certificates?: CertificateItem[];
     button?: CertificatesGalleryButton;
+    surface?: "bg" | "bg-alt";
 };
