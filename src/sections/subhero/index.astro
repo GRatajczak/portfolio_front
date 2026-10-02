@@ -1,6 +1,5 @@
 ---
-import Container from "@/components/Container/index.astro";
-import SectionHeader from "@/components/SectionHeader/index.astro";
+import Eyebrow from "@/components/Eyebrow/index.astro";
 import type { Props } from "./index.type";
 
 const {
@@ -8,8 +7,34 @@ const {
     heading = "",
     highlightLine = false,
 } = Astro.props as Props;
+
+// `/pl/about-pl` and `/about` both become `~/about`.
+const slug = Astro.url.pathname
+    .replace(/^\/pl(?=\/|$)/, "")
+    .replace(/^\/+|\/+$/g, "")
+    .replace(/-pl$/, "");
+const path = `~/${slug}`;
 ---
 
-<Container className={highlightLine ? "mt-20 md:mt-42" : ""}>
-    <SectionHeader hero eyebrow={eyebrow} heading={heading} headingAs="h1" />
-</Container>
+<section class="bg-grid">
+    <div
+        class="mx-auto flex max-w-[1240px] flex-col gap-[18px] px-[clamp(20px,4vw,48px)] pt-[clamp(56px,9vw,120px)] pb-[clamp(40px,6vw,72px)]"
+    >
+        {eyebrow && <Eyebrow text={eyebrow} />}
+        {
+            heading && (
+                <h1 class="m-0 text-[clamp(56px,10vw,136px)] leading-[.92] tracking-[-.05em]">
+                    {heading}
+                </h1>
+            )
+        }
+        {
+            highlightLine && slug && (
+                <div class="flex items-center gap-3.5 font-mono text-xs text-dim">
+                    <span>{path}</span>
+                    <span class="h-0.5 flex-1 bg-acc" aria-hidden="true" />
+                </div>
+            )
+        }
+    </div>
+</section>
