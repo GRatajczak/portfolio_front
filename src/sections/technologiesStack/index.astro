@@ -1,165 +1,36 @@
 ---
 import Container from "@/components/Container/index.astro";
+import FileFrame from "@/components/FileFrame/index.astro";
 import { getTechnologyLabel } from "@/utils/pageBuilder/helpers";
 import type { Props } from "./index.type";
 
 const { technologies = [] } = Astro.props as Props;
-const minSlidesForMarquee = 12;
-const marqueeTechnologies =
-    technologies.length === 0
-        ? []
-        : Array.from(
-              {
-                  length: Math.max(
-                      minSlidesForMarquee,
-                      technologies.length * 3,
-                  ),
-              },
-              (_, index) => technologies[index % technologies.length],
-          );
+const names = technologies.map((item) => getTechnologyLabel(item)).filter(Boolean);
 ---
 
-<Container className="border-t border-b border-paper/30 max-w-600">
-    {
-        marqueeTechnologies.length > 0 ? (
-            <swiper-container class="technologies-stack-swiper" init="false">
-                {marqueeTechnologies.map((item) => (
-                    <swiper-slide>
-                        <div class="inline-flex shrink-0 items-center gap-1.5 px-2 py-0.5 text-xs text-paper whitespace-nowrap">
-                            {item.technology?.svg ? (
-                                <span
-                                    data-tech-icon
-                                    aria-hidden="true"
-                                    title={getTechnologyLabel(item)}
-                                    class="inline-flex h-10 w-10 items-center justify-center [&_svg]:h-10 [&_svg]:w-10 grayscale transition-all duration-300 hover:grayscale-0"
-                                    set:html={item.technology.svg}
-                                />
-                            ) : null}
-                        </div>
-                    </swiper-slide>
-                ))}
-            </swiper-container>
-        ) : null
-    }
-</Container>
-
-<script>
-    import { register } from "swiper/element/bundle";
-
-    if (!customElements.get("swiper-container")) {
-        register();
-    }
-
-    const initRandomTechHighlight = (swiperEl: HTMLElement) => {
-        if (swiperEl.dataset.randomHighlightInitialized === "true") {
-            return;
-        }
-
-        const icons = Array.from(
-            swiperEl.querySelectorAll<HTMLElement>("[data-tech-icon]"),
-        );
-        if (icons.length === 0) {
-            return;
-        }
-
-        let activeIndexes = new Set<number>();
-        const setGrayscale = (icon: HTMLElement, isGray: boolean) => {
-            icon.style.filter = isGray ? "grayscale(1)" : "grayscale(0)";
-        };
-
-        const highlightBatchSize = Math.min(3, icons.length);
-        const pickRandomIndexes = () => {
-            const candidateIndexes = Array.from(icons.keys());
-            for (let i = candidateIndexes.length - 1; i > 0; i -= 1) {
-                const randomIndex = Math.floor(Math.random() * (i + 1));
-                [candidateIndexes[i], candidateIndexes[randomIndex]] = [
-                    candidateIndexes[randomIndex],
-                    candidateIndexes[i],
-                ];
-            }
-
-            return new Set(candidateIndexes.slice(0, highlightBatchSize));
-        };
-
-        const highlightRandomIcons = () => {
-            activeIndexes.forEach((index) => setGrayscale(icons[index], true));
-            activeIndexes = pickRandomIndexes();
-            activeIndexes.forEach((index) => setGrayscale(icons[index], false));
-        };
-
-        icons.forEach((icon) => setGrayscale(icon, true));
-        highlightRandomIcons();
-        window.setInterval(highlightRandomIcons, 1000);
-        swiperEl.dataset.randomHighlightInitialized = "true";
-    };
-
-    const initTechnologiesStackSwipers = () => {
-        document
-            .querySelectorAll(".technologies-stack-swiper")
-            .forEach((swiperCandidate) => {
-                if (
-                    !(swiperCandidate instanceof HTMLElement) ||
-                    swiperCandidate.dataset.initialized === "true"
-                ) {
-                    return;
-                }
-
-                const slidesCount =
-                    swiperCandidate.querySelectorAll("swiper-slide").length;
-                if (slidesCount < 1) {
-                    return;
-                }
-
-                const swiperEl = swiperCandidate as HTMLElement & {
-                    initialize: () => void;
-                };
-
-                if (typeof swiperEl.initialize !== "function") {
-                    return;
-                }
-
-                Object.assign(swiperEl, {
-                    slidesPerView: 4,
-                    spaceBetween: 8,
-                    loop: true,
-                    loopAdditionalSlides: slidesCount,
-                    watchSlidesProgress: true,
-                    speed: 5000,
-                    allowTouchMove: true,
-                    grabCursor: true,
-                    freeMode: true,
-                    freeModeMomentum: true,
-                    autoplay: {
-                        delay: 0,
-                        disableOnInteraction: false,
-                        pauseOnMouseEnter: false,
-                    },
-                    breakpoints: {
-                        640: {
-                            slidesPerView: 6,
-                        },
-                        1024: {
-                            slidesPerView: 12,
-                        },
-                    },
-                    injectStyles: [
-                        `
-                            .swiper-wrapper {
-                                transition-timing-function: linear !important;
-                            }
-                            .swiper-slide {
-                                width: auto !important;
-                            }
-                        `,
-                    ],
-                });
-
-                swiperEl.initialize();
-                swiperEl.dataset.initialized = "true";
-                initRandomTechHighlight(swiperEl);
-            });
-    };
-
-    document.addEventListener("astro:page-load", initTechnologiesStackSwipers);
-    initTechnologiesStackSwipers();
-</script>
+{
+    names.length > 0 && (
+        <Container>
+            <FileFrame
+                leftLabel="src/stack.ts"
+                rightLabel={`${names.length} items`}
+                bodyClassName="flex flex-col gap-[18px] p-[clamp(20px,3vw,36px)] font-mono text-[clamp(13px,1.3vw,15px)] text-fg"
+            >
+                <div>
+                    <span class="text-acc">export const</span> stack{" "}
+                    <span class="text-dim">=</span> [
+                </div>
+                <ul class="m-0 flex list-none flex-wrap gap-2.5 p-0 pl-[clamp(12px,3vw,32px)]">
+                    {names.map((name) => (
+                        <li class="border border-line px-3.5 py-2 text-fg-soft transition-colors duration-200 hover:border-acc hover:text-fg">
+                            '{name}'
+                        </li>
+                    ))}
+                </ul>
+                <div>
+                    ] <span class="text-acc">as const</span>;
+                </div>
+            </FileFrame>
+        </Container>
+    )
+}
