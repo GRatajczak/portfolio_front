@@ -5,52 +5,36 @@ import type { Props } from "./index.type";
 const { images = [], className = "" } = Astro.props as Props;
 const visibleImages = images.slice(0, 3);
 
-const gridArea = (index: number) => {
-    switch (index) {
-        case 0:
-            return "md:[grid-area:1/1/2/2]";
-        case 1:
-            return "md:[grid-area:1/2/3/3]";
-        case 2:
-            return "md:[grid-area:2/1/3/2]";
-        default:
-            return "md:[grid-area:auto]";
-    }
-};
+// Design: [0] 3/4 aligned to the end of its row, [1] 2/3 spanning both rows, [2] 3/2.
+const itemClass = [
+    "aspect-[3/4] self-end",
+    "row-span-2 aspect-[2/3]",
+    "aspect-[3/2]",
+];
 ---
 
 {
     visibleImages.length > 0 ? (
         <ul
-            class={`image-grid grid grid-cols-1 gap-4 md:h-[58vw] md:grid-cols-2 md:grid-rows-2 lg:h-[44vw] lg:gap-5 xl:h-[38vw] ${className}`}
+            class={`m-0 grid list-none grid-cols-[1fr_1.15fr] grid-rows-[auto_auto] gap-3.5 p-0 ${className}`}
         >
             {visibleImages.map((image, index) => {
                 const imageUrl = image.asset?.url;
                 const imageWidth = image.asset?.metadata?.dimensions?.width;
                 const imageHeight = image.asset?.metadata?.dimensions?.height;
-                const imageAlt = image.alt || "About me image";
 
                 if (!imageUrl || imageWidth == null || imageHeight == null) {
                     return null;
                 }
 
-                const itemClassName = gridArea(index);
-                const visibilityClassName = index === 1 ? "block" : "hidden md:block";
-                const imageClassName =
-                    index === 0
-                        ? "ml-auto h-full w-[46%] object-cover"
-                        : "h-full w-full object-cover";
-
                 return (
-                    <li
-                        class={`image-grid-item overflow-hidden ${visibilityClassName} ${itemClassName}`}
-                    >
+                    <li class={`overflow-hidden ${itemClass[index]}`}>
                         <Image
                             src={imageUrl}
-                            alt={imageAlt}
+                            alt={image.alt || "About me image"}
                             width={imageWidth}
                             height={imageHeight}
-                            class={`image-grid-image ${imageClassName}`}
+                            class="block size-full object-cover"
                             loading="lazy"
                             format="webp"
                         />
@@ -60,80 +44,3 @@ const gridArea = (index: number) => {
         </ul>
     ) : null
 }
-
-<script>
-    import { gsap } from "gsap";
-    import ScrollTrigger from "gsap/ScrollTrigger";
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const initImageGridAnimations = () => {
-        document.querySelectorAll(".image-grid").forEach((grid) => {
-            const items = grid.querySelectorAll(".image-grid-item");
-
-            items.forEach((item, index) => {
-                const animatedItem = item as HTMLElement;
-
-                if (animatedItem.dataset.animationInitialized === "true") {
-                    return;
-                }
-
-                const image = animatedItem.querySelector(".image-grid-image");
-
-                if (!image) {
-                    return;
-                }
-
-                const timeline = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: animatedItem,
-                        start: "top bottom",
-                        once: true,
-                    },
-                });
-
-                timeline.to(animatedItem, {
-                    ease: "power2.out",
-                    duration: 1.2,
-                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                    delay: index * 0.3,
-                });
-
-                timeline.to(
-                    image,
-                    {
-                        duration: 1.2,
-                        scale: 1,
-                        ease: "power2.out",
-                    },
-                    "<",
-                );
-
-                animatedItem.dataset.animationInitialized = "true";
-            });
-        });
-    };
-
-    document.addEventListener("astro:page-load", initImageGridAnimations);
-    initImageGridAnimations();
-</script>
-
-<style>
-    .image-grid-item {
-        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-    }
-
-    .image-grid-image {
-        transform: scale(1.2);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .image-grid-item {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-        }
-
-        .image-grid-image {
-            transform: scale(1);
-        }
-    }
-</style>

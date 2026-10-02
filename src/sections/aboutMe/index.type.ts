@@ -16,4 +16,5 @@ export type Props = {
     description?: PortableBlock[];
     button?: AboutMeButton;
     images?: ImageGridItem[];
+    surface?: "bg" | "bg-alt";
 };
