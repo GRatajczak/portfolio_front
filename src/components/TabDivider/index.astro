@@ -1,12 +1,17 @@
 ---
 import type { Props } from "./index.type";
 
-const { label = "", from = "bg", to = "bg-alt" } = Astro.props as Props;
+const {
+    label = "",
+    from = "bg",
+    to = "bg-alt",
+    className = "",
+} = Astro.props as Props;
 ---
 
 <div
-    class="tab-divider relative h-7"
-    style={`background:var(--color-${from});--tab-fill:var(--color-${to})`}
+    class={`tab-divider relative h-7 ${className}`}
+    style={`--tab-from:var(--color-${from});--tab-fill:var(--color-${to})`}
     aria-hidden="true"
 >
     <div class="tab-shape absolute inset-0"></div>
@@ -16,6 +21,9 @@ const { label = "", from = "bg", to = "bg-alt" } = Astro.props as Props;
 </div>
 
 <style>
+    .tab-divider {
+        background: var(--tab-from);
+    }
     .tab-shape {
         background: var(--tab-fill);
         clip-path: polygon(0 100%, 4% 100%, 10% 0, 56% 0, 62% 100%, 100% 100%);

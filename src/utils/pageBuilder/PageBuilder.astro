@@ -1,8 +1,12 @@
 ---
+import TabDivider from "@/components/TabDivider/index.astro";
 import { componentsMapper } from "./componentsMapper";
+import { getSectionLayout } from "./helpers";
 import type { Props } from "./PageBuilder.type";
 
 const { elements = [], facebook = "", instagram = "", phone = "" } = Astro.props as Props;
+
+const layout = getSectionLayout(elements);
 ---
 
 {
@@ -17,13 +21,30 @@ const { elements = [], facebook = "", instagram = "", phone = "" } = Astro.props
             return null;
         }
 
+        const { surface, previousSurface, tabLabel } = layout[index];
+
         return (
-            <Component
-                {...element}
-                facebook={facebook}
-                instagram={instagram}
-                phone={phone}
-            />
+            <>
+                {tabLabel && previousSurface && (
+                    <TabDivider
+                        label={tabLabel}
+                        from={previousSurface}
+                        to={surface}
+                    />
+                )}
+                <div
+                    class={surface === "bg-alt" ? "bg-bg-alt" : "bg-bg"}
+                    data-surface={surface}
+                >
+                    <Component
+                        {...element}
+                        surface={surface}
+                        facebook={facebook}
+                        instagram={instagram}
+                        phone={phone}
+                    />
+                </div>
+            </>
         );
     })
 }

@@ -6,4 +6,5 @@ export type Props = {
     from?: Surface;
     /** Background of the section below. */
     to?: Surface;
+    className?: string;
 };

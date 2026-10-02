@@ -25,3 +25,13 @@ export type ProjectLike = {
     project?: ReferenceLike;
     overrideLabel?: string;
 };
+
+export type SectionSurface = "bg" | "bg-alt";
+
+export type SectionLayout = {
+    surface: SectionSurface;
+    /** Surface of the previous section, set only when a divider is rendered. */
+    previousSurface?: SectionSurface;
+    /** Divider label; empty when no divider precedes the section. */
+    tabLabel: string;
+};

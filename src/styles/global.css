@@ -259,3 +259,8 @@ html {
         line-height: 1.1;
     }
 }
+
+/* Footer tab continues the background of the last page-builder section. */
+main:has(> [data-surface="bg-alt"]:last-child) ~ .footer-tab {
+    --tab-from: var(--color-bg-alt) !important;
+}
