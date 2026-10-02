@@ -1,7 +1,7 @@
 ---
-import Logo from "@/assets/Logo.svg";
 import type { HeaderMenuItem, Props } from "./index.type";
 import Link from "@/components/Link/index.astro";
+import Button from "@/components/Button/index.astro";
 import MobileMenu from "./MobileMenu.astro";
 const { menuItems = [] } = Astro.props as Props;
 
@@ -48,19 +48,46 @@ const getHref = (slug: string) => {
     return `${localePrefix}/${localizedSlug}`;
 };
 
+const normalizePath = (path: string) => {
+    const withoutLocale = path.replace(/^\/pl(?=\/|$)/, "") || "/";
+    return withoutLocale.length > 1
+        ? withoutLocale.replace(/\/$/, "")
+        : withoutLocale;
+};
+const currentPath = normalizePath(Astro.url.pathname);
+const isActive = (href: string) => {
+    if (href.startsWith("http") || href.startsWith("#")) return false;
+    const target = normalizePath(href);
+    return (
+        currentPath === target ||
+        (target !== "/" && currentPath.startsWith(`${target}/`))
+    );
+};
+
 const navigationItems = sanitizedMenuItems.map((item) => ({
     title: item.title,
     href: getHref(item.slug),
 }));
+const contactHref = `${localePrefix}/contact`;
 ---
 
-<header class="fixed top-0 left-0 z-20 w-full" data-desktop-header>
+<header
+    class="fixed top-0 left-0 z-20 w-full border-b border-line bg-bg/82 backdrop-blur-md"
+    data-desktop-header
+>
     <nav
-        class="mx-auto flex w-full max-w-full items-center justify-between border-b border-paper/30 px-4 py-2 transition-[max-width,border-radius,background-color,border-color] duration-300 ease-out md:px-6 bg-ink/80 backdrop-blur-xl md:bg-transparent md:backdrop-blur-0"
+        class="mx-auto flex h-[72px] w-full max-w-[1240px] items-center justify-between gap-6 px-[clamp(20px,4vw,48px)]"
         data-desktop-header-nav
     >
-        <a href={homeHref} aria-label="Go to homepage" class="inline-flex">
-            <Logo />
+        <a
+            href={homeHref}
+            aria-label="Go to homepage"
+            data-matrix="link"
+            class="flex items-center gap-0.5 font-mono text-[15px] font-medium"
+        >
+            <span class="text-acc">~/</span><span>ratajczak</span><span
+                class="ml-1 h-4 w-2 animate-blink bg-acc"
+                aria-hidden="true"></span>
         </a>
 
         {
@@ -68,7 +95,7 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
                 <>
                     <button
                         type="button"
-                        class="text-sm  transition-colors uppercase font-semibold hover:text-paper md:hidden"
+                        class="text-sm font-semibold uppercase transition-colors hover:text-fg min-[760px]:hidden"
                         aria-expanded="false"
                         aria-controls="mobile-menu-panel"
                         data-mobile-menu-toggle
@@ -76,26 +103,27 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
                         Menu
                     </button>
 
-                    <ul class="hidden items-center gap-6 md:flex">
-                        {navigationItems.map((item) => (
-                            <li>
-                                <Link
-                                    href={item.href}
-                                    className="text-sm  hover:text-paper"
-                                >
-                                    {item.title}
-                                </Link>
-                            </li>
-                        ))}
-                        <li>
-                            <Link
-                                href={`${localePrefix}/contact`}
-                                className="text-sm  hover:text-paper"
-                            >
-                                Contact
-                            </Link>
-                        </li>
-                    </ul>
+                    <div class="hidden items-center gap-[clamp(14px,3vw,36px)] min-[760px]:flex">
+                        <ul class="flex flex-wrap items-center justify-end gap-[clamp(14px,3vw,36px)]">
+                            {navigationItems.map((item, index) => (
+                                <li>
+                                    <Link
+                                        href={item.href}
+                                        font="mono"
+                                        className={`flex gap-1.5 text-[13px] leading-none ${isActive(item.href) ? "text-fg" : "text-muted"}`}
+                                    >
+                                        <span class="text-acc">
+                                            {String(index + 1).padStart(2, "0")}.
+                                        </span>
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                        <Button href={contactHref} size="sm">
+                            Get in touch
+                        </Button>
+                    </div>
                 </>
             )
         }
@@ -106,7 +134,7 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
             <MobileMenu
                 homeHref={homeHref}
                 menuItems={navigationItems}
-                contactHref={`${localePrefix}/contact`}
+                contactHref={contactHref}
             />
         )
     }
@@ -153,7 +181,7 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
         };
 
         const onResize = () => {
-            if (window.innerWidth >= 768) {
+            if (window.innerWidth >= 760) {
                 closeMenu();
             }
         };
@@ -184,57 +212,12 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
         };
     };
 
-    const setupDesktopHeaderScroll = () => {
-        const header = document.querySelector("[data-desktop-header]");
-        const headerNav = document.querySelector("[data-desktop-header-nav]");
-
-        if (!header || !headerNav) {
-            return () => {};
-        }
-
-        const desktopQuery = window.matchMedia("(min-width: 768px)");
-        const scrollThreshold = 24;
-
-        const updateDesktopHeaderState = () => {
-            if (!desktopQuery.matches) {
-                header.removeAttribute("data-scrolled");
-                return;
-            }
-
-            if (window.scrollY > scrollThreshold) {
-                header.setAttribute("data-scrolled", "true");
-                return;
-            }
-
-            header.removeAttribute("data-scrolled");
-        };
-
-        updateDesktopHeaderState();
-        window.addEventListener("scroll", updateDesktopHeaderState, {
-            passive: true,
-        });
-        window.addEventListener("resize", updateDesktopHeaderState);
-        desktopQuery.addEventListener("change", updateDesktopHeaderState);
-
-        return () => {
-            window.removeEventListener("scroll", updateDesktopHeaderState);
-            window.removeEventListener("resize", updateDesktopHeaderState);
-            desktopQuery.removeEventListener(
-                "change",
-                updateDesktopHeaderState,
-            );
-        };
-    };
-
     let cleanupMobileMenu = () => {};
-    let cleanupDesktopHeaderScroll = () => {};
 
     const initializeHeaderScripts = () => {
         cleanupMobileMenu();
-        cleanupDesktopHeaderScroll();
 
         cleanupMobileMenu = setupMobileMenu();
-        cleanupDesktopHeaderScroll = setupDesktopHeaderScroll();
     };
 
     if (document.readyState === "loading") {
@@ -247,27 +230,3 @@ const navigationItems = sanitizedMenuItems.map((item) => ({
 
     document.addEventListener("astro:page-load", initializeHeaderScripts);
 </script>
-
-<style>
-    @media (width >= 48rem) {
-        [data-desktop-header] {
-            border-bottom-color: transparent;
-        }
-
-        [data-desktop-header][data-scrolled="true"] {
-            border-bottom-color: transparent;
-        }
-
-        [data-desktop-header][data-scrolled="true"] [data-desktop-header-nav] {
-            max-width: 600px;
-            border-radius: 9999px;
-            border: 1px solid rgba(236, 236, 231, 0.3);
-            background-color: color-mix(
-                in srgb,
-                var(--color-ink) 88%,
-                transparent
-            );
-            backdrop-filter: blur(10px);
-        }
-    }
-</style>
