@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import Heading from "@/components/Heading/index.astro";
 import type { Props } from "./index.type";
 
 const {
@@ -9,184 +8,84 @@ const {
     portraitImage,
     mobileImage,
 } = Astro.props as Props;
-const subheadlineItems = subheadline.map((item) => item.text).filter(Boolean);
-const portraitImageUrl = portraitImage?.asset?.url;
+const phrases = subheadline.map((item) => item.text).filter(Boolean) as string[];
+const portraitImageUrl = portraitImage?.asset?.url ?? mobileImage?.asset?.url;
 const portraitImageWidth =
     portraitImage?.asset?.metadata?.dimensions?.width ?? 900;
 const portraitImageHeight =
     portraitImage?.asset?.metadata?.dimensions?.height ?? 1200;
 const portraitImageAlt = portraitImage?.alt || "Portrait photo";
-const mobileImageUrl = mobileImage?.asset?.url ?? portraitImageUrl;
+const mobileImageUrl = mobileImage?.asset?.url;
 const mobileImageWidth =
     mobileImage?.asset?.metadata?.dimensions?.width ?? portraitImageWidth;
 const mobileImageHeight =
     mobileImage?.asset?.metadata?.dimensions?.height ?? portraitImageHeight;
-const mobileImageAlt = mobileImage?.alt || portraitImageAlt;
+const cornerClass = "absolute size-7 border-acc";
 ---
 
-<section
-    class="flex items-end justify-between h-full max-h-screen mx-auto px-6 relative"
->
-    <div class="w-full md:w-[60%] pb-8 min-h-svh flex flex-col justify-end">
+<section class="bg-grid relative">
+    <div
+        class="mx-auto grid max-w-[1240px] grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] items-end gap-12 px-[clamp(20px,4vw,48px)] pt-[clamp(48px,8vw,96px)]"
+    >
+        <div class="flex flex-col gap-7 pb-[clamp(40px,7vw,96px)]">
+            <span class="font-mono text-[14px] text-muted">
+                <span class="text-acc">$</span> whoami
+            </span>
+            {
+                headline && (
+                    <h1 class="m-0 text-[clamp(56px,9vw,124px)] leading-[.92] tracking-[-.05em] text-balance">
+                        {headline}
+                    </h1>
+                )
+            }
+            {
+                phrases.length > 0 && (
+                    <div
+                        class="flex min-h-8 items-center gap-2.5 font-mono text-[clamp(16px,1.8vw,22px)] text-fg"
+                        data-typing={JSON.stringify(phrases)}
+                    >
+                        <span class="text-acc">&gt;</span>
+                        <span data-typing-text>{phrases[0]}</span>
+                        <span
+                            class="h-6 w-[11px] animate-blink bg-acc"
+                            aria-hidden="true"
+                        />
+                    </div>
+                )
+            }
+        </div>
         {
-            mobileImageUrl && (
-                <Image
-                    src={mobileImageUrl}
-                    alt={mobileImageAlt}
-                    width={mobileImageWidth}
-                    height={mobileImageHeight}
-                    class="mb-4 h-60 w-40 md:w-full object-cover rounded-xl md:hidden! border-paper/30 aspect-square"
-                    loading="eager"
-                    format="webp"
-                />
-            )
-        }
-        {
-            subheadlineItems.length > 0 && (
-                <div class="hero-subheadline">
-                    <p class="hero-subheadline-text opacity-70">
-                        {subheadlineItems.map((item, index) => (
-                            <span
-                                class={`hero-subheadline-item  ${index === 0 ? "is-active" : ""}`}
-                                aria-hidden={index === 0 ? "false" : "true"}
-                            >
-                                {item}
-                            </span>
-                        ))}
-                    </p>
+            portraitImageUrl && (
+                <div class="relative w-[min(100%,460px)] justify-self-center">
+                    <div class={`${cornerClass} top-0 left-0 border-t-2 border-l-2`} />
+                    <div class={`${cornerClass} top-0 right-0 border-t-2 border-r-2`} />
+                    <picture>
+                        {mobileImageUrl && (
+                            <source
+                                media="(max-width: 759px)"
+                                srcset={mobileImageUrl}
+                                width={mobileImageWidth}
+                                height={mobileImageHeight}
+                            />
+                        )}
+                        <Image
+                            src={portraitImageUrl}
+                            alt={portraitImageAlt}
+                            width={portraitImageWidth}
+                            height={portraitImageHeight}
+                            class="block h-auto w-full box-border px-6 pt-6 [filter:grayscale(.15)_contrast(1.05)]"
+                            loading="eager"
+                            format="webp"
+                        />
+                    </picture>
+                    <div class="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-b from-transparent to-bg" />
                 </div>
             )
         }
-        {
-            headline && (
-                <Heading
-                    as="h1"
-                    text={headline}
-                    size="display"
-                    className="font-semibold mb-5 tracking-wide mt-2 md:mt-0"
-                />
-            )
-        }
     </div>
-    {
-        portraitImageUrl && (
-            <Image
-                src={portraitImageUrl}
-                alt={portraitImageAlt}
-                width={portraitImageWidth}
-                height={portraitImageHeight}
-                class="hero-portrait-shadow mt-6 h-auto max-h-[60vh] w-full object-cover hidden! border-paper/30 lg:mt-0 lg:block! lg:max-h-screen lg:h-full lg:w-[40%] lg:border-l absolute lg:right-0 lg:bottom-0 lg:top-0"
-                loading="eager"
-                format="webp"
-            />
-        )
-    }
 </section>
 
 <script>
-    const initHeroSubheadlineFade = () => {
-        document.querySelectorAll(".hero-subheadline").forEach((wrapper) => {
-            const container = wrapper as HTMLElement;
-            const items = Array.from(
-                container.querySelectorAll(".hero-subheadline-item"),
-            ) as HTMLElement[];
-
-            if (
-                items.length === 0 ||
-                container.dataset.animationInitialized === "true"
-            ) {
-                return;
-            }
-
-            container.dataset.animationInitialized = "true";
-
-            if (items.length === 1) {
-                items[0].classList.add("is-active");
-                items[0].setAttribute("aria-hidden", "false");
-                return;
-            }
-
-            let activeIndex = 0;
-            const setActiveItem = (index: number) => {
-                items.forEach((item, itemIndex) => {
-                    const isActive = itemIndex === index;
-                    item.classList.toggle("is-active", isActive);
-                    item.setAttribute(
-                        "aria-hidden",
-                        isActive ? "false" : "true",
-                    );
-                });
-            };
-
-            setActiveItem(activeIndex);
-
-            const intervalId = window.setInterval(() => {
-                activeIndex = (activeIndex + 1) % items.length;
-                setActiveItem(activeIndex);
-            }, 2400);
-
-            container.dataset.intervalId = String(intervalId);
-        });
-    };
-
-    const cleanupHeroSubheadlineFade = () => {
-        document.querySelectorAll(".hero-subheadline").forEach((wrapper) => {
-            const container = wrapper as HTMLElement;
-            const intervalId = container.dataset.intervalId;
-
-            if (intervalId) {
-                window.clearInterval(Number(intervalId));
-            }
-        });
-    };
-
-    document.addEventListener("astro:before-swap", cleanupHeroSubheadlineFade);
-    document.addEventListener("astro:page-load", initHeroSubheadlineFade);
-    initHeroSubheadlineFade();
+    import { initTyping } from "@/scripts/typing";
+    initTyping();
 </script>
-
-<style>
-    .hero-subheadline {
-        min-height: 1.5rem;
-        width: 100%;
-    }
-
-    .hero-subheadline-text {
-        position: relative;
-        display: block;
-        margin: 0;
-        line-height: 1.1;
-        font-size: var(--font-size-base);
-    }
-
-    .hero-subheadline-item {
-        position: absolute;
-        inset: 0 auto auto 0;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 450ms ease-in-out;
-    }
-
-    .hero-subheadline-item.is-active {
-        opacity: 1;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .hero-subheadline-item {
-            transition: none;
-        }
-    }
-
-    .hero-portrait-shadow {
-        animation: heroShadowIn 1s 1s ease-out forwards;
-    }
-
-    @keyframes heroShadowIn {
-        0% {
-            box-shadow: 0 0 0 rgba(236, 236, 231, 0);
-        }
-        100% {
-            box-shadow: 0 0 64px rgba(236, 236, 231, 0.05);
-        }
-    }
-</style>
