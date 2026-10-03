@@ -88,7 +88,7 @@ const hasBrief = sections.length > 0;
     <main>
         <section data-surface="bg" class="bg-grid">
             <div
-                class="mx-auto flex max-w-[1240px] flex-col gap-[22px] px-[clamp(20px,4vw,48px)] pt-[clamp(40px,7vw,88px)] pb-[clamp(40px,6vw,64px)]"
+                class="mx-auto flex max-w-[1400px] flex-col gap-[22px] px-[clamp(20px,4vw,48px)] pt-[clamp(40px,7vw,88px)] pb-[clamp(40px,6vw,64px)]"
             >
                 <Link
                     href="/work"
@@ -120,7 +120,7 @@ const hasBrief = sections.length > 0;
         {
             (imageUrl || lead || project?.description) && (
                 <section data-surface="bg">
-                    <div class="mx-auto flex max-w-[1240px] flex-col gap-[clamp(40px,6vw,64px)] px-[clamp(20px,4vw,48px)] pb-[clamp(56px,8vw,96px)]">
+                    <div class="mx-auto flex max-w-[1400px] flex-col gap-[clamp(40px,6vw,64px)] px-[clamp(20px,4vw,48px)] pb-[clamp(56px,8vw,96px)]">
                         {imageUrl && (
                             <img
                                 src={`${imageUrl}?w=1800&auto=format`}
@@ -170,7 +170,7 @@ const hasBrief = sections.length > 0;
                         data-surface={hasBrief ? "bg" : "bg-alt"}
                         class={hasBrief ? "bg-bg" : "bg-bg-alt"}
                     >
-                        <div class="mx-auto flex max-w-[1240px] flex-col gap-[clamp(56px,8vw,104px)] px-[clamp(20px,4vw,48px)] py-[clamp(56px,8vw,112px)]">
+                        <div class="mx-auto flex max-w-[1400px] flex-col gap-[clamp(56px,8vw,104px)] px-[clamp(20px,4vw,48px)] py-[clamp(56px,8vw,112px)]">
                             {featureBlocks.map(({ Component, props }) => (
                                 <Component {...props} />
                             ))}

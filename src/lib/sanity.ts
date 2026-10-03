@@ -21,7 +21,10 @@ export const isSanityConfigured = Boolean(projectId && dataset);
 export const DEFAULT_LOCALE = "en";
 export type { HomePageData, PostPreview };
 
-const sanityDataCache = new Map<string, unknown>();
+// Each Worker isolate has its own cache and the revalidate webhook only clears
+// the isolate that received it, so entries also expire on their own.
+const SANITY_CACHE_TTL_MS = 60_000;
+const sanityDataCache = new Map<string, { data: unknown; expiresAt: number }>();
 const pendingSanityRequests = new Map<string, Promise<unknown>>();
 
 export const sanityClient = isSanityConfigured
@@ -44,9 +47,9 @@ async function getCachedSanityData<T>(
     key: string,
     fetcher: () => Promise<T>,
 ): Promise<T> {
-    const cachedValue = sanityDataCache.get(key);
-    if (cachedValue !== undefined) {
-        return cachedValue as T;
+    const cachedEntry = sanityDataCache.get(key);
+    if (cachedEntry && cachedEntry.expiresAt > Date.now()) {
+        return cachedEntry.data as T;
     }
 
     const pendingRequest = pendingSanityRequests.get(key);
@@ -56,7 +59,10 @@ async function getCachedSanityData<T>(
 
     const request = fetcher()
         .then((data) => {
-            sanityDataCache.set(key, data);
+            sanityDataCache.set(key, {
+                data,
+                expiresAt: Date.now() + SANITY_CACHE_TTL_MS,
+            });
             pendingSanityRequests.delete(key);
             return data;
         })
