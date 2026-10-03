@@ -19,7 +19,7 @@ const isGrid = layout === "grid";
 ---
 
 <Container
-    className={`flex flex-col ${isGrid ? "gap-12" : "gap-14"} py-[clamp(56px,8vw,112px)]`}
+    className={`flex flex-col ${isGrid ? "gap-12 pt-[clamp(24px,4vw,48px)] pb-[clamp(64px,9vw,120px)]" : "gap-14 py-[clamp(56px,8vw,112px)]"}`}
 >
     {
         (eyebrow || heading || button?.buttonText) && (

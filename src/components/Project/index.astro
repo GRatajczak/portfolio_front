@@ -26,7 +26,16 @@ const technologies = (project.technologies ?? []).flatMap((item) =>
 );
 const imageUrl = project.image?.asset?.url;
 const imageAlt = project.image?.alt || project.title || "Project image";
-const fileLabel = `${project.slug ?? "project"}.preview.png`;
+const fileSlug =
+    project.slug ||
+    (project.title ?? "project")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "") ||
+    "project";
+const fileLabel = `${fileSlug}.preview.png`;
 const indexLabel =
     variant === "rows" ? `${pad(index + 1)} / ${pad(total)}` : pad(index + 1);
 const projectUrl = project.projectUrl;
