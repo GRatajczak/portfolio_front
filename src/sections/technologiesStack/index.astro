@@ -34,7 +34,7 @@ const { t } = useTranslations(Astro.url);
                             {svg && (
                                 <span
                                     aria-hidden="true"
-                                    class="tech-icon flex w-0 mr-0 items-center justify-center overflow-hidden opacity-0 transition-all duration-200 [&_svg]:size-[18px] [&_svg]:shrink-0"
+                                    class="tech-icon mr-2 flex w-[18px] items-center justify-center overflow-hidden transition-all duration-200 [&_svg]:size-[18px] [&_svg]:shrink-0"
                                     set:html={svg}
                                 />
                             )}
@@ -51,11 +51,20 @@ const { t } = useTranslations(Astro.url);
 }
 
 <style>
-    li:hover > .tech-icon,
-    li:focus-within > .tech-icon {
-        width: 18px;
-        margin-right: 8px;
-        opacity: 1;
+    /* Mobile / touch: icons always visible. Desktop: revealed on hover. */
+    @media (hover: hover) and (min-width: 1024px) {
+        .tech-icon {
+            width: 0;
+            margin-right: 0;
+            opacity: 0;
+        }
+
+        li:hover > .tech-icon,
+        li:focus-within > .tech-icon {
+            width: 18px;
+            margin-right: 8px;
+            opacity: 1;
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {
