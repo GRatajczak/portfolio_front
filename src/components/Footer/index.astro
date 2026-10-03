@@ -56,10 +56,6 @@ const getHref = (slug: string) => {
     return `${localePrefix}/${localizedSlug}`;
 };
 
-const privacyPolicyHref = localePrefix
-    ? `${localePrefix}/privacy-policy`
-    : "/privacy-policy";
-
 const socials = [
     { label: "LinkedIn", href: linkedin },
     { label: "Instagram", href: instagram },
@@ -170,9 +166,6 @@ const { t } = useTranslations(Astro.url);
             <span>© {currentYear} | Grzegorz Ratajczak</span>
             <div class="flex gap-6">
                 <span>{t("footer.country")}</span>
-                <Link href={privacyPolicyHref} font="mono" className="text-xs text-dim">
-                    {t("footer.privacy")}
-                </Link>
             </div>
         </div>
     </div>

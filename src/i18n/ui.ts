@@ -13,7 +13,6 @@ const en = {
     "footer.quickLinks": "Quick links",
     "footer.contact": "Contact",
     "footer.country": "Poland",
-    "footer.privacy": "Privacy Policy",
 
     "project.seeLive": "See live",
     "project.seeCaseStudy": "See case study",
@@ -70,7 +69,6 @@ const pl: Record<UiKey, string> = {
     "footer.quickLinks": "Szybkie linki",
     "footer.contact": "Kontakt",
     "footer.country": "Polska",
-    "footer.privacy": "Polityka prywatności",
 
     "project.seeLive": "Zobacz na żywo",
     "project.seeCaseStudy": "Zobacz case study",
