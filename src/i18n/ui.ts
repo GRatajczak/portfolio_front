@@ -1,6 +1,10 @@
 export type Locale = "en" | "pl";
 
 const en = {
+    "seo.siteName": "Grzegorz Ratajczak",
+    "seo.description":
+        "Portfolio of Grzegorz Ratajczak — web developer building fast, accessible websites and apps. Selected projects, experience and contact.",
+
     "nav.home": "Home",
     "nav.getInTouch": "Get in touch",
     "nav.homeAria": "Go to homepage",
@@ -54,6 +58,10 @@ const en = {
 export type UiKey = keyof typeof en;
 
 const pl: Record<UiKey, string> = {
+    "seo.siteName": "Grzegorz Ratajczak",
+    "seo.description":
+        "Portfolio Grzegorza Ratajczaka — programisty tworzącego szybkie, dostępne strony i aplikacje internetowe. Wybrane projekty, doświadczenie i kontakt.",
+
     "nav.home": "Start",
     "nav.getInTouch": "Napisz do mnie",
     "nav.homeAria": "Przejdź na stronę główną",

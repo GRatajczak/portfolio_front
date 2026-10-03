@@ -21,6 +21,11 @@ export default defineConfig({
     },
     env: {
         schema: {
+            PUBLIC_SITE_URL: envField.string({
+                context: "client",
+                access: "public",
+                optional: true,
+            }),
             PUBLIC_SANITY_PROJECT_ID: envField.string({
                 context: "client",
                 access: "public",
