@@ -80,6 +80,7 @@ const hasBrief = sections.length > 0;
 <Layout
     title={project ? project.title : t("notFound.title")}
     noindex={!project}
+    hideFooter={!project}
     noAlternates
     headerMenuItems={projectPageData?.headerMenuItems ?? []}
     footerMenuItems={projectPageData?.footerMenuItems ?? []}

@@ -30,6 +30,7 @@ if (!pageData) {
 <Layout
     title={pageData ? pageData.title : t("notFound.title")}
     noindex={!pageData}
+    hideFooter={!pageData}
     noAlternates={!pageData}
     headerMenuItems={pageData?.headerMenuItems ?? []}
     footerMenuItems={pageData?.footerMenuItems ?? []}

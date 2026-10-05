@@ -14,6 +14,7 @@ const {
     ogImage,
     noindex = false,
     noAlternates = false,
+    hideFooter = false,
     headerMenuItems = [],
     footerMenuItems = [],
     phone = "",
@@ -75,14 +76,18 @@ const seo = buildSeo({
             instagram={instagram}
         />
         <slot />
-        <Footer
-            menuItems={footerMenuItems}
-            phone={phone}
-            email={email}
-            instagram={instagram}
-            linkedin={linkedin}
-            github={github}
-        />
+        {
+            !hideFooter && (
+                <Footer
+                menuItems={footerMenuItems}
+                phone={phone}
+                email={email}
+                instagram={instagram}
+                linkedin={linkedin}
+                github={github}
+                />
+            )
+        }
         <Lightbox />
         <ClientRouter />
     </body>

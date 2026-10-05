@@ -8,6 +8,7 @@ export type Props = {
     noindex?: boolean;
     /** Skip hreflang for routes that exist in one language only. */
     noAlternates?: boolean;
+    hideFooter?: boolean;
     headerMenuItems?: HeaderMenuItem[];
     footerMenuItems?: FooterMenuItem[];
     phone?: string;

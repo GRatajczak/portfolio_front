@@ -9,6 +9,6 @@ const { t } = useTranslations(Astro.url);
 Astro.response.status = 404;
 ---
 
-<Layout title={t("notFound.title")} noindex noAlternates>
+<Layout title={t("notFound.title")} noindex noAlternates hideFooter>
     <NotFound />
 </Layout>
