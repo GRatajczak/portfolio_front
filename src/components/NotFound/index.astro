@@ -1,0 +1,55 @@
+---
+import Button from "@/components/Button/index.astro";
+import { useTranslations } from "@/i18n/ui";
+
+const { locale, t } = useTranslations(Astro.url);
+const homeHref = locale === "pl" ? "/pl/" : "/";
+---
+
+<main class="bg-grid flex flex-1 items-center">
+        <div
+            class="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-7 px-5 py-16 text-center md:px-12 md:py-24"
+        >
+            <span class="font-mono text-sm text-muted">
+                <span class="text-acc">$</span>
+                {t("notFound.cmd")}
+            </span>
+            <h1
+                class="flex items-baseline justify-center text-[clamp(120px,24vw,320px)] leading-[0.85] font-semibold tracking-[-0.06em]"
+            >
+                <span>4</span><span class="text-acc">0</span><span>4</span>
+            </h1>
+            <div
+                class="w-full max-w-[560px] border border-line bg-surface text-left font-mono"
+            >
+                <div class="border-b border-line px-5 py-3 text-xs text-dim">
+                    {t("notFound.stderr")}
+                </div>
+                <div
+                    class="flex flex-col gap-2 p-5 text-[clamp(13px,1.3vw,15px)]"
+                >
+                    <div>
+                        <span class="text-acc">Error:</span>
+                        {t("notFound.error")}
+                    </div>
+                    <div class="text-muted">{t("notFound.body")}</div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-acc">&gt;</span>
+                        <span class="animate-blink h-[18px] w-[10px] bg-acc"
+                        ></span>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="mt-2 flex flex-wrap items-center justify-center gap-4"
+            >
+                <Button href={homeHref} label={t("notFound.home")} />
+                <a
+                    href="javascript:history.back()"
+                    class="px-2 py-[15px] font-mono text-sm text-muted hover:text-acc"
+                >
+                    {t("notFound.back")}
+                </a>
+            </div>
+        </div>
+    </main>

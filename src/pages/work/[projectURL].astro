@@ -1,11 +1,13 @@
 ---
 import Eyebrow from "@/components/Eyebrow/index.astro";
+import NotFound from "@/components/NotFound/index.astro";
 import Link from "@/components/Link/index.astro";
 import RichText from "@/components/RichText/index.astro";
 import Tag from "@/components/Tag/index.astro";
 import TabDivider from "@/components/TabDivider/index.astro";
 import Layout from "@/layouts/Layout.astro";
 import ProjectSectionsGrid from "@/sections/projectSectionsGrid/index.astro";
+import { useTranslations } from "@/i18n/ui";
 import { componentsMapper } from "@/utils/pageBuilder/componentsMapper";
 import {
     DEFAULT_LOCALE,
@@ -24,6 +26,7 @@ export async function getStaticPaths() {
     }));
 }
 
+const { t } = useTranslations(Astro.url);
 const projectURL = Astro.params.projectURL ?? "";
 const projectPageData = await getProjectByRouteSlug(
     projectURL,
@@ -75,7 +78,8 @@ const hasBrief = sections.length > 0;
 ---
 
 <Layout
-    title={project?.title}
+    title={project ? project.title : t("notFound.title")}
+    noindex={!project}
     noAlternates
     headerMenuItems={projectPageData?.headerMenuItems ?? []}
     footerMenuItems={projectPageData?.footerMenuItems ?? []}
@@ -85,7 +89,7 @@ const hasBrief = sections.length > 0;
     linkedin={projectPageData?.linkedin ?? ""}
     github={projectPageData?.github ?? ""}
 >
-    <main>
+    {!project ? <NotFound /> : <main>
         <section data-surface="bg" class="bg-grid">
             <div
                 class="mx-auto flex max-w-[1400px] flex-col gap-[22px] px-[clamp(20px,4vw,48px)] pt-[clamp(40px,7vw,88px)] pb-[clamp(40px,6vw,64px)]"
@@ -179,5 +183,5 @@ const hasBrief = sections.length > 0;
                 </>
             )
         }
-    </main>
+    </main>}
 </Layout>

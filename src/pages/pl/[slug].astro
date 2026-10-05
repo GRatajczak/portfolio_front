@@ -1,6 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import PageBuilder from "@/utils/pageBuilder/PageBuilder.astro";
+import NotFound from "@/components/NotFound/index.astro";
+import { useTranslations } from "@/i18n/ui";
 import Text from "@/components/Text/index.astro";
 import {
     DEFAULT_LOCALE,
@@ -16,6 +18,7 @@ export async function getStaticPaths() {
     }));
 }
 
+const { t } = useTranslations(Astro.url);
 const slug = Astro.params.slug ?? "";
 const pageData = await getPageByRouteSlug(slug, "pl", DEFAULT_LOCALE);
 
@@ -25,7 +28,9 @@ if (!pageData) {
 ---
 
 <Layout
-    title={pageData?.title}
+    title={pageData ? pageData.title : t("notFound.title")}
+    noindex={!pageData}
+    noAlternates={!pageData}
     headerMenuItems={pageData?.headerMenuItems ?? []}
     footerMenuItems={pageData?.footerMenuItems ?? []}
     phone={pageData?.phone ?? ""}
@@ -34,7 +39,7 @@ if (!pageData) {
     linkedin={pageData?.linkedin ?? ""}
     github={pageData?.github ?? ""}
 >
-    <main>
+    {!pageData ? <NotFound /> : <main>
         {
             pageData?.elements?.length ? (
                 <PageBuilder
@@ -51,5 +56,5 @@ if (!pageData) {
                 </section>
             )
         }
-    </main>
+    </main>}
 </Layout>
