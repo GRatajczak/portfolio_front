@@ -52,6 +52,14 @@ const en = {
         "✗ network error — check your connection and try again.",
     "contact.hint.writeTo": "Write to me at {email}.",
     "contact.hint.tryAgain": "Try again or write to {email}.",
+
+    "notFound.title": "Page not found",
+    "notFound.cmd": "cd ~/ratajczak/this-page",
+    "notFound.stderr": "stderr",
+    "notFound.error": "ENOENT, no such page",
+    "notFound.body": "The page you are looking for does not exist or has been moved.",
+    "notFound.home": "Back to home",
+    "notFound.back": "cd .. ↩",
 } as const;
 
 export type UiKey = keyof typeof en;
@@ -108,6 +116,14 @@ const pl: Record<UiKey, string> = {
         "✗ błąd sieci — sprawdź połączenie i spróbuj ponownie.",
     "contact.hint.writeTo": "Napisz do mnie: {email}.",
     "contact.hint.tryAgain": "Spróbuj ponownie lub napisz na {email}.",
+
+    "notFound.title": "Nie znaleziono strony",
+    "notFound.cmd": "cd ~/ratajczak/this-page",
+    "notFound.stderr": "stderr",
+    "notFound.error": "ENOENT, brak takiej strony",
+    "notFound.body": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
+    "notFound.home": "Wróć na start",
+    "notFound.back": "cd .. ↩",
 };
 
 const dictionaries: Record<Locale, Record<UiKey, string>> = { en, pl };
