@@ -73,6 +73,7 @@ Copy `.env.example` to `.env` and fill in:
 PUBLIC_SANITY_PROJECT_ID=
 PUBLIC_SANITY_DATASET=production
 PUBLIC_SANITY_API_VERSION=2026-04-20
+PUBLIC_SITE_URL=         # public, canonical/hreflang/sitemap/robots base, e.g. https://example.com
 SANITY_WEBHOOK_SECRET=   # server-only, for /api/revalidate
 RESEND_API_KEY=          # server-only, for POST /api/contact (503 when missing)
 CONTACT_TO_EMAIL=        # server-only, inbox receiving contact messages
