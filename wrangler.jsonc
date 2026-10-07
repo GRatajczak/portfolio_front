@@ -6,4 +6,9 @@
         "directory": "./dist",
         "binding": "ASSETS",
     },
+    // Cloudflare checks its cache before invoking the Worker. Pages opt in
+    // with `s-maxage` (src/middleware.ts); /api/revalidate purges it.
+    "cache": {
+        "enabled": true,
+    },
 }

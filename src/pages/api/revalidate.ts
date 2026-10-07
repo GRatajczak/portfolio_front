@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
 import { SIGNATURE_HEADER_NAME, isValidSignature } from "@sanity/webhook";
-import { invalidateSanityDataCache } from "@/lib/sanity";
 
 const UNAUTHORIZED_MESSAGE = "Unauthorized webhook request.";
 const MISCONFIGURED_MESSAGE =
@@ -19,7 +18,7 @@ function getBearerToken(authorizationHeader: string | null) {
     return token.trim();
 }
 
-export const POST: APIRoute = async ({ request, url }) => {
+export const POST: APIRoute = async ({ request, url, locals }) => {
     const webhookSecret = import.meta.env.SANITY_WEBHOOK_SECRET;
 
     if (!webhookSecret) {
@@ -48,11 +47,32 @@ export const POST: APIRoute = async ({ request, url }) => {
         payload = {};
     }
 
-    invalidateSanityDataCache();
+    // Purges the edge cache in every data center (not available in dev).
+    const edgeCache = (
+        locals.cfContext as
+            | {
+                  cache?: {
+                      purge: (options: { purgeEverything: true }) => Promise<unknown>;
+                  };
+              }
+            | undefined
+    )?.cache;
+    let purge: unknown = null;
+    try {
+        purge = edgeCache
+            ? await edgeCache.purge({ purgeEverything: true })
+            : null;
+    } catch (error) {
+        // A 5xx makes Sanity retry the webhook.
+        return new Response(`Edge cache purge failed: ${String(error)}`, {
+            status: 502,
+        });
+    }
 
     return Response.json({
         ok: true,
         revalidated: true,
+        purge,
         at: new Date().toISOString(),
         documentId: payload._id ?? null,
         documentType: payload._type ?? null,

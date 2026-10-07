@@ -21,10 +21,9 @@ export const isSanityConfigured = Boolean(projectId && dataset);
 export const DEFAULT_LOCALE = "en";
 export type { HomePageData, PostPreview };
 
-// Each Worker isolate has its own cache and the revalidate webhook only clears
-// the isolate that received it, so entries also expire on their own.
-const SANITY_CACHE_TTL_MS = 60_000;
-const sanityDataCache = new Map<string, { data: unknown; expiresAt: number }>();
+// Rendered pages are cached at the Cloudflare edge and purged on publish, so
+// results are not kept in memory: a stale copy in another isolate would end up
+// in the edge cache. Only identical requests already in flight are shared.
 const pendingSanityRequests = new Map<string, Promise<unknown>>();
 
 export const sanityClient = isSanityConfigured
@@ -38,38 +37,18 @@ export const sanityClient = isSanityConfigured
 
 const imageBuilder = sanityClient ? createImageUrlBuilder(sanityClient) : null;
 
-export function invalidateSanityDataCache() {
-    sanityDataCache.clear();
-    pendingSanityRequests.clear();
-}
-
-async function getCachedSanityData<T>(
+async function dedupeSanityRequest<T>(
     key: string,
     fetcher: () => Promise<T>,
 ): Promise<T> {
-    const cachedEntry = sanityDataCache.get(key);
-    if (cachedEntry && cachedEntry.expiresAt > Date.now()) {
-        return cachedEntry.data as T;
-    }
-
     const pendingRequest = pendingSanityRequests.get(key);
     if (pendingRequest) {
         return pendingRequest as Promise<T>;
     }
 
-    const request = fetcher()
-        .then((data) => {
-            sanityDataCache.set(key, {
-                data,
-                expiresAt: Date.now() + SANITY_CACHE_TTL_MS,
-            });
-            pendingSanityRequests.delete(key);
-            return data;
-        })
-        .catch((error) => {
-            pendingSanityRequests.delete(key);
-            throw error;
-        });
+    const request = fetcher().finally(() => {
+        pendingSanityRequests.delete(key);
+    });
 
     pendingSanityRequests.set(key, request as Promise<unknown>);
     return request;
@@ -607,7 +586,7 @@ export async function getPosts(
     }
 
     try {
-        return await getCachedSanityData(
+        return await dedupeSanityRequest(
             `posts:${locale}:${baseLocale}`,
             async () =>
                 sanityClient.fetch<PostPreview[]>(POSTS_QUERY, {
@@ -662,7 +641,7 @@ export async function getPageRouteSlugs(
     }
 
     try {
-        const slugs = await getCachedSanityData(
+        const slugs = await dedupeSanityRequest(
             `page-slugs:${locale}:${baseLocale}`,
             async () =>
                 sanityClient.fetch<PageSlugResult[]>(PAGE_SLUGS_QUERY, {
@@ -719,7 +698,7 @@ export async function getProjectRouteSlugs(
     }
 
     try {
-        const slugs = await getCachedSanityData(
+        const slugs = await dedupeSanityRequest(
             `project-slugs:${locale}:${baseLocale}`,
             async () =>
                 sanityClient.fetch<ProjectSlugResult[]>(PROJECT_SLUGS_QUERY, {
@@ -765,7 +744,7 @@ async function getPageBySlug(
     }
 
     try {
-        const data = await getCachedSanityData(
+        const data = await dedupeSanityRequest(
             `page:${locale}:${baseLocale}:${pageSlug}:${fallbackPageSlug}`,
             async () =>
                 sanityClient.fetch<PageQueryResult>(PAGE_QUERY, {
@@ -815,7 +794,7 @@ async function getProjectBySlug(
     }
 
     try {
-        const data = await getCachedSanityData(
+        const data = await dedupeSanityRequest(
             `project:${locale}:${baseLocale}:${projectSlug}:${fallbackProjectSlug}`,
             async () =>
                 sanityClient.fetch<ProjectQueryResult>(PROJECT_QUERY, {

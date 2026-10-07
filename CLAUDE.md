@@ -28,7 +28,7 @@ Shared building blocks: `Button` (`primary` / `outline`), `Eyebrow`, `Tag` (opti
 
 All content comes from Sanity. `src/lib/sanity.ts` centralizes all GROQ queries and fetch functions. Each page fetch also retrieves global data (header/footer nav, social links) in a single combined query — global data is **not** fetched separately.
 
-An in-memory cache (`sanityDataCache` Map) deduplicates Sanity requests within a request lifecycle. The cache is fully invalidated when Sanity sends a webhook to `POST /api/revalidate`.
+Rendered pages are cached at the Cloudflare edge: `cache.enabled` in `wrangler.jsonc` puts the cache in front of the Worker, and `src/middleware.ts` marks successful `GET` page responses with `s-maxage` (browsers get `max-age=0`). Sanity publishes hit `POST /api/revalidate`, which purges the whole edge cache with `ctx.cache.purge`; each deploy starts with an empty cache. Sanity results are therefore not cached in memory (a stale isolate copy would end up in the edge cache) — `dedupeSanityRequest` only shares identical requests in flight. Responses with `Set-Cookie` or their own `Cache-Control` are left alone.
 
 ### Page Builder pattern
 
