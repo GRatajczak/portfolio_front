@@ -43,6 +43,31 @@ const seo = buildSeo({
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" href="/favicon.ico" />
+        <link
+            rel="preload"
+            href="/fonts/geist-latin-wght-normal.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link
+            rel="preload"
+            href="/fonts/jetbrains-mono-latin-wght-normal.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        {
+            locale === "pl" && (
+                <link
+                    rel="preload"
+                    href="/fonts/geist-latin-ext-wght-normal.woff2"
+                    as="font"
+                    type="font/woff2"
+                    crossorigin
+                />
+            )
+        }
         <meta name="generator" content={Astro.generator} />
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />

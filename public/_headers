@@ -1,0 +1,8 @@
+# Applied by Workers Static Assets to files served from dist/client (not to
+# SSR responses). /_astro files are content-hashed; fonts keep fixed names,
+# so rename the file when replacing a font.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
