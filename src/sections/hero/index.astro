@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { sanityImage } from "@/utils/sanityImage";
 import type { Props } from "./index.type";
 
 const {
@@ -20,6 +20,21 @@ const mobileImageWidth =
     mobileImage?.asset?.metadata?.dimensions?.width ?? portraitImageWidth;
 const mobileImageHeight =
     mobileImage?.asset?.metadata?.dimensions?.height ?? portraitImageHeight;
+// The portrait is the LCP element: at most 460px wide, below 760px it swaps
+// to the mobile crop.
+const portrait =
+    portraitImageUrl &&
+    sanityImage(portraitImageUrl, {
+        sizes: "460px",
+        sourceWidth: portraitImage?.asset?.metadata?.dimensions?.width,
+    });
+const mobile =
+    mobileImageUrl &&
+    sanityImage(mobileImageUrl, {
+        sizes: "min(100vw, 460px)",
+        sourceWidth: mobileImage?.asset?.metadata?.dimensions?.width,
+        widths: [320, 480, 640, 960, 1280, 1440],
+    });
 const cornerClass = "absolute size-7 border-acc";
 ---
 
@@ -60,27 +75,30 @@ const cornerClass = "absolute size-7 border-acc";
             }
         </div>
         {
-            portraitImageUrl && (
+            portrait && (
                 <div class="relative w-[min(100%,460px)] justify-self-center">
                     <div class={`${cornerClass} top-0 left-0 border-t-2 border-l-2`} />
                     <div class={`${cornerClass} top-0 right-0 border-t-2 border-r-2`} />
                     <picture>
-                        {mobileImageUrl && (
+                        {mobile && (
                             <source
                                 media="(max-width: 759px)"
-                                srcset={mobileImageUrl}
+                                srcset={mobile.srcset}
+                                sizes={mobile.sizes}
                                 width={mobileImageWidth}
                                 height={mobileImageHeight}
                             />
                         )}
-                        <Image
-                            src={portraitImageUrl}
+                        <img
+                            src={portrait.src}
+                            srcset={portrait.srcset}
+                            sizes={portrait.sizes}
                             alt={portraitImageAlt}
                             width={portraitImageWidth}
                             height={portraitImageHeight}
                             class="block h-auto w-full box-border px-6 pt-6 [filter:grayscale(.15)_contrast(1.05)]"
                             loading="eager"
-                            format="webp"
+                            fetchpriority="high"
                         />
                     </picture>
                     <div class="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-b from-transparent to-bg" />

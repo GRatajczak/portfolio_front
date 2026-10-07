@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { sanityImage } from "@/utils/sanityImage";
 import type { Props } from "./index.type";
 
 const { images = [], className = "" } = Astro.props as Props;
@@ -27,16 +27,23 @@ const itemClass = [
                     return null;
                 }
 
+                const { src, srcset, sizes } = sanityImage(imageUrl, {
+                    sizes: "(max-width: 860px) 50vw, 360px",
+                    sourceWidth: imageWidth,
+                });
+
                 return (
                     <li class={`overflow-hidden ${itemClass[index]}`}>
-                        <Image
-                            src={imageUrl}
+                        <img
+                            src={src}
+                            srcset={srcset}
+                            sizes={sizes}
                             alt={image.alt || "About me image"}
                             width={imageWidth}
                             height={imageHeight}
                             class="block size-full object-cover"
                             loading="lazy"
-                            format="webp"
+                            decoding="async"
                         />
                     </li>
                 );

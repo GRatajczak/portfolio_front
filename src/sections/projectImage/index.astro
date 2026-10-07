@@ -1,14 +1,23 @@
 ---
+import { sanityImage } from "@/utils/sanityImage";
 import type { Props } from "./index.type";
 
 const { asset, alt } = Astro.props as Props;
 const dimensions = asset?.metadata?.dimensions;
+const image =
+    asset?.url &&
+    sanityImage(asset.url, {
+        sizes: "min(100vw, 1310px)",
+        sourceWidth: dimensions?.width,
+    });
 ---
 
 {
-    asset?.url && (
+    image && (
         <img
-            src={`${asset.url}?w=1800&auto=format`}
+            src={image.src}
+            srcset={image.srcset}
+            sizes={image.sizes}
             alt={alt ?? "Project image"}
             width={dimensions?.width}
             height={dimensions?.height}

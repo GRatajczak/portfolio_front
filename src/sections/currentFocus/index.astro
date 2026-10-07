@@ -3,11 +3,18 @@ import RichText from "@/components/RichText/index.astro";
 import StatusDot from "@/components/StatusDot/index.astro";
 import { statusFromCategory } from "@/components/StatusDot/index.type";
 import { toPlainText } from "@/utils/pageBuilder/helpers";
+import { sanityImage } from "@/utils/sanityImage";
 import type { Props } from "./index.type";
 
 const { heading = "", description = [], project } = Astro.props as Props;
 
 const imageUrl = project?.image?.asset?.url;
+const image =
+    imageUrl &&
+    sanityImage(imageUrl, {
+        sizes: "(max-width: 860px) 100vw, 660px",
+        sourceWidth: project?.image?.asset?.metadata?.dimensions?.width,
+    });
 const imageAlt = project?.image?.alt || project?.title || "Project image";
 const projectText = project?.content?.length
     ? toPlainText(project.content.slice(0, 1))
@@ -39,9 +46,11 @@ const projectText = project?.content?.length
         {
             project?.title && (
                 <div class="flex flex-col border border-line bg-bg-alt">
-                    {imageUrl && (
+                    {image && (
                         <img
-                            src={imageUrl}
+                            src={image.src}
+                            srcset={image.srcset}
+                            sizes={image.sizes}
                             alt={imageAlt}
                             class="block aspect-[16/10] w-full object-cover"
                             loading="lazy"

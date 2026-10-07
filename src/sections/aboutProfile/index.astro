@@ -2,6 +2,7 @@
 import Eyebrow from "@/components/Eyebrow/index.astro";
 import RichText from "@/components/RichText/index.astro";
 import Tag from "@/components/Tag/index.astro";
+import { sanityImage } from "@/utils/sanityImage";
 import type { Props } from "./index.type";
 
 const {
@@ -17,6 +18,12 @@ const {
 } = Astro.props as Props;
 
 const imageUrl = image?.asset?.url;
+const portrait =
+    imageUrl &&
+    sanityImage(imageUrl, {
+        sizes: "(max-width: 860px) 100vw, 660px",
+        sourceWidth: image?.asset?.metadata?.dimensions?.width,
+    });
 const pad = (n: number) => String(n).padStart(2, "0");
 const bodyClass =
     "flex flex-col gap-3 text-muted [&_p]:m-0 [&_p]:text-base! [&_p]:leading-[1.65]! [&_p]:text-pretty";
@@ -27,7 +34,7 @@ const bodyClass =
         class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,380px),1fr))] items-start gap-[clamp(32px,5vw,72px)]"
     >
         {
-            imageUrl && (
+            portrait && (
                 <figure class="m-0 flex flex-col border border-line bg-bg-alt min-[760px]:sticky min-[760px]:top-24">
                     {(fileLabel || fileMeta) && (
                         <div class="flex justify-between border-b border-line px-4 py-3 font-mono text-[11px] text-dim">
@@ -36,7 +43,9 @@ const bodyClass =
                         </div>
                     )}
                     <img
-                        src={`${imageUrl}?w=1200&auto=format`}
+                        src={portrait.src}
+                        srcset={portrait.srcset}
+                        sizes={portrait.sizes}
                         alt={image?.alt || captionTitle || "Portrait"}
                         class="block aspect-[4/5] w-full object-cover"
                         loading="lazy"

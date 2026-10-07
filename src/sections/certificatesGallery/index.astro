@@ -3,6 +3,7 @@ import { useTranslations } from "@/i18n/ui";
 import Button from "@/components/Button/index.astro";
 import Container from "@/components/Container/index.astro";
 import Eyebrow from "@/components/Eyebrow/index.astro";
+import { sanityImage, sanityImageUrl } from "@/utils/sanityImage";
 import type { Props } from "./index.type";
 
 const {
@@ -25,8 +26,12 @@ const cards = certificates
         return {
             title,
             alt: certificate.image?.alt || title || "Certificate preview",
-            src: `${url}?w=800&auto=format`,
-            full: `${url}?w=2000&auto=format`,
+            image: sanityImage(url, {
+                sizes: "min(82vw, 380px)",
+                sourceWidth: certificate.image?.asset?.metadata?.dimensions?.width,
+                widths: [320, 480, 640, 800],
+            }),
+            full: sanityImageUrl(url, 2000),
             extension: `.${extension}`,
         };
     })
@@ -105,7 +110,9 @@ const { t } = useTranslations(Astro.url);
                             aria-label={`${t("certificates.open")} ${card.title || t("certificates.fallback")}`}
                         >
                             <img
-                                src={card.src}
+                                src={card.image.src}
+                                srcset={card.image.srcset}
+                                sizes={card.image.sizes}
                                 alt={card.alt}
                                 class="absolute inset-0 block size-full object-cover object-top"
                                 loading="lazy"

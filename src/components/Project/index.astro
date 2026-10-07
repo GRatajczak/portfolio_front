@@ -7,6 +7,7 @@ import StatusDot from "@/components/StatusDot/index.astro";
 import { statusFromCategory } from "@/components/StatusDot/index.type";
 import Tag from "@/components/Tag/index.astro";
 import { toPlainText } from "@/utils/pageBuilder/helpers";
+import { sanityImage } from "@/utils/sanityImage";
 import type { Props } from "./index.type";
 
 const {
@@ -25,6 +26,12 @@ const technologies = (project.technologies ?? []).flatMap((item) =>
         : [],
 );
 const imageUrl = project.image?.asset?.url;
+const image =
+    imageUrl &&
+    sanityImage(imageUrl, {
+        sizes: "(max-width: 860px) 100vw, 680px",
+        sourceWidth: project.image?.asset?.metadata?.dimensions?.width,
+    });
 const imageAlt = project.image?.alt || project.title || "Project image";
 const fileSlug =
     project.slug ||
@@ -60,9 +67,11 @@ const { t } = useTranslations(Astro.url);
                 <span>{fileLabel}</span>
                 <span>{indexLabel}</span>
             </div>
-            {imageUrl && (
+            {image && (
                 <img
-                    src={imageUrl}
+                    src={image.src}
+                    srcset={image.srcset}
+                    sizes={image.sizes}
                     alt={imageAlt}
                     class="block aspect-[3/2] w-full object-cover"
                     loading="lazy"
@@ -119,9 +128,11 @@ const { t } = useTranslations(Astro.url);
                     <span>{fileLabel}</span>
                     <span>{indexLabel}</span>
                 </div>
-                {imageUrl ? (
+                {image ? (
                     <img
-                        src={imageUrl}
+                        src={image.src}
+                        srcset={image.srcset}
+                        sizes={image.sizes}
                         alt={imageAlt}
                         class="block aspect-[3/2] w-full object-cover"
                         loading="lazy"

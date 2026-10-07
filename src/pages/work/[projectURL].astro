@@ -9,6 +9,7 @@ import Layout from "@/layouts/Layout.astro";
 import ProjectSectionsGrid from "@/sections/projectSectionsGrid/index.astro";
 import { useTranslations } from "@/i18n/ui";
 import { componentsMapper } from "@/utils/pageBuilder/componentsMapper";
+import { sanityImage } from "@/utils/sanityImage";
 import {
     DEFAULT_LOCALE,
     getProjectByRouteSlug,
@@ -128,7 +129,11 @@ const hasBrief = sections.length > 0;
                     <div class="mx-auto flex max-w-[1400px] flex-col gap-[clamp(40px,6vw,64px)] px-[clamp(20px,4vw,48px)] pb-[clamp(56px,8vw,96px)]">
                         {imageUrl && (
                             <img
-                                src={`${imageUrl}?w=1800&auto=format`}
+                                {...sanityImage(imageUrl, {
+                                    sizes: "min(100vw, 1310px)",
+                                    sourceWidth: imageDimensions?.width,
+                                })}
+                                fetchpriority="high"
                                 alt={project?.image?.alt ?? project?.title ?? ""}
                                 width={imageDimensions?.width}
                                 height={imageDimensions?.height}

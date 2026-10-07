@@ -1,11 +1,18 @@
 ---
 import RichText from "@/components/RichText/index.astro";
+import { sanityImage } from "@/utils/sanityImage";
 import type { Props } from "./index.type";
 
 const { title, content = [], image, number = "", reverse = false } =
     Astro.props as Props;
 const imageUrl = image?.asset?.url;
 const dimensions = image?.asset?.metadata?.dimensions;
+const responsiveImage =
+    imageUrl &&
+    sanityImage(imageUrl, {
+        sizes: "(max-width: 900px) 100vw, 760px",
+        sourceWidth: dimensions?.width,
+    });
 ---
 
 <div
@@ -29,9 +36,11 @@ const dimensions = image?.asset?.metadata?.dimensions;
         />
     </div>
     {
-        imageUrl && (
+        responsiveImage && (
             <img
-                src={`${imageUrl}?w=1400&auto=format`}
+                src={responsiveImage.src}
+                srcset={responsiveImage.srcset}
+                sizes={responsiveImage.sizes}
                 alt={image?.alt ?? title ?? "Project image"}
                 width={dimensions?.width}
                 height={dimensions?.height}
