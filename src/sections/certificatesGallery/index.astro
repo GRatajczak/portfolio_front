@@ -133,38 +133,55 @@ const { t } = useTranslations(Astro.url);
 </Container>
 
 <script>
-    import { register } from "swiper/element/bundle";
+    // Swiper is fetched only when a gallery gets near the viewport, so it
+    // stays off the critical path.
+    let observer: IntersectionObserver | undefined;
 
-    register();
+    const initSwiper = async (swiperEl: HTMLElement) => {
+        if (swiperEl.dataset.initialized) return;
+        swiperEl.dataset.initialized = "true";
 
-    const initCertificatesSwipers = () => {
-        document
-            .querySelectorAll<HTMLElement>("swiper-container.certificates-swiper")
-            .forEach((swiperEl) => {
-                if (swiperEl.dataset.initialized === "true") return;
-
-                const section = swiperEl.closest("section");
-                const prevEl = section?.querySelector("[data-carousel-prev]");
-                const nextEl = section?.querySelector("[data-carousel-next]");
-
-                Object.assign(swiperEl, {
-                    slidesPerView: "auto",
-                    spaceBetween: 12,
-                    grabCursor: true,
-                    keyboard: { enabled: true },
-                    navigation:
-                        prevEl && nextEl ? { prevEl, nextEl } : false,
-                });
-                (swiperEl as HTMLElement & { initialize: () => void }).initialize();
-                swiperEl.dataset.initialized = "true";
-            });
+        const { initCertificatesSwiper } = await import(
+            "@/scripts/certificatesSwiper"
+        );
+        initCertificatesSwiper(swiperEl);
     };
 
-    document.addEventListener("astro:page-load", initCertificatesSwipers);
-    initCertificatesSwipers();
+    const observeCertificatesSwipers = () => {
+        observer?.disconnect();
+        observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    observer?.unobserve(entry.target);
+                    initSwiper(entry.target as HTMLElement);
+                });
+            },
+            { rootMargin: "600px 0px" },
+        );
+        document
+            .querySelectorAll<HTMLElement>("swiper-container.certificates-swiper")
+            .forEach((swiperEl) => observer?.observe(swiperEl));
+    };
+
+    document.addEventListener("astro:page-load", observeCertificatesSwipers);
+    document.addEventListener("astro:before-swap", () => observer?.disconnect());
+    observeCertificatesSwipers();
 </script>
 
 <style>
+    /* Until Swiper loads, lay the slides out the way it will, so nothing
+       shifts when it initializes. */
+    swiper-container:not(:defined) {
+        display: flex;
+        gap: 12px;
+        overflow: hidden;
+    }
+    swiper-container:not(:defined) > swiper-slide {
+        display: block;
+        flex-shrink: 0;
+    }
+
     [data-carousel-prev].swiper-button-disabled,
     [data-carousel-next].swiper-button-disabled {
         opacity: 0.4;
