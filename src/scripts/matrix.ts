@@ -1,15 +1,15 @@
 // "Matrix" hover: text scrambles for 480ms on `[data-matrix]`; buttons
-// (`data-matrix="btn"`) also get falling characters on a canvas clipped to the
-// button shape. Disabled for touch (`hover: none`) and reduced motion.
+// (`data-matrix="btn"`) also get falling characters on a canvas inside the
+// button. Disabled for touch (`hover: none`) and reduced motion.
 
 const RAIN = "01";
 const SCRAMBLE = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789<>/{}=#$%&*";
 const SCRAMBLE_MS = 480;
 const FONT_SIZE = 11;
-const CORNER = 14;
 
 type Session = {
     el: HTMLElement;
+    canvas?: HTMLCanvasElement;
     nodes: Text[];
     originals: string[];
     raf: number;
@@ -23,34 +23,28 @@ const isDisabled = () =>
 
 let initialized = false;
 let session: Session | null = null;
-let canvas: HTMLCanvasElement | null = null;
-
-// The canvas lives in <body>, which View Transitions replace — recreate lazily.
-const getCanvas = () => {
-    if (canvas?.isConnected) return canvas;
-
-    canvas = document.createElement("canvas");
+// Rain is drawn on a canvas placed inside the button (which has
+// `overflow-hidden` and its own clip-path), so it can never leak out.
+const createCanvas = (el: HTMLElement) => {
+    const ratio = window.devicePixelRatio || 1;
+    const { width, height } = el.getBoundingClientRect();
+    const canvas = document.createElement("canvas");
     canvas.setAttribute("aria-hidden", "true");
+    canvas.width = Math.ceil(width * ratio);
+    canvas.height = Math.ceil(height * ratio);
     Object.assign(canvas.style, {
-        position: "fixed",
+        position: "absolute",
         left: "0",
         top: "0",
+        width: "100%",
+        height: "100%",
         pointerEvents: "none",
-        zIndex: "9998",
     });
-    document.body.appendChild(canvas);
-    fitCanvas();
-    return canvas;
-};
+    el.appendChild(canvas);
+    const ctx = canvas.getContext("2d");
+    ctx?.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-const fitCanvas = () => {
-    if (!canvas) return;
-    const ratio = window.devicePixelRatio || 1;
-    canvas.width = innerWidth * ratio;
-    canvas.height = innerHeight * ratio;
-    canvas.style.width = `${innerWidth}px`;
-    canvas.style.height = `${innerHeight}px`;
-    canvas.getContext("2d")?.setTransform(ratio, 0, 0, ratio, 0, 0);
+    return { canvas, ctx, width, height };
 };
 
 const stop = () => {
@@ -60,10 +54,8 @@ const stop = () => {
     session.nodes.forEach((node, i) => {
         node.nodeValue = session!.originals[i];
     });
+    session.canvas?.remove();
     session = null;
-    canvas
-        ?.getContext("2d")
-        ?.clearRect(0, 0, innerWidth, innerHeight);
 };
 
 const start = (el: HTMLElement) => {
@@ -91,9 +83,16 @@ const start = (el: HTMLElement) => {
         { length: columns },
         () => -Math.random() * (startRect.height / FONT_SIZE) * 2,
     );
-    const ctx = rain ? getCanvas().getContext("2d") : null;
+    const layer = rain ? createCanvas(el) : null;
+    const ctx = layer?.ctx ?? null;
     const startedAt = performance.now();
-    const current: Session = { el, nodes, originals, raf: 0 };
+    const current: Session = {
+        el,
+        canvas: layer?.canvas,
+        nodes,
+        originals,
+        raf: 0,
+    };
     session = current;
 
     const tick = (now: number) => {
@@ -112,36 +111,24 @@ const start = (el: HTMLElement) => {
             textNode.nodeValue = out;
         });
 
-        if (ctx) {
-            const r = el.getBoundingClientRect();
-            ctx.clearRect(0, 0, innerWidth, innerHeight);
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(r.left, r.top);
-            ctx.lineTo(r.right - CORNER, r.top);
-            ctx.lineTo(r.right, r.top + CORNER);
-            ctx.lineTo(r.right, r.bottom);
-            ctx.lineTo(r.left + CORNER, r.bottom);
-            ctx.lineTo(r.left, r.bottom - CORNER);
-            ctx.closePath();
-            ctx.clip();
+        if (ctx && layer) {
+            ctx.clearRect(0, 0, layer.width, layer.height);
             ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
             ctx.fillStyle = color;
             for (let k = 0; k < columns; k++) {
                 drops[k] += 0.32;
-                if ((drops[k] - 6) * FONT_SIZE > r.height) {
+                if ((drops[k] - 6) * FONT_SIZE > layer.height) {
                     drops[k] = -Math.random() * 4;
                 }
                 for (let j = 0; j < 6; j++) {
                     ctx.globalAlpha = j === 0 ? 0.6 : 0.32 * (1 - j / 6);
                     ctx.fillText(
                         pick(RAIN),
-                        r.left + k * FONT_SIZE,
-                        r.top + (drops[k] - j) * FONT_SIZE,
+                        k * FONT_SIZE,
+                        (drops[k] - j) * FONT_SIZE,
                     );
                 }
             }
-            ctx.restore();
         }
 
         if (progress < 1 || rain) current.raf = requestAnimationFrame(tick);
@@ -168,5 +155,4 @@ export const initMatrix = () => {
     });
     document.addEventListener("mousedown", stop, true);
     document.addEventListener("astro:before-swap", stop);
-    window.addEventListener("resize", fitCanvas);
 };
