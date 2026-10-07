@@ -12,4 +12,7 @@ export type Props = {
     /** Appends ↗ (external) after the label. */
     showArrowUp?: boolean;
     mobileIconOnly?: boolean;
+    /** Screen-reader-only context after the label, e.g. the section heading
+     *  so a generic "See more" link says what it leads to. */
+    srContext?: string;
 };

@@ -57,16 +57,16 @@ const { t } = useTranslations(Astro.url);
                             class="relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden border border-line bg-surface p-0 transition-colors duration-200 hover:border-acc focus-visible:border-acc"
                             data-lightbox-src={card.full}
                             data-lightbox-title={card.title}
-                            aria-label={`${t("certificates.open")} ${card.title || t("certificates.fallback")}`}
                         >
                             <img
                                 src={card.image.src}
                                 srcset={card.image.srcset}
                                 sizes={card.image.sizes}
-                                alt={card.alt}
+                                alt={card.title ? "" : card.alt}
                                 class="absolute inset-0 block size-full object-cover object-top"
                                 loading="lazy"
                             />
+                            <span class="sr-only">{t("certificates.open")}: </span>
                             <span class="absolute inset-x-0 bottom-0 flex justify-between gap-3 bg-bg/90 px-3.5 py-2.5 text-left font-mono text-xs text-fg">
                                 <span>
                                     <span class="text-acc">{pad(index + 1)}</span>{" "}

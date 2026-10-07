@@ -30,7 +30,6 @@ const en = {
     "certificates.previous": "Previous certificate",
     "certificates.next": "Next certificate",
     "certificates.open": "Open",
-    "certificates.fallback": "certificate",
 
     "lightbox.aria": "Image preview",
 
@@ -94,7 +93,6 @@ const pl: Record<UiKey, string> = {
     "certificates.previous": "Poprzedni certyfikat",
     "certificates.next": "Następny certyfikat",
     "certificates.open": "Otwórz",
-    "certificates.fallback": "certyfikat",
 
     "lightbox.aria": "Podgląd obrazu",
 

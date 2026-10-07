@@ -98,11 +98,11 @@ const socials = [
     >
         <a
             href={homeHref}
-            aria-label={t("nav.homeAria")}
             data-matrix="link"
             class="flex items-center gap-0.5 font-mono text-[15px] font-medium"
         >
             <span class="text-acc">~/</span><span>ratajczak</span><span
+                class="sr-only">, {t("nav.homeAria")}</span><span
                 class="ml-1 h-4 w-2 animate-blink bg-acc"
                 aria-hidden="true"></span>
         </a>

@@ -75,11 +75,12 @@ const { t } = useTranslations(Astro.url);
         <div class="flex flex-col gap-[22px]">
             <a
                 href={homeHref}
-                aria-label={t("nav.homeAria")}
                 data-matrix="link"
                 class="font-mono text-lg font-medium"
             >
-                <span class="text-acc">~/</span>ratajczak
+                <span class="text-acc">~/</span>ratajczak<span class="sr-only"
+                    >, {t("nav.homeAria")}</span
+                >
             </a>
             <div class="flex flex-col gap-2.5 font-mono text-[13px]">
                 {
